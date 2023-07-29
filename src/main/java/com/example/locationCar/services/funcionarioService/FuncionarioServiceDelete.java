@@ -2,10 +2,12 @@ package com.example.locationCar.services.funcionarioService;
 
 import com.example.locationCar.models.FuncionarioModel;
 import com.example.locationCar.repositories.FuncionarioRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.UUID;
 
+@Service
 public class FuncionarioServiceDelete {
 
     FuncionarioRepository funcionarioRepository;
