@@ -1,0 +1,24 @@
+{
+	"info": {
+		"_postman_id": "d3b15c6f-2232-4624-b6ae-b925dd5c4414",
+		"name": "Cliente",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28517604"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "cvbcxbcvxb",
+					"host": [
+						"cvbcxbcvxb"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
