@@ -16,12 +16,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/v1/funcionario")
 public class FuncionarioController {
 
-    private final FuncionarioRepository funcionarioRepository;
     private final FuncionarioService funcionarioServiceCadastro;
 
 
     public FuncionarioController(FuncionarioService funcionarioServiceCadastro, FuncionarioRepository funcionarioRepository, FuncionarioService funcionarioServiceCadastro1) {
-        this.funcionarioRepository = funcionarioRepository;
         this.funcionarioServiceCadastro = funcionarioServiceCadastro1;
     }
 
@@ -31,7 +29,7 @@ public class FuncionarioController {
         BeanUtils.copyProperties(funcionarioRecordDto, funcionarioModel);
                 FuncionarioModel savedFuncionario = FuncionarioService.saveFuncionario(funcionarioModel);
 
-        return  ResponseEntity.status(HttpStatus.CREATED).body(funcionarioRepository.save(funcionarioModel));
+        return  ResponseEntity.status(HttpStatus.CREATED).body(funcionarioModel);
     }
 
 }

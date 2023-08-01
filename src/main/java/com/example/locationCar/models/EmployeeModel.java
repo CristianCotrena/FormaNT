@@ -12,10 +12,10 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table (name= "TB_FUNCIONARIO")
+@Table(name = "TB_FUNCIONARIO")
 public class FuncionarioModel implements Serializable {
-        @Serial
-        private static final long serialVersionUID = 1L;
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,7 +23,6 @@ public class FuncionarioModel implements Serializable {
     private UUID idFuncionario;
     private String nome;
     private Cargo cargo;
-    @Size(min = 11, max = 14)
     private String cpfCnpj;
     private String registro;
     private String telefone;
