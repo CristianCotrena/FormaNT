@@ -1,8 +1,8 @@
-package com.example.locationCar.funcionarioTest;
+package com.example.locationCar.employeeTests;
 
 import org.junit.jupiter.api.Test;
 
-public class FuncionarioTest {
+public class EmployeeTest {
 
     @Test
     void testFuncionario() {
