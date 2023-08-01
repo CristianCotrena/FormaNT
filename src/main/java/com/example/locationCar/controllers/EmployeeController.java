@@ -1,4 +1,4 @@
-package com.example.locationCar.controller;
+package com.example.locationCar.controllers;
 
 
 import com.example.locationCar.dtos.EmployeeRecordDto;
