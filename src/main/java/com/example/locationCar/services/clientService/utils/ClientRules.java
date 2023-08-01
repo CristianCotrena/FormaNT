@@ -8,12 +8,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class ClientRules {
 
-    ClientModel clientModel;
-
-    public ClientRules(ClientModel clientModel) {
-        this.clientModel = clientModel;
-    }
-
     public String encryptPassword(String password) {
        String passwordEncripted = BCrypt.hashpw(password, BCrypt.gensalt(10));
          return passwordEncripted;

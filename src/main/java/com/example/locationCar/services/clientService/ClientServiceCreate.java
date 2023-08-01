@@ -1,37 +1,48 @@
 package com.example.locationCar.services.clientService;
 
+import ch.qos.logback.core.net.server.Client;
 import com.example.locationCar.dtos.ClientRecordDto;
 import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.repositories.ClientRepository;
 import com.example.locationCar.services.clientService.utils.ClientRules;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 public class ClientServiceCreate {
+    private final ClientRepository clientRepository;
+    private final ClientRules clientRules;
 
-    ClientRepository clientRepository;
-    ClientRules clientRules;
-
+    @Autowired
     public ClientServiceCreate(ClientRepository clientRepository, ClientRules clientRules) {
         this.clientRepository = clientRepository;
         this.clientRules = clientRules;
     }
 
-    public ClientModel createClient(ClientRecordDto clientRecordDto) {
+    public UUID createClient(ClientModel clientModel) {
 
-        ClientModel existsByCNH = clientRepository.findByCnh(clientRecordDto.cnh());
-        ClientModel existsByEmail = clientRepository.findByEmail(clientRecordDto.email());
+        if (clientRepository.findByCnh(clientModel.getCnh()) != null){
+            throw new RuntimeException("CNH já cadastrada para outro cliente.");
+        }
+        if (clientRepository.findByEmail(clientModel.getEmail()) != null){
+            throw new RuntimeException("E-mail já cadastrado para outro cliente.");
+        }
 
-        if(existsByCNH != null) throw new IllegalArgumentException("CNH já cadastrada");
-        if(existsByEmail != null) throw new IllegalArgumentException("Email já cadastrado");
+        try {
+            String encryptedPassword = clientRules.encryptPassword(clientModel.getPassword());
+            clientModel.setPassword(encryptedPassword);
+        } catch (Exception e) {
+            System.out.println(e);
+            throw new RuntimeException("Teste");
+        }
 
-        var clientModel = new ClientModel();
-        BeanUtils.copyProperties(clientRecordDto, clientModel); // conversão de DTO para Model
-        String encryptedPassword = clientRules.encryptPassword(clientRecordDto.password());
-        clientModel.setPassword(encryptedPassword);
 
-        return clientRepository.save(clientModel);
 
+
+
+        return clientRepository.save(clientModel).getIdClient();
     }
 }
