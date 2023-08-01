@@ -1,20 +1,34 @@
 {
 	"info": {
-		"_postman_id": "d3b15c6f-2232-4624-b6ae-b925dd5c4414",
+		"_postman_id": "5a6dffcb-f93d-43e8-a889-f1a61e842130",
 		"name": "Cliente",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "28517604"
+		"_exporter_id": "28525027"
 	},
 	"item": [
 		{
-			"name": "New Request",
+			"name": "CreateClient",
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Anna\",\r\n    \"cpfCnpj\": \"016.302.650-55\",\r\n    \"cnh\": \"jhhh\",\r\n    \"age\": 37,\r\n    \"telephone\": \"981220944\",\r\n    \"emergencyContact\": \"984873664\",\r\n    \"email\": \"anna.hermes@gmail.com\",\r\n    \"status\": 1,\r\n    \"password\": \"udhdd\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "cvbcxbcvxb",
+					"raw": "localhost:8080/v1/client",
 					"host": [
-						"cvbcxbcvxb"
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"client"
 					]
 				}
 			},
