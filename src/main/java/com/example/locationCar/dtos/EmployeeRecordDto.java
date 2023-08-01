@@ -1,19 +1,19 @@
 package com.example.locationCar.dtos;
 
-import com.example.locationCar.models.enums.Cargo;
+import com.example.locationCar.models.enums.Position;
 import com.example.locationCar.models.enums.Role;
-import com.example.locationCar.models.enums.TipoContrato;
+import com.example.locationCar.models.enums.ContractType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record FuncionarioRecordDto(
+public record EmployeeRecordDto(
 
-        @NotBlank String nome,
-        Cargo cargo,
+        @NotBlank String name,
+        Position position,
         @NotBlank String cpfCnpj,
-        @NotBlank String registro,
-        @NotBlank String telefone,
-        TipoContrato tipoContrato,
+        @NotBlank String registry,
+        @NotBlank String phone,
+        ContractType contractType,
         Role role,
         @NotBlank String email,
         @NotNull int status) {

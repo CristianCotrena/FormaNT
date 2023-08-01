@@ -1,5 +1,5 @@
 package com.example.locationCar.models.enums;
 
-public enum TipoContrato {
+public enum ContractType {
     CLT, CNPJ;
 }

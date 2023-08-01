@@ -1,11 +1,10 @@
 package com.example.locationCar.controller;
 
 
-import com.example.locationCar.dtos.FuncionarioRecordDto;
-import com.example.locationCar.models.FuncionarioModel;
-import com.example.locationCar.repositories.FuncionarioRepository;
+import com.example.locationCar.dtos.EmployeeRecordDto;
+import com.example.locationCar.models.EmployeeModel;
 
-import com.example.locationCar.services.funcionarioService.FuncionarioService;
+import com.example.locationCar.services.funcionarioService.EmployeeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
@@ -14,22 +13,22 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/v1/funcionario")
-public class FuncionarioController {
+public class EmployeeController {
 
-    private final FuncionarioService funcionarioServiceCadastro;
+    private final EmployeeService employeeService;
 
 
-    public FuncionarioController(FuncionarioService funcionarioServiceCadastro, FuncionarioRepository funcionarioRepository, FuncionarioService funcionarioServiceCadastro1) {
-        this.funcionarioServiceCadastro = funcionarioServiceCadastro1;
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
     }
 
     @PostMapping
-    public ResponseEntity<FuncionarioModel> saveFuncionario (@RequestBody @Valid FuncionarioRecordDto funcionarioRecordDto) {
-        var funcionarioModel = new FuncionarioModel();
-        BeanUtils.copyProperties(funcionarioRecordDto, funcionarioModel);
-                FuncionarioModel savedFuncionario = FuncionarioService.saveFuncionario(funcionarioModel);
+    public ResponseEntity<EmployeeModel> saveEmployee(@RequestBody @Valid EmployeeRecordDto employeeRecordDto) {
+        var employeeModel  = new EmployeeModel();
+        BeanUtils.copyProperties(employeeRecordDto, employeeModel );
+                EmployeeModel savedFuncionario = EmployeeService.saveFuncionario(employeeModel );
 
-        return  ResponseEntity.status(HttpStatus.CREATED).body(funcionarioModel);
+        return  ResponseEntity.status(HttpStatus.CREATED).body(employeeModel );
     }
 
 }

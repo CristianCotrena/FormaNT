@@ -1,10 +1,10 @@
 package com.example.locationCar.services.funcionarioService;
 
-import com.example.locationCar.models.FuncionarioModel;
-import com.example.locationCar.models.enums.Cargo;
+import com.example.locationCar.models.EmployeeModel;
+import com.example.locationCar.models.enums.Position;
 import com.example.locationCar.models.enums.Role;
-import com.example.locationCar.models.enums.TipoContrato;
-import com.example.locationCar.repositories.FuncionarioRepository;
+import com.example.locationCar.models.enums.ContractType;
+import com.example.locationCar.repositories.EmployeeRepository;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
@@ -13,23 +13,23 @@ import org.springframework.stereotype.Service;
 import java.util.regex.Pattern;
 
 @Service
-public class FuncionarioService {
-    private static FuncionarioRepository funcionarioRepository;
+public class EmployeeService {
+    private static EmployeeRepository funcionarioRepository;
 
-    public FuncionarioService(FuncionarioRepository funcionarioRepository) {
+    public EmployeeService(EmployeeRepository funcionarioRepository) {
         this.funcionarioRepository = funcionarioRepository;
     }
 
-    public static FuncionarioModel saveFuncionario(FuncionarioModel funcionario) {
+    public static EmployeeModel saveFuncionario(EmployeeModel funcionario) {
 
-        TipoContrato tipoContrato = funcionario.getTipoContrato();
+        ContractType tipoContrato = funcionario.getContractType();
         String cpfCnpj = funcionario.getCpfCnpj();
 
-        if (tipoContrato == TipoContrato.CLT) {
+        if (tipoContrato == ContractType.CLT) {
             if (!isValidCpf(cpfCnpj)) {
                 throw new IllegalArgumentException("CPF inválido");
             }
-        } else if (tipoContrato == TipoContrato.CNPJ) {
+        } else if (tipoContrato == ContractType.CNPJ) {
             if (!isValidCnpj(cpfCnpj)) {
                 throw new IllegalArgumentException("CNPJ inválido");
             }
@@ -38,11 +38,11 @@ public class FuncionarioService {
         }
 
 
-        if (!isValidCargo(funcionario.getCargo())) {
+        if (!isValidCargo(funcionario.getPosition())) {
             throw new IllegalArgumentException("Cargo inválido.");
         }
 
-        if (!isValidTipoContrato(funcionario.getTipoContrato())) {
+        if (!isValidTipoContrato(funcionario.getContractType())) {
             throw new IllegalArgumentException("Tipo de contrato inválido.");
         }
 
@@ -54,7 +54,7 @@ public class FuncionarioService {
             throw new IllegalArgumentException("Email inválido.");
         }
 
-        if (!isValidTelefone(funcionario.getTelefone())) {
+        if (!isValidTelefone(funcionario.getPhone())) {
             throw new IllegalArgumentException("Telefone inválido.");
         }
 
@@ -76,16 +76,16 @@ public class FuncionarioService {
 
 
 
-    private static boolean isValidCargo(Cargo cargo) {
-        return cargo != null && (cargo == Cargo.VENDEDOR || cargo == Cargo.ESTOQUISTA);
+    private static boolean isValidCargo(Position cargo) {
+        return cargo != null && (cargo == Position.VENDEDOR || cargo == Position.ESTOQUISTA);
     }
 
     private static boolean isValidRole(Role role) {
         return role != null && (role == Role.VENDEDOR || role == Role.ADMINISTRADOR);
     }
 
-    private static boolean isValidTipoContrato(TipoContrato tipoContrato) {
-        return tipoContrato != null && (tipoContrato == TipoContrato.CLT || tipoContrato == TipoContrato.CNPJ);
+    private static boolean isValidTipoContrato(ContractType tipoContrato) {
+        return tipoContrato != null && (tipoContrato == ContractType.CLT || tipoContrato == ContractType.CNPJ);
     }
 
     private static boolean isValidEmail(String email) {

@@ -1,6 +1,6 @@
 package com.example.locationCar.models.enums;
 
-public enum Cargo {
+public enum Position {
     VENDEDOR,  ESTOQUISTA;
 
 }

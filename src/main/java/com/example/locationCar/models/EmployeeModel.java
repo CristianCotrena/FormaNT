@@ -1,10 +1,9 @@
 package com.example.locationCar.models;
 
-import com.example.locationCar.models.enums.Cargo;
+import com.example.locationCar.models.enums.Position;
 import com.example.locationCar.models.enums.Role;
-import com.example.locationCar.models.enums.TipoContrato;
+import com.example.locationCar.models.enums.ContractType;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -13,35 +12,35 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "TB_FUNCIONARIO")
-public class FuncionarioModel implements Serializable {
+public class EmployeeModel implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 
-    private UUID idFuncionario;
-    private String nome;
-    private Cargo cargo;
+    private UUID employeeId;
+    private String name;
+    private Position position;
     private String cpfCnpj;
-    private String registro;
-    private String telefone;
-    private TipoContrato tipoContrato;
+    private String registry;
+    private String phone;
+    private ContractType contractType;
     private Role role;
     private String email;
     private int status;
 
-    public FuncionarioModel() {
+    public EmployeeModel() {
     }
 
-    public FuncionarioModel(UUID idFuncionario, String nome, Cargo cargo, String cpfCnpj, String registro, String telefone, TipoContrato tipoContrato, Role role, String email, int status) {
-        this.idFuncionario = idFuncionario;
-        this.nome = nome;
-        this.cargo = cargo;
+    public EmployeeModel(UUID idFuncionario, String nome, Position cargo, String cpfCnpj, String registro, String telefone, ContractType tipoContrato, Role role, String email, int status) {
+        this.employeeId = idFuncionario;
+        this.name = nome;
+        this.position = cargo;
         this.cpfCnpj = cpfCnpj;
-        this.registro = registro;
-        this.telefone = telefone;
-        this.tipoContrato = tipoContrato;
+        this.registry = registro;
+        this.phone = telefone;
+        this.contractType = tipoContrato;
         this.role = role;
         this.email = email;
         this.status = status;
@@ -55,20 +54,20 @@ public class FuncionarioModel implements Serializable {
         this.role = role;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Cargo getCargo() {
-        return cargo;
+    public Position getPosition() {
+        return position;
     }
 
-    public void setCargo(Cargo cargo) {
-        this.cargo = cargo;
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
 
@@ -80,28 +79,28 @@ public class FuncionarioModel implements Serializable {
         this.cpfCnpj = cpfCnpj;
     }
 
-    public String getRegistro() {
-        return registro;
+    public String getRegistry() {
+        return registry;
     }
 
-    public void setRegistro(String registro) {
-        this.registro = registro;
+    public void setRegistry(String registry) {
+        this.registry = registry;
     }
 
-    public String getTelefone() {
-        return telefone;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public TipoContrato getTipoContrato() {
-        return tipoContrato;
+    public ContractType getContractType() {
+        return contractType;
     }
 
-    public void setTipoContrato(TipoContrato tipoContrato) {
-        this.tipoContrato = tipoContrato;
+    public void setContractType(ContractType contractType) {
+        this.contractType = contractType;
     }
 
     public String getEmail() {
@@ -112,12 +111,12 @@ public class FuncionarioModel implements Serializable {
         this.email = email;
     }
 
-    public UUID getIdFuncionario() {
-        return idFuncionario;
+    public UUID getEmployeeId() {
+        return employeeId;
     }
 
-    public void setIdFuncionario(UUID idFuncionario) {
-        this.idFuncionario = idFuncionario;
+    public void setEmployeeId(UUID employeeId) {
+        this.employeeId = employeeId;
     }
 
     public int getStatus() {
@@ -132,25 +131,25 @@ public class FuncionarioModel implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FuncionarioModel that = (FuncionarioModel) o;
-        return status == that.status && Objects.equals(idFuncionario, that.idFuncionario) && Objects.equals(nome, that.nome) && Objects.equals(cargo, that.cargo) && Objects.equals(cpfCnpj, that.cpfCnpj) && Objects.equals(registro, that.registro) && Objects.equals(telefone, that.telefone) && Objects.equals(tipoContrato, that.tipoContrato) && Objects.equals(role, that.role) && Objects.equals(email, that.email);
+        EmployeeModel that = (EmployeeModel) o;
+        return status == that.status && Objects.equals(employeeId, that.employeeId) && Objects.equals(name, that.name) && Objects.equals(position, that.position) && Objects.equals(cpfCnpj, that.cpfCnpj) && Objects.equals(registry, that.registry) && Objects.equals(phone, that.phone) && Objects.equals(contractType, that.contractType) && Objects.equals(role, that.role) && Objects.equals(email, that.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idFuncionario, nome, cargo, cpfCnpj, registro, telefone, tipoContrato, role, email, status);
+        return Objects.hash(employeeId, name, position, cpfCnpj, registry, phone, contractType, role, email, status);
     }
 
     @Override
     public String toString() {
         return "FuncionarioModel{" +
-                "idFuncionario=" + idFuncionario +
-                ", nome='" + nome + '\'' +
-                ", cargo='" + cargo + '\'' +
+                "idFuncionario=" + employeeId +
+                ", nome='" + name + '\'' +
+                ", cargo='" + position + '\'' +
                 ", cpfCnpj='" + cpfCnpj + '\'' +
-                ", registro='" + registro + '\'' +
-                ", telefone='" + telefone + '\'' +
-                ", tipoContrato='" + tipoContrato + '\'' +
+                ", registro='" + registry + '\'' +
+                ", telefone='" + phone + '\'' +
+                ", tipoContrato='" + contractType + '\'' +
                 ", role='" + role + '\'' +
                 ", email='" + email + '\'' +
                 ", status=" + status +
