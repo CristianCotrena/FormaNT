@@ -35,7 +35,6 @@ public class ClientServiceCreate {
             throw new IllegalArgumentException("E-mail já cadastrado para outro cliente.");
         }
 
-
         try {
             String encryptedPassword = clientRules.encryptPassword(clientModel.getPassword());
             clientModel.setPassword(encryptedPassword);
@@ -43,10 +42,6 @@ public class ClientServiceCreate {
             System.out.println(e);
             throw new RuntimeException("Erro na solicitação de cadastro.");
         }
-
-
-
-
 
         return clientRepository.save(clientModel).getIdClient();
     }

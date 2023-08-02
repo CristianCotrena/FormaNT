@@ -74,15 +74,14 @@ public class CreateClientTest {
         });
 
         // Executando o método a ser testado
-        ResponseEntity<String> responseEntity = clientController.createClient(clientModel);
+            ResponseEntity<String> responseEntity = clientController.createClient(clientModel);
 
         // Verificando se o resultado foi o esperado
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
         assertEquals("CNH já cadastrada para outro cliente.", responseEntity.getBody());
-
-
     }
-        @Test
+
+    @Test
     public void testCreateClient_EmailAlreadyExists() {
             // Dados de entrada para o teste
             String sameEmail = "teste@teste.com"; // Email que já existe no DB. No caso de banco de dados já populado, é fazer um filter e encontrar o Email correspondente
@@ -103,7 +102,5 @@ public class CreateClientTest {
             // Verificando se o resultado foi o esperado
             assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
             assertEquals("E-mail já cadastrado para outro cliente.", responseEntity.getBody());
-
-
     }
 }

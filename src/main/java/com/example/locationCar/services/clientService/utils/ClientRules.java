@@ -10,6 +10,6 @@ public class ClientRules {
 
     public String encryptPassword(String password) {
        String passwordEncripted = BCrypt.hashpw(password, BCrypt.gensalt(10));
-         return passwordEncripted;
+       return passwordEncripted;
     }
 }
