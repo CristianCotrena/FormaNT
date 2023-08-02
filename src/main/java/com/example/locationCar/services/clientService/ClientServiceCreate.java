@@ -24,6 +24,10 @@ public class ClientServiceCreate {
 
     public UUID createClient(ClientModel clientModel) {
 
+        ClientModel existingClient = clientRepository.findByEmailAndCnh(clientModel.getEmail(), clientModel.getCnh());
+        if (existingClient != null){
+            throw new IllegalArgumentException("CNH e E-mail já cadastrados para outro cliente.");
+        }
         if (clientRepository.findByCnh(clientModel.getCnh()) != null){
             throw new IllegalArgumentException("CNH já cadastrada para outro cliente.");
         }
@@ -31,12 +35,13 @@ public class ClientServiceCreate {
             throw new IllegalArgumentException("E-mail já cadastrado para outro cliente.");
         }
 
+
         try {
             String encryptedPassword = clientRules.encryptPassword(clientModel.getPassword());
             clientModel.setPassword(encryptedPassword);
         } catch (Exception e) {
             System.out.println(e);
-            throw new RuntimeException("Erro");
+            throw new RuntimeException("Erro na solicitação de cadastro.");
         }
 
 
