@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Guilherme Vasco\",\r\n    \"cpfCnpj\": \"321.345.675-55\",\r\n    \"cnh\": \"45478654324\",\r\n    \"age\": 24,\r\n    \"telephone\": \"+552787364-5362\",\r\n    \"emergencyContact\": \"+553213245-6543\",\r\n    \"email\": \"@gmail.com\",\r\n    \"status\": 1,\r\n    \"password\": \"udhdd\"\r\n}",
+					"raw": "{\r\n    \"name\": \"Guilherme Pimentel\",\r\n    \"cpfCnpj\": \"321.345.675-55\",\r\n    \"cnh\": \"45478651324\",\r\n    \"age\": 24,\r\n    \"telephone\": \"2735467856\",\r\n    \"emergencyContact\": \"32132416543\",\r\n    \"email\": \"teste@teste.com\",\r\n    \"password\": \"udhdd\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
