@@ -1,6 +1,5 @@
 package com.example.locationCar.services.funcionarioService;
 
-import com.example.locationCar.models.FuncionarioModel;
 import com.example.locationCar.repositories.EmployeeRepository;
 import org.springframework.stereotype.Service;
 

@@ -1,11 +1,6 @@
 # Default ignored files
 /shelf/
 /workspace.xml
-<<<<<<< HEAD
-/DS_Store
-DS_Store
-
-=======
 .DS_Store
+*.class
 /target
->>>>>>> develop

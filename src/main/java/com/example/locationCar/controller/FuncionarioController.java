@@ -1,7 +1,6 @@
 package com.example.locationCar.controller;
 
 
-import com.example.locationCar.models.FuncionarioModel;
 import com.example.locationCar.repositories.EmployeeRepository;
 import com.example.locationCar.services.funcionarioService.EmployeeServiceDelete;
 import org.springframework.http.HttpStatus;
