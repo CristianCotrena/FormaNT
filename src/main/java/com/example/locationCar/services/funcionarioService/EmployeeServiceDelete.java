@@ -1,5 +1,6 @@
 package com.example.locationCar.services.funcionarioService;
 
+import com.example.locationCar.models.EmployeeModel;
 import com.example.locationCar.repositories.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +17,10 @@ public class EmployeeServiceDelete {
     }
 
 
-    public FuncionarioModel deleteFuncionario(UUID funcionarioId) {
-        Optional<FuncionarioModel> funcionarioO = employeeRepository.findById(funcionarioId);
+    public EmployeeModel deleteEmployee(UUID employeeId) {
+        Optional<EmployeeModel> employeeO = employeeRepository.findById(employeeId);
 
-        employeeRepository.deleteById(funcionarioO.get().getIdFuncionario());
-        return funcionarioO.orElse(null);
+        employeeRepository.deleteById(employeeO.get().getEmployeeId());
+        return employeeO.orElse(null);
     }
 }
