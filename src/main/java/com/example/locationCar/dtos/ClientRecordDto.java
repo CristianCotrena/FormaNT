@@ -11,7 +11,6 @@ public record ClientRecordDto(
     @NotBlank String telephone,
     @NotBlank String emergencyContact,
     @NotBlank String email,
-    @NotNull int status,
     @NotBlank String password
     )
 {}

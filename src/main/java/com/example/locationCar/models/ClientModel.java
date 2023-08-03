@@ -20,7 +20,7 @@ public class ClientModel implements Serializable {
     private String telephone;
     private String emergencyContact;
     private String email;
-    private int status;
+    private int status = 1;
     private String password;
 
 

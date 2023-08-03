@@ -1,11 +1,8 @@
 package com.example.locationCar.services.clientService;
 
-import ch.qos.logback.core.net.server.Client;
-import com.example.locationCar.dtos.ClientRecordDto;
 import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.repositories.ClientRepository;
 import com.example.locationCar.services.clientService.utils.ClientRules;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +36,7 @@ public class ClientServiceCreate {
     }
 
     public static boolean isPhoneValid(String phone) {
-        return phone.matches("^\\+\\d{1,3}\\d{2}\\d{2}\\d{5}-\\d{4}$") || phone.matches("^\\d{11,13}$");
+        return phone.matches("^\\d{2}\\d{4,5}-\\d{4}$") || phone.matches("^\\d{10,11}$");
     }
 
     public UUID createClient(ClientModel clientModel) {
@@ -49,10 +46,19 @@ public class ClientServiceCreate {
         String getCnh = clientModel.getCnh();
         String getTelephone = clientModel.getTelephone();
         String getEmergencyContact = clientModel.getEmergencyContact();
-        int getAge = clientModel.getAge();
         ClientModel existingClient = clientRepository.findByEmailAndCpfCnpj(getEmail, cpfCnpj);
 
-        // Verificações de CPF/CNPJ
+        // Verificação de Email existente.
+        if (clientRepository.findByEmail(getEmail) != null){
+            throw new IllegalArgumentException("E-mail já cadastrado para outro cliente.");
+        }
+
+        // Verificação de CPF/CNPJ existente.
+        if (clientRepository.findByCpfCnpj(cpfCnpj) != null){
+            throw new IllegalArgumentException("CPF/CNPJ já cadastrado para outro cliente.");
+        }
+
+        // Validação de CPF/CNPJ
         if (cpfCnpj != null && cpfCnpj.length() > 0) {
             if (cleanedCpfCnpj.length() == 11) {
                 if (!isCPFValid(clientModel.getCpfCnpj())) {
@@ -70,21 +76,6 @@ public class ClientServiceCreate {
         // Verificações de Email e CPF/CNPJ existentes simultaneamente.
         if (existingClient != null){
             throw new IllegalArgumentException("E-mail e CPF/CNPJ já cadastrados para outro cliente.");
-        }
-
-        // Verificação de Email existente.
-        if (clientRepository.findByEmail(getEmail) != null){
-            throw new IllegalArgumentException("E-mail já cadastrado para outro cliente.");
-        }
-
-        // Verificação de CPF/CNPJ existente.
-        if (clientRepository.findByCpfCnpj(cpfCnpj) != null){
-            throw new IllegalArgumentException("CPF/CNPJ já cadastrado para outro cliente.");
-        }
-
-        // Verificação de idade
-        if (getAge < 18){
-            throw new IllegalArgumentException("Não é permitido cadastro de menores de 18 anos.");
         }
 
 

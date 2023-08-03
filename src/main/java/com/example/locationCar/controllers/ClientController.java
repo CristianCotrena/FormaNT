@@ -1,18 +1,11 @@
 package com.example.locationCar.controllers;
 
-import com.example.locationCar.dtos.ClientRecordDto;
 import com.example.locationCar.models.ClientModel;
-import com.example.locationCar.repositories.ClientRepository;
 import com.example.locationCar.services.clientService.ClientServiceCreate;
-import com.example.locationCar.services.clientService.utils.ClientRules;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -20,7 +13,7 @@ import java.util.UUID;
 @RequestMapping("v1/client")
 public class ClientController {
 
-    private final ClientServiceCreate clientServiceCreate;
+   ClientServiceCreate clientServiceCreate;
 
     @Autowired
     public ClientController(ClientServiceCreate clientServiceCreate) {
