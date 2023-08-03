@@ -3,6 +3,10 @@ package com.example.locationCar.services.clientService;
 import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.repositories.ClientRepository;
 import com.example.locationCar.services.clientService.utils.ClientRules;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +14,7 @@ import java.util.UUID;
 
 @Service
 public class ClientServiceCreate {
+
     private final ClientRepository clientRepository;
     private final ClientRules clientRules;
 
