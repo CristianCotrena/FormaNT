@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/v1/funcionario")
+@RequestMapping("/v1/employee")
 public class EmployeeController {
 
     private final EmployeeService employeeService;
@@ -26,7 +26,7 @@ public class EmployeeController {
     public ResponseEntity<EmployeeModel> saveEmployee(@RequestBody @Valid EmployeeRecordDto employeeRecordDto) {
         var employeeModel  = new EmployeeModel();
         BeanUtils.copyProperties(employeeRecordDto, employeeModel );
-                EmployeeModel savedFuncionario = EmployeeService.saveFuncionario(employeeModel );
+                EmployeeModel savedEmployee = EmployeeService.saveEmployee(employeeModel);
 
         return  ResponseEntity.status(HttpStatus.CREATED).body(employeeModel );
     }

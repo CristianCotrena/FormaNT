@@ -14,16 +14,17 @@ import java.util.regex.Pattern;
 
 @Service
 public class EmployeeService {
-    private static EmployeeRepository funcionarioRepository;
+    private static EmployeeRepository employeeRepository;
 
     public EmployeeService(EmployeeRepository funcionarioRepository) {
-        this.funcionarioRepository = funcionarioRepository;
+        this.employeeRepository = employeeRepository;
     }
 
-    public static EmployeeModel saveFuncionario(EmployeeModel funcionario) {
+    public static EmployeeModel saveEmployee(EmployeeModel employee
+    ) {
 
-        ContractType tipoContrato = funcionario.getContractType();
-        String cpfCnpj = funcionario.getCpfCnpj();
+        ContractType tipoContrato = employee.getContractType();
+        String cpfCnpj = employee.getCpfCnpj();
 
         if (tipoContrato == ContractType.CLT) {
             if (!isValidCpf(cpfCnpj)) {
@@ -38,40 +39,40 @@ public class EmployeeService {
         }
 
 
-        if (!isValidCargo(funcionario.getPosition())) {
+        if (!isValidCargo(employee.getPosition())) {
             throw new IllegalArgumentException("Cargo inválido.");
         }
 
-        if (!isValidTipoContrato(funcionario.getContractType())) {
+        if (!isValidTipoContrato(employee.getContractType())) {
             throw new IllegalArgumentException("Tipo de contrato inválido.");
         }
 
-        if (!isValidRole(funcionario.getRole())) {
+        if (!isValidRole(employee.getRole())) {
             throw new IllegalArgumentException("Role inválida.");
         }
 
-        if (!isValidEmail(funcionario.getEmail())) {
+        if (!isValidEmail(employee.getEmail())) {
             throw new IllegalArgumentException("Email inválido.");
         }
 
-        if (!isValidTelefone(funcionario.getPhone())) {
+        if (!isValidTelefone(employee.getPhone())) {
             throw new IllegalArgumentException("Telefone inválido.");
         }
 
-        if (!isValidCpfCnpj(funcionario.getCpfCnpj())){
+        if (!isValidCpfCnpj(employee.getCpfCnpj())){
             throw new IllegalArgumentException("CPF ou CNPJ inválido.");
 
         }
 
-        if (funcionarioRepository.existsByEmail(funcionario.getEmail())) {
-            throw new IllegalArgumentException("Já existe um funcionario cadastrado com este e-mail");
+        if (employeeRepository.existsByEmail(employee.getEmail())) {
+            throw new IllegalArgumentException("Já existe um employee cadastrado com este e-mail");
         }
-        if (funcionarioRepository.existsByCpfCnpj(funcionario.getCpfCnpj())) {
-            throw new IllegalArgumentException("Já existe um funcionario cadastrado com CPF ou CNPJ");
+        if (employeeRepository.existsByCpfCnpj(employee.getCpfCnpj())) {
+            throw new IllegalArgumentException("Já existe um employee cadastrado com CPF ou CNPJ");
         }
 
 
-        return funcionarioRepository.save(funcionario);
+        return employeeRepository.save(employee);
     }
 
 
@@ -187,6 +188,7 @@ public class EmployeeService {
 
            return cnpj.charAt(13) - '0' == secondVerifierDigit;
        }
+
 
 
 }

@@ -33,14 +33,14 @@ public class EmployeeModel implements Serializable {
     public EmployeeModel() {
     }
 
-    public EmployeeModel(UUID idFuncionario, String nome, Position cargo, String cpfCnpj, String registro, String telefone, ContractType tipoContrato, Role role, String email, int status) {
-        this.employeeId = idFuncionario;
-        this.name = nome;
-        this.position = cargo;
+    public EmployeeModel(UUID idEmployee, String name, Position position, String cpfCnpj, String registry, String phone, ContractType contractType, Role role, String email, int status) {
+        this.employeeId = idEmployee;
+        this.name = name;
+        this.position = position;
         this.cpfCnpj = cpfCnpj;
-        this.registry = registro;
-        this.phone = telefone;
-        this.contractType = tipoContrato;
+        this.registry = registry;
+        this.phone = phone;
+        this.contractType = contractType;
         this.role = role;
         this.email = email;
         this.status = status;
@@ -142,14 +142,14 @@ public class EmployeeModel implements Serializable {
 
     @Override
     public String toString() {
-        return "FuncionarioModel{" +
-                "idFuncionario=" + employeeId +
-                ", nome='" + name + '\'' +
-                ", cargo='" + position + '\'' +
+        return "EmployeeModel{" +
+                "employeeId=" + employeeId +
+                ", name='" + name + '\'' +
+                ", position='" + position + '\'' +
                 ", cpfCnpj='" + cpfCnpj + '\'' +
-                ", registro='" + registry + '\'' +
-                ", telefone='" + phone + '\'' +
-                ", tipoContrato='" + contractType + '\'' +
+                ", registry='" + registry + '\'' +
+                ", phone='" + phone + '\'' +
+                ", contractType='" + contractType + '\'' +
                 ", role='" + role + '\'' +
                 ", email='" + email + '\'' +
                 ", status=" + status +
