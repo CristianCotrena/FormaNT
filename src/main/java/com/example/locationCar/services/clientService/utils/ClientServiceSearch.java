@@ -10,7 +10,7 @@ import java.util.UUID;
 @Service
 public class ClientServiceSearch {
 
-    private final ClientRepository clientRepository;
+    private static ClientRepository clientRepository;
 
     public ClientServiceSearch(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
@@ -18,12 +18,11 @@ public class ClientServiceSearch {
     public ClientModel findUser(UUID idClient, String cpfCnpj, String email) {
         List<ClientModel> clients = clientRepository.findAll();
         for(ClientModel client : clients) {
-            if (client.getIdClient().equals(idClient) & client.getCpfCnpj().equals(cpfCnpj) & client.getEmail().equals(email)) {
+            if (idClient.equals(client.getIdClient()) && cpfCnpj.equals(client.getCpfCnpj()) && email.equals(client.getEmail())) {
                 return client;
             }
         }
         return null;
     }
-
 }
 
