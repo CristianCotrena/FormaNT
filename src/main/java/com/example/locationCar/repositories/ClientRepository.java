@@ -8,8 +8,8 @@ import java.util.UUID;
 
 @Repository
 public interface ClientRepository extends JpaRepository<ClientModel, UUID> {
-    ClientModel findByCnh(String cnh);
+    ClientModel findByCpfCnpj(String cpfCnpj);
     ClientModel findByEmail(String email);
-    ClientModel findByEmailAndCnh(String email, String cnh);
+    ClientModel findByEmailAndCpfCnpj(String email, String cpfCnpj);
 
 }

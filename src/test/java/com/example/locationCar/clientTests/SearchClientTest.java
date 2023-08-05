@@ -3,7 +3,7 @@ package com.example.locationCar.clientTests;
 
 import com.example.locationCar.controllers.ClientController;
 import com.example.locationCar.models.ClientModel;
-import com.example.locationCar.services.clientService.utils.ClientServiceSearch;
+import com.example.locationCar.services.clientService.ClientServiceSearch;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
