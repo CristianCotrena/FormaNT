@@ -1,4 +1,4 @@
-package com.example.locationCar.services.funcionarioService;
+package com.example.locationCar.services.employeeService;
 
 import com.example.locationCar.dtos.EmployeeRecordDto;
 import com.example.locationCar.models.EmployeeModel;
@@ -7,8 +7,6 @@ import com.example.locationCar.repositories.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
-
-import static com.example.locationCar.services.funcionarioService.EmployeeService.isValidTelefone;
 
 @Service
 public class UpdateEmployeeService {
@@ -57,7 +55,7 @@ public class UpdateEmployeeService {
     }
 
     private static void validatePhone(String telefone) {
-        if (!isValidTelefone(telefone)) {
+        if (!CreateEmployeeService.isValidTelefone(telefone)) {
             throw new IllegalArgumentException("Telefone Invalido");
         }
     }

@@ -1,6 +1,5 @@
-package com.example.locationCar.services.funcionarioService;
+package com.example.locationCar.services.employeeService;
 
-import com.example.locationCar.dtos.EmployeeRecordDto;
 import com.example.locationCar.models.EmployeeModel;
 import com.example.locationCar.models.enums.Position;
 import com.example.locationCar.models.enums.Role;
@@ -11,14 +10,13 @@ import org.apache.commons.validator.routines.EmailValidator;
 
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
 import java.util.regex.Pattern;
 
 @Service
-public class EmployeeService {
+public class CreateEmployeeService {
     private static EmployeeRepository employeeRepository;
 
-    public EmployeeService(EmployeeRepository employeeRepository) {
+    public CreateEmployeeService(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }
 

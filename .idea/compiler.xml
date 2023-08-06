@@ -12,7 +12,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="locationCar" options="-parameters" />
+      <module name="locationCar" options="-parameters --add-exports java.base/jdk.internal.org.objectweb.asm.util=ALL-UNNAMED" />
     </option>
   </component>
 </project>
