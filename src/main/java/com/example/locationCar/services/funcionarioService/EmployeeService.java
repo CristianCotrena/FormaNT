@@ -1,5 +1,6 @@
 package com.example.locationCar.services.funcionarioService;
 
+import com.example.locationCar.dtos.EmployeeRecordDto;
 import com.example.locationCar.models.EmployeeModel;
 import com.example.locationCar.models.enums.Position;
 import com.example.locationCar.models.enums.Role;
@@ -10,18 +11,18 @@ import org.apache.commons.validator.routines.EmailValidator;
 
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 @Service
 public class EmployeeService {
     private static EmployeeRepository employeeRepository;
 
-    public EmployeeService(EmployeeRepository funcionarioRepository) {
+    public EmployeeService(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }
 
-    public static EmployeeModel saveEmployee(EmployeeModel employee
-    ) {
+    public static EmployeeModel saveEmployee(EmployeeModel employee) {
 
         ContractType tipoContrato = employee.getContractType();
         String cpfCnpj = employee.getCpfCnpj();
@@ -94,7 +95,7 @@ public class EmployeeService {
         return validator.isValid(email);
     }
 
-    private static boolean isValidTelefone(String telefone) {
+    static boolean isValidTelefone(String telefone) {
         String telefoneFormato = "\\(\\d{2}\\) \\d{4}-\\d{4}"; // formato (XX) XXXX-XXXX
         return Pattern.matches(telefoneFormato, telefone);
     }

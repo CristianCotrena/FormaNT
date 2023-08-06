@@ -21,11 +21,15 @@ public class EmployeeModel implements Serializable {
 
     private UUID employeeId;
     private String name;
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "varchar(255)")
     private Position position;
     private String cpfCnpj;
     private String registry;
     private String phone;
+    @Enumerated(EnumType.STRING)
     private ContractType contractType;
+    @Enumerated(EnumType.STRING)
     private Role role;
     private String email;
     private int status;
