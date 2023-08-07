@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "d8dbb1b1-eaf5-434a-9c5c-283291f3cd86",
+		"_postman_id": "5a6dffcb-f93d-43e8-a889-f1a61e842130",
 		"name": "Cliente",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "28517604"
+		"_exporter_id": "28525027"
 	},
 	"item": [
 		{
@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Guilherme Pimentel\",\r\n    \"cpfCnpj\": \"321.345.675-55\",\r\n    \"cnh\": \"45478651324\",\r\n    \"age\": 24,\r\n    \"telephone\": \"2735467856\",\r\n    \"emergencyContact\": \"32132416543\",\r\n    \"email\": \"teste@teste.com\",\r\n    \"password\": \"udhdd\"\r\n}",
+					"raw": "{\r\n    \"name\": \"Anna\",\r\n    \"cpfCnpj\": \"016.302.650-55\",\r\n    \"cnh\": \"jhhh\",\r\n    \"age\": 37,\r\n    \"telephone\": \"981220944\",\r\n    \"emergencyContact\": \"984873664\",\r\n    \"email\": \"anna.hermes@gmail.com\",\r\n    \"status\": 1\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
