@@ -2,26 +2,17 @@ package com.example.locationCar.services.clientService;
 
 import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.repositories.ClientRepository;
-import com.example.locationCar.services.clientService.utils.ClientRules;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
 @Service
-public class ClientServiceCreate {
+public class CreateClientService {
 
     private final ClientRepository clientRepository;
-    private final ClientRules clientRules;
 
-    @Autowired
-    public ClientServiceCreate(ClientRepository clientRepository, ClientRules clientRules) {
+    public CreateClientService(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
-        this.clientRules = clientRules;
     }
 
     public static boolean isEmailValid(String email) {
@@ -99,15 +90,6 @@ public class ClientServiceCreate {
 
         if(!isPhoneValid(getEmergencyContact)){
             throw new IllegalArgumentException("Telefone do contato de emergência inválido.");
-        }
-
-
-        try {
-            String encryptedPassword = clientRules.encryptPassword(clientModel.getPassword());
-            clientModel.setPassword(encryptedPassword);
-        } catch (Exception e) {
-            System.out.println(e);
-            throw new RuntimeException("Erro na solicitação de cadastro.");
         }
 
         return clientRepository.save(clientModel).getIdClient();

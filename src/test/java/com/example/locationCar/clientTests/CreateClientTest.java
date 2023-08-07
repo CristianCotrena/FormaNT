@@ -1,9 +1,8 @@
 package com.example.locationCar.clientTests;
 
-import ch.qos.logback.core.net.server.Client;
 import com.example.locationCar.controllers.ClientController;
 import com.example.locationCar.models.ClientModel;
-import com.example.locationCar.services.clientService.ClientServiceCreate;
+import com.example.locationCar.services.clientService.CreateClientService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -22,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CreateClientTest {
 
     @Mock
-    private ClientServiceCreate clientServiceCreate; // Simula o serviço que cria o cliente
+    private CreateClientService createClientService; // Simula o serviço que cria o cliente
 
     @InjectMocks
     private ClientController clientController; // Simula o controller que recebe a requisição
@@ -41,7 +40,6 @@ public class CreateClientTest {
         clientModel.setTelephone("11999999999");
         clientModel.setEmergencyContact("11999999998");
         clientModel.setStatus(1);
-        clientModel.setPassword("123456");
     }
 
     @Test
@@ -49,7 +47,7 @@ public class CreateClientTest {
         UUID validUUID = UUID.randomUUID();
 
         // Criando cliente e retornando o id
-        when(clientServiceCreate.createClient(any())).thenReturn(validUUID);
+        when(createClientService.createClient(any())).thenReturn(validUUID);
 
         // Executando o método a ser testado
         ResponseEntity<String> responseEntity = clientController.createClient(clientModel);
@@ -64,7 +62,7 @@ public class CreateClientTest {
         String sameCpfCnpj = "13234545899"; // cpf/cnpj que já existe no DB. No caso de banco de dados já populado, é fazer um filter e encontrar a informação correspondente
 
         // Configuração do mock para lançar uma exceção se o cpf/cnpj já existir
-        when(clientServiceCreate.createClient(any())).thenAnswer(invocation -> {
+        when(createClientService.createClient(any())).thenAnswer(invocation -> {
             ClientModel client = invocation.getArgument(0); // Obtém o argumento passado para o método createClient, que é o clientModel
             if (client.getCpfCnpj().equals(sameCpfCnpj)) {
                 throw new IllegalArgumentException("CPF/CNPJ já cadastrado para outro cliente.");
@@ -87,7 +85,7 @@ public class CreateClientTest {
         String sameEmail = "teste@teste.com"; // Email que já existe no DB. No caso de banco de dados já populado, é fazer um filter e encontrar o Email correspondente
 
         // Configuração do mock para lançar uma exceção se o Email já existir
-        when(clientServiceCreate.createClient(any())).thenAnswer(invocation -> {
+        when(createClientService.createClient(any())).thenAnswer(invocation -> {
             ClientModel client = invocation.getArgument(0); // Obtém o argumento passado para o método createClient, que é o clientModel
             if (client.getEmail().equals(sameEmail)) {
                 throw new IllegalArgumentException("E-mail já cadastrado para outro cliente.");
@@ -108,7 +106,7 @@ public class CreateClientTest {
     public void testCreateClient_telephoneValidation() {
 
         // Configuração do mock para lançar uma exceção se o telefone for inválido
-        when(clientServiceCreate.createClient(any())).thenAnswer(invocation -> {
+        when(createClientService.createClient(any())).thenAnswer(invocation -> {
             ClientModel client = invocation.getArgument(0); // Obtém o argumento passado para o método createClient, que é o clientModel
             if (client.getTelephone().length() < 10 || client.getTelephone().length() > 11) {
                 throw new IllegalArgumentException("Telefone inválido.");
@@ -137,7 +135,7 @@ public class CreateClientTest {
     public void testCreateClient_CpfCnpjValidation() {
 
         // Configuração do mock para lançar uma exceção se o cpf/cnpj for inválido
-        when(clientServiceCreate.createClient(any())).thenAnswer(invocation -> {
+        when(createClientService.createClient(any())).thenAnswer(invocation -> {
             ClientModel client = invocation.getArgument(0); // Obtém o argumento passado para o método createClient, que é o clientModel
             if (client.getCpfCnpj().length() < 11 || client.getCpfCnpj().length() > 14) {
                 throw new IllegalArgumentException("CPF/CNPJ inválido.");
@@ -168,7 +166,7 @@ public class CreateClientTest {
         String invalidEmail = "teste@teste"; // email inválido
 
         // Configuração do mock para lançar uma exceção se o email for inválido
-        when(clientServiceCreate.createClient(any())).thenAnswer(invocation -> {
+        when(createClientService.createClient(any())).thenAnswer(invocation -> {
             ClientModel client = invocation.getArgument(0); // Obtém o argumento passado para o método createClient, que é o clientModel
             if (client.getEmail().contains(invalidEmail)) {
                 throw new IllegalArgumentException("E-mail inválido.");
@@ -191,7 +189,7 @@ public class CreateClientTest {
     public void testCreateClient_CnhValidation() {
 
         // Configuração do mock para lançar uma exceção se a Cnh for inválida
-        when(clientServiceCreate.createClient(any())).thenAnswer(invocation -> {
+        when(createClientService.createClient(any())).thenAnswer(invocation -> {
             ClientModel client = invocation.getArgument(0); // Obtém o argumento passado para o método createClient, que é o clientModel
             if (client.getCnh().length() < 10 || client.getCnh().length() > 12) {
                 throw new IllegalArgumentException("CNH inválida.");
@@ -218,7 +216,7 @@ public class CreateClientTest {
     @Test
     public void testCreateClient_ErmergencyContactValidation() {
         // Configuração do mock para lançar uma exceção se o telefone for inválido
-        when(clientServiceCreate.createClient(any())).thenAnswer(invocation -> {
+        when(createClientService.createClient(any())).thenAnswer(invocation -> {
             ClientModel client = invocation.getArgument(0); // Obtém o argumento passado para o método createClient, que é o clientModel
             if (client.getEmergencyContact().length() < 10 || client.getEmergencyContact().length() > 11) {
                 throw new IllegalArgumentException("Telefone do contato de emergência inválido.");
