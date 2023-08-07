@@ -1,6 +1,7 @@
-package repositories;
+package com.example.locationCar.repositories;
 
-import models.AddressModel;
+
+import com.example.locationCar.models.AddressModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
