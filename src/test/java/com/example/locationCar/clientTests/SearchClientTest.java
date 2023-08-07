@@ -6,19 +6,16 @@ import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.services.clientService.ClientServiceSearch;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
+
 public class SearchClientTest {
 
     @Mock
@@ -44,35 +41,51 @@ public class SearchClientTest {
     }
 
         //Simula o cenário em que o cliente é encontrado pelo ID, CPF/CNPJ e e-mail.
-    @Test
-    public void testSearchClient_ClientFound() {
+
+   @Test
+    public void testSearchClient_ClientFoundById() {
         // Configurção do comportamento simulado do clientServiceSearch
-        when(clientServiceSearch.findUser(clientModel.getIdClient(),clientModel.getCpfCnpj(), clientModel.getEmail()))
+        when(clientServiceSearch.findUserById(clientModel.getIdClient()))
                 .thenReturn(clientModel);
 
         // Chamada do método que será testado
-        ResponseEntity<Object> response = clientController.searchClient(clientModel.getIdClient(),
-                clientModel.getCpfCnpj(), clientModel.getEmail());
+        ResponseEntity<Object> response = clientController.searchClient(clientModel.getIdClient(), null, null);
 
         // Verificação do resultado esperado
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(clientModel, response.getBody());
     }
 
-        //Simula o cenário em que o cliente não é encontrado.
     @Test
-    public void testSearchClient_ClientNotFound() {
-        // Configuração do comportamento simulado do clientServiceSearch
-        when(clientServiceSearch.findUser(any(), any(), any())).thenReturn(null);
+    public void testSearchClient_ClientFoundByCpfCnpj() {
+        // Configurção do comportamento simulado do clientServiceSearch
+        when(clientServiceSearch.findUserByCpfCnpj(clientModel.getCpfCnpj()))
+                .thenReturn(clientModel);
 
         // Chamada do método que será testado
-        ResponseEntity<Object> response = clientController.searchClient(UUID.randomUUID(), "999999999",
-                "naoexiste@teste.com");
+        ResponseEntity<Object> response = clientController.searchClient(null, clientModel.getCpfCnpj(), null);
 
         // Verificação do resultado esperado
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertEquals("Client not found", response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(clientModel, response.getBody());
     }
+
+    @Test
+    public void testSearchClient_ClientFoundByEmail() {
+        // Configurção do comportamento simulado do clientServiceSearch
+        when(clientServiceSearch.findUserByEmail(clientModel.getEmail()))
+                .thenReturn(clientModel);
+
+        // Chamada do método que será testado
+        ResponseEntity<Object> response = clientController.searchClient(null, null, clientModel.getEmail());
+
+        // Verificação do resultado esperado
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(clientModel, response.getBody());
+    }
+
+
+
 
 }
 
