@@ -2,3 +2,5 @@
 /shelf/
 /workspace.xml
 *.class
+.target
+.DS_Store
