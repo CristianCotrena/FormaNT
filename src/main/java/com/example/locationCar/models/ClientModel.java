@@ -43,6 +43,21 @@ public class ClientModel implements Serializable {
     @Schema(example = "123456")
     private String password;
 
+    public ClientModel() {
+    }
+
+    public ClientModel(UUID idClient, String name, String cpfCnpj, String cnh, int age, String telephone, String emergencyContact, String email, int status, String password) {
+        this.idClient = idClient;
+        this.name = name;
+        this.cpfCnpj = cpfCnpj;
+        this.cnh = cnh;
+        this.age = age;
+        this.telephone = telephone;
+        this.emergencyContact = emergencyContact;
+        this.email = email;
+        this.status = status;
+        this.password = password;
+    }
 
     public UUID getIdClient() {
         return idClient;
