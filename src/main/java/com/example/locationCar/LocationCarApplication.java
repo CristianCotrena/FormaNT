@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 				description = "Projeto para aluguel de carros"
 		)
 )
+
 @SpringBootApplication
 public class LocationCarApplication {
 	public static void main(String[] args) {
