@@ -113,4 +113,15 @@ public class ClientModel implements Serializable {
         this.status = status;
     }
 
+    public ClientModel() {
+    }
+    public ClientModel(String name, String cpfCnpj, String cnh, int age, String telephone, String emergencyContact, String email) {
+        this.name = name;
+        this.cpfCnpj = cpfCnpj;
+        this.cnh = cnh;
+        this.age = age;
+        this.telephone = telephone;
+        this.emergencyContact = emergencyContact;
+        this.email = email;
+    }
 }

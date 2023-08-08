@@ -13,11 +13,10 @@ import static com.example.locationCar.services.clientService.utils.ClientRules.*
 public class CreateClientService {
 
     private final ClientRepository clientRepository;
-    private final ClientRules clientRules;
+    ClientRules clientRules;
 
-    public CreateClientService(ClientRepository clientRepository, ClientRules clientRules) {
+    public CreateClientService(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
-        this.clientRules = clientRules;
     }
 
 
@@ -62,7 +61,7 @@ public class CreateClientService {
 
 
         // Validações de email, cnh e telefone
-        if(!isEmailValid(getEmail)){
+        if(!clientRules.isEmailValid(getEmail)){
             throw new IllegalArgumentException("E-mail inválido.");
         }
 

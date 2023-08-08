@@ -1,46 +1,14 @@
 package com.example.locationCar.controllers;
 
-<<<<<<< HEAD
 import com.example.locationCar.dtos.ClientRecordDto;
 import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.repositories.ClientRepository;
+import com.example.locationCar.services.clientService.UpdateClientService;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
-
-
-@RestController
-@RequestMapping("/v1/client")
-public class ClientController {
-
-    private final ClientRepository clientRepository;
-
-    public ClientController(ClientRepository clientRepository) {
-        this.clientRepository = clientRepository;
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> updateClient(@PathVariable(value="id")UUID id,
-                                            @RequestBody @Valid ClientRecordDto clientRecordDto) {
-        Optional<ClientModel> clientOptional = clientRepository.findById(id);
-        if (clientOptional.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Client not found");
-        }
-        var clienteModel = clientOptional.get();
-        BeanUtils.copyProperties(clientRecordDto, clienteModel);
-        var saveClient = clientRepository.save(clienteModel);
-        Map<String, Object> response = new HashMap<>();
-        response.put("idClient", saveClient.getIdClient());
-        return ResponseEntity.status(HttpStatus.OK).body(response);
-
-=======
 import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.services.clientService.CreateClientService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -53,15 +21,26 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
+
+
 @RestController
 @RequestMapping("v1/client")
 @Tag(name = "Client", description = "Operations about client")
 public class ClientController {
 
-   private final CreateClientService createClientService;
+    private final CreateClientService createClientService;
+    private final ClientRepository clientRepository;
+    UpdateClientService updateClientService;
 
-    public ClientController(CreateClientService createClientService) {
+    public ClientController(
+            CreateClientService createClientService,
+            ClientRepository clientRepository) {
         this.createClientService = createClientService;
+        this.clientRepository = clientRepository;
     }
 
     @Operation(summary = "Create client", description = "Add a client to database")
@@ -81,7 +60,21 @@ public class ClientController {
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
->>>>>>> f3a779f062a75f22c38cc86e8cb6fdb3979e2d70
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateClient(@PathVariable(value = "id") UUID id,
+                                                   @RequestBody ClientRecordDto clientRecordDto) {
+        System.out.println("Entrou no update");
+        Optional<ClientModel> clientOptional = clientRepository.findById(id);
+        if (clientOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Client not found");
+        }
+        ClientModel client = clientOptional.get();
+        BeanUtils.copyProperties(clientRecordDto, client, "idClient");
+//        ClientModel updatedClient = updateClientService.updateClient(clientOptional, clientRecordDto);
+        return ResponseEntity.ok(clientRepository.save(client));
+    }
+
 }
 
