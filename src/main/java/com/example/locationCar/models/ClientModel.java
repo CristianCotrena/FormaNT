@@ -1,5 +1,6 @@
 package com.example.locationCar.models;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -12,15 +13,33 @@ public class ClientModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Schema(hidden = true)
     private UUID idClient;
+
+    @Schema(example = "Carlitos Tevez")
     private String name;
+
+    @Schema(example = "435.763.342-22")
     private String cpfCnpj;
+
+    @Schema(example = "874658935467")
     private String cnh;
+
+    @Schema(example = "23")
     private int age;
+
+    @Schema(example = "11999999999")
     private String telephone;
+
+    @Schema(example = "11999999998")
     private String emergencyContact;
+
+    @Schema(example = "carlitosboca@gmail.com")
     private String email;
-    private int status;
+
+    @Schema(hidden = true)
+    private int status = 1;
+
 
     public UUID getIdClient() {
         return idClient;
@@ -93,4 +112,5 @@ public class ClientModel implements Serializable {
     public void setStatus(int status) {
         this.status = status;
     }
+
 }
