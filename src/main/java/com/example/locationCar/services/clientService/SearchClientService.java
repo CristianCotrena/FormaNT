@@ -4,16 +4,15 @@ import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.repositories.ClientRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class ClientServiceSearch {
+public class SearchClientService {
 
     private static ClientRepository clientRepository;
 
-    public ClientServiceSearch(ClientRepository clientRepository) {
+    public SearchClientService(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
     }
 

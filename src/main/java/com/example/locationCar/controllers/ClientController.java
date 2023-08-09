@@ -1,7 +1,7 @@
 package com.example.locationCar.controllers;
 import com.example.locationCar.models.ClientModel;
-import com.example.locationCar.services.clientService.ClientServiceCreate;
-import com.example.locationCar.services.clientService.ClientServiceSearch;
+import com.example.locationCar.services.clientService.CreateClientService;
+import com.example.locationCar.services.clientService.SearchClientService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -19,14 +19,14 @@ import java.util.UUID;
 @Tag(name = "Client", description = "Operations about client")
 public class ClientController {
 
-    ClientServiceCreate clientServiceCreate;
-    ClientServiceSearch clientServiceSearch;
+    CreateClientService createClientService;
+    SearchClientService searchClientService;
 
 
     @Autowired
-    public ClientController(ClientServiceCreate clientServiceCreate, ClientServiceSearch clientServiceSearch) {
-        this.clientServiceCreate = clientServiceCreate;
-        this.clientServiceSearch = clientServiceSearch;
+    public ClientController(CreateClientService createClientService, SearchClientService searchClientService) {
+        this.createClientService = createClientService;
+        this.searchClientService = searchClientService;
     }
 
     @Operation(summary = "Create client", description = "Add a client to database")
@@ -49,7 +49,7 @@ public class ClientController {
     @PostMapping
     public ResponseEntity<String> createClient(@RequestBody ClientModel clientModel) {
         try {
-            UUID newClientId = clientServiceCreate.createClient(clientModel);
+            UUID newClientId = createClientService.createClient(clientModel);
             return new ResponseEntity<>(newClientId.toString(), HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -74,17 +74,17 @@ public class ClientController {
             @RequestParam(value = "email", required = false) String email) {
 
         if (idClient != null) {
-            ClientModel clientModel = clientServiceSearch.findUserById(idClient);
+            ClientModel clientModel = searchClientService.findUserById(idClient);
             return ResponseEntity.status(HttpStatus.OK).body(clientModel);
         }
 
         if (cpfCnpj != null) {
-            ClientModel clientModel = clientServiceSearch.findUserByCpfCnpj(cpfCnpj);
+            ClientModel clientModel = searchClientService.findUserByCpfCnpj(cpfCnpj);
             return ResponseEntity.status(HttpStatus.OK).body(clientModel);
         }
 
         if (email != null) {
-            ClientModel clientModel = clientServiceSearch.findUserByEmail(email);
+            ClientModel clientModel = searchClientService.findUserByEmail(email);
             return ResponseEntity.status(HttpStatus.OK).body(clientModel);
         }
 

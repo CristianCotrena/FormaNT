@@ -3,7 +3,7 @@ package com.example.locationCar.clientTests;
 
 import com.example.locationCar.controllers.ClientController;
 import com.example.locationCar.models.ClientModel;
-import com.example.locationCar.services.clientService.ClientServiceSearch;
+import com.example.locationCar.services.clientService.SearchClientService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 public class SearchClientTest {
 
     @Mock
-    private ClientServiceSearch clientServiceSearch;
+    private SearchClientService searchClientService;
 
     @InjectMocks
     private ClientController clientController;
@@ -45,7 +45,7 @@ public class SearchClientTest {
    @Test
     public void testSearchClient_ClientFoundById() {
         // Configurção do comportamento simulado do clientServiceSearch
-        when(clientServiceSearch.findUserById(clientModel.getIdClient()))
+        when(searchClientService.findUserById(clientModel.getIdClient()))
                 .thenReturn(clientModel);
 
         // Chamada do método que será testado
@@ -59,7 +59,7 @@ public class SearchClientTest {
     @Test
     public void testSearchClient_ClientFoundByCpfCnpj() {
         // Configurção do comportamento simulado do clientServiceSearch
-        when(clientServiceSearch.findUserByCpfCnpj(clientModel.getCpfCnpj()))
+        when(searchClientService.findUserByCpfCnpj(clientModel.getCpfCnpj()))
                 .thenReturn(clientModel);
 
         // Chamada do método que será testado
@@ -73,7 +73,7 @@ public class SearchClientTest {
     @Test
     public void testSearchClient_ClientFoundByEmail() {
         // Configurção do comportamento simulado do clientServiceSearch
-        when(clientServiceSearch.findUserByEmail(clientModel.getEmail()))
+        when(searchClientService.findUserByEmail(clientModel.getEmail()))
                 .thenReturn(clientModel);
 
         // Chamada do método que será testado
