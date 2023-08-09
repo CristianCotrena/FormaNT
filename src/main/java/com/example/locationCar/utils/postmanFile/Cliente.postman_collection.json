@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "4adf4871-73bf-4589-944c-edee1172e04b",
+		"_postman_id": "4ed6fdb9-7cb0-4d10-93eb-de10540043bc",
 		"name": "Cliente",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "18793992"
@@ -35,21 +35,12 @@
 			"response": []
 		},
 		{
-			"name": "UpdateClient",
+			"name": "DeleteClient",
 			"request": {
-				"method": "PUT",
+				"method": "DELETE",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Roberto\",\r\n    \"age\": 20,\r\n    \"telephone\": \"551195222148\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
-					"raw": "http://localhost:8080/v1/client/771079a3-7d31-433c-aae8-24a14b2b8c45",
+					"raw": "http://localhost:8080/v1/client/8dfa0850-5e31-401f-aa80-3d41a48b6169",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -58,7 +49,67 @@
 					"path": [
 						"v1",
 						"client",
-						"771079a3-7d31-433c-aae8-24a14b2b8c45"
+						"8dfa0850-5e31-401f-aa80-3d41a48b6169"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ListClients",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/client?page=0&age=17",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"client"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "age",
+							"value": "17"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateClient",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Felipe Miranda\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/client/771079a3-7d31-433c-aae8-24a14b2b8c46",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"client",
+						"771079a3-7d31-433c-aae8-24a14b2b8c46"
 					]
 				}
 			},
