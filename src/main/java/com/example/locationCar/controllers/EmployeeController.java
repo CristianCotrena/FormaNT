@@ -25,20 +25,23 @@ public class EmployeeController {
         this.updateEmployeeService = updateEmployeeService;
     }
 
+
     @PostMapping
     public ResponseEntity<EmployeeModel> saveEmployee(@RequestBody @Valid EmployeeRecordDto employeeRecordDto) {
         var employeeModel = new EmployeeModel();
         BeanUtils.copyProperties(employeeRecordDto, employeeModel);
-        EmployeeModel savedEmployee = CreateEmployeeService.saveEmployee(employeeModel);
+        EmployeeModel savedEmployee = createEmployeeService.saveEmployee(employeeModel);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(employeeModel);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedEmployee)  ;
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateEmployee(@PathVariable UUID id, @RequestBody @Valid EmployeeRecordDto employeeRecordDto) {
-        UUID updatedEmployeeId = UpdateEmployeeService.updateEmployee(id, employeeRecordDto);
+        UUID updatedEmployeeId = updateEmployeeService.updateEmployee(id, employeeRecordDto);
         return ResponseEntity.ok(updatedEmployeeId);
     }
+
+
 }
 
 

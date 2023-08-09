@@ -7,21 +7,22 @@ import com.example.locationCar.repositories.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 @Service
 public class UpdateEmployeeService {
 
-    private static EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
 
     public UpdateEmployeeService(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }
 
-    public static UUID updateEmployee(UUID id, EmployeeRecordDto employeeRecordDto) {
+    public UUID updateEmployee(UUID id, EmployeeRecordDto employeeRecordDto) {
         EmployeeModel existingEmployee = employeeRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Funcionário não existe"));
 
-        validatePhone(employeeRecordDto.phone());
+        isValidTelefone(employeeRecordDto.phone());
         existingEmployee.setName(employeeRecordDto.name());
         existingEmployee.setPosition(employeeRecordDto.position());
         existingEmployee.setRegistry(employeeRecordDto.registry());
@@ -48,16 +49,16 @@ public class UpdateEmployeeService {
     }
 
 
-    private static void validatePosition(Position position) {
+    public static boolean validatePosition(Position position) {
         if (position == null || (position != Position.VENDEDOR && position != Position.ESTOQUISTA)) {
             throw new IllegalArgumentException("Cargo invalido");
         }
+        return true;
     }
 
-    private static void validatePhone(String telefone) {
-        if (!CreateEmployeeService.isValidTelefone(telefone)) {
-            throw new IllegalArgumentException("Telefone Invalido");
-        }
+    public static boolean isValidTelefone(String telefone) {
+        String telefoneFormato = "\\(\\d{2}\\) \\d{4}-\\d{4}"; // formato (XX) XXXX-XXXX
+        return Pattern.matches(telefoneFormato, telefone);
     }
 }
 

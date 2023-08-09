@@ -8,28 +8,35 @@ import com.example.locationCar.repositories.EmployeeRepository;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.util.regex.Pattern;
 
 @Service
 public class CreateEmployeeService {
-    private static EmployeeRepository employeeRepository;
+
+    public static EmployeeRepository employeeRepository;
+    private EmployeeRepository employeeRepository1;
 
     public CreateEmployeeService(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }
 
-    public static EmployeeModel saveEmployee(EmployeeModel employee) {
+    public static  EmployeeModel saveEmployee(EmployeeModel employee) {
 
-        ContractType tipoContrato = employee.getContractType();
+        ContractType contractType = employee.getContractType();
         String cpfCnpj = employee.getCpfCnpj();
 
-        if (tipoContrato == ContractType.CLT) {
+        if (!isValidTipoContrato(contractType)) {
+            throw new IllegalArgumentException("Tipo de contrato inválido.");
+        }
+
+        if (contractType  == ContractType.CLT) {
             if (!isValidCpf(cpfCnpj)) {
                 throw new IllegalArgumentException("CPF inválido");
             }
-        } else if (tipoContrato == ContractType.CNPJ) {
+        } else if (contractType  == ContractType.CNPJ) {
             if (!isValidCnpj(cpfCnpj)) {
                 throw new IllegalArgumentException("CNPJ inválido");
             }
@@ -76,24 +83,24 @@ public class CreateEmployeeService {
 
 
 
-    private static boolean isValidCargo(Position cargo) {
+    public static boolean isValidCargo(Position cargo) {
         return cargo != null && (cargo == Position.VENDEDOR || cargo == Position.ESTOQUISTA);
     }
 
-    private static boolean isValidRole(Role role) {
+    public static boolean isValidRole(Role role) {
         return role != null && (role == Role.VENDEDOR || role == Role.ADMINISTRADOR);
     }
 
-    private static boolean isValidTipoContrato(ContractType tipoContrato) {
+    public static boolean isValidTipoContrato(ContractType tipoContrato) {
         return tipoContrato != null && (tipoContrato == ContractType.CLT || tipoContrato == ContractType.CNPJ);
     }
 
-    private static boolean isValidEmail(String email) {
+    public static boolean isValidEmail(String email) {
         EmailValidator validator = EmailValidator.getInstance();
         return validator.isValid(email);
     }
 
-    static boolean isValidTelefone(String telefone) {
+    public static boolean isValidTelefone(String telefone) {
         String telefoneFormato = "\\(\\d{2}\\) \\d{4}-\\d{4}"; // formato (XX) XXXX-XXXX
         return Pattern.matches(telefoneFormato, telefone);
     }

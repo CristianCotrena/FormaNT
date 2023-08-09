@@ -25,6 +25,26 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "UpdateEmployee",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/employee/47c2ba33-9314-4076-8b21-a98af0e4e9e3",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"employee",
+						"47c2ba33-9314-4076-8b21-a98af0e4e9e3"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
