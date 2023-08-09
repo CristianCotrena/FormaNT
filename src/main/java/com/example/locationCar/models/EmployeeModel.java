@@ -22,7 +22,6 @@ public class EmployeeModel implements Serializable {
     @Schema (hidden = true)
     private UUID employeeId;
 
-
     @Schema(example = "Marineide")
     private String name;
 
@@ -31,14 +30,11 @@ public class EmployeeModel implements Serializable {
     @Schema(example = "VENDEDOR")
     private Position position;
 
-
     @Schema(example = "01630265053")
     private String cpfCnpj;
 
-
     @Schema(example = "1212")
     private String registry;
-
 
     @Schema(example = "(51) 3335-0435")
     private String phone;
@@ -50,7 +46,6 @@ public class EmployeeModel implements Serializable {
     @Enumerated(EnumType.STRING)
     @Schema(example = "VENDEDOR")
     private Role role;
-
 
     @Schema(example = "marineide@gmail.com")
     private String email;
