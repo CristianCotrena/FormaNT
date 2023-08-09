@@ -56,12 +56,17 @@ public class ClientController {
             @Content(mediaType = "text/plain", schema = @Schema(type = "string", example = "Client deleted successfully"))
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteClient(@PathVariable(value = "id") UUID id) {
-        Optional<ClientModel> client = clientService.getClient(id);
-        if (client.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Client not found.");
+    public ResponseEntity<Object> deleteClient(@PathVariable(value = "id") String id) {
+        try {
+            UUID idClient = UUID.fromString(id);
+            Optional<ClientModel> client = clientService.getClient(idClient);
+            if (client.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Client not found.");
+            }
+            clientService.deleteClient(idClient);
+            return ResponseEntity.status(HttpStatus.OK).body("Client deleted successfully.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro, please enter only your Client ID.");
         }
-        clientService.deleteClient(id);
-        return ResponseEntity.status(HttpStatus.OK).body("Client deleted successfully.");
     }
 }
