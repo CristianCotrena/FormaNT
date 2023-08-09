@@ -1,0 +1,82 @@
+{
+	"info": {
+		"_postman_id": "0d356cbd-7aac-4f12-9169-255770f9df65",
+		"name": "Funcionário",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28525027"
+	},
+	"item": [
+		{
+			"name": "Deletemployee",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/funcionario/4d152cf5-a03f-4eb2-979e-5d2e434ca38b",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"funcionario",
+						"4d152cf5-a03f-4eb2-979e-5d2e434ca38b"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateEmployee",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/employee",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"employee"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SearchEmployee",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/employee?id=45ca972c-5c69-47f9-a641-2bfabb5c387c&cpfCnpj=01630265055&email=manecos@gmail.com",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"employee"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "45ca972c-5c69-47f9-a641-2bfabb5c387c"
+						},
+						{
+							"key": "cpfCnpj",
+							"value": "01630265055"
+						},
+						{
+							"key": "email",
+							"value": "manecos@gmail.com"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
