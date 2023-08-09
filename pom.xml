@@ -114,17 +114,11 @@
             <artifactId>spring-test</artifactId>
             <version>6.0.11</version>
         </dependency>
-
-<<<<<<< HEAD
-=======
-
         <dependency>
             <groupId>io.swagger.core.v3</groupId>
             <artifactId>swagger-annotations-jakarta</artifactId>
             <version>2.2.9</version>
         </dependency>
-
->>>>>>> bea6f3942d241888e2933e5e9d19b077964acd66
     </dependencies>
 
     <build>
