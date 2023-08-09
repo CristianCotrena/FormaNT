@@ -1,4 +1,4 @@
-package com.example.locationCar.model;
+package com.example.locationCar.models;
 
 import jakarta.persistence.*;
 
