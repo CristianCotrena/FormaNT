@@ -11,14 +11,10 @@ import java.util.UUID;
 @Service
 public class CreateClientService {
 
-    private final ClientRepository clientRepository;
-    private final ClientRules clientRules;
+    ClientRepository clientRepository;
 
-    @Autowired
     public CreateClientService(ClientRepository clientRepository, ClientRules clientRules) {
-        this.clientRepository = clientRepository;
-        this.clientRules = clientRules;
-    }
+
 
     public static boolean isEmailValid(String email) {
         return email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
@@ -95,15 +91,6 @@ public class CreateClientService {
 
         if(!isPhoneValid(getEmergencyContact)){
             throw new IllegalArgumentException("Telefone do contato de emergência inválido.");
-        }
-
-
-        try {
-            String encryptedPassword = clientRules.encryptPassword(clientModel.getPassword());
-            clientModel.setPassword(encryptedPassword);
-        } catch (Exception e) {
-            System.out.println(e);
-            throw new RuntimeException("Erro na solicitação de cadastro.");
         }
 
         return clientRepository.save(clientModel).getIdClient();

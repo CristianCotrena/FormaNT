@@ -40,7 +40,6 @@ public class CreateClientTest {
         clientModel.setTelephone("11999999999");
         clientModel.setEmergencyContact("11999999998");
         clientModel.setStatus(1);
-        clientModel.setPassword("123456");
     }
 
     @Test

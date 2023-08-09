@@ -40,9 +40,6 @@ public class ClientModel implements Serializable {
     @Schema(hidden = true)
     private int status = 1;
 
-    @Schema(example = "123456")
-    private String password;
-
 
     public UUID getIdClient() {
         return idClient;
@@ -115,9 +112,5 @@ public class ClientModel implements Serializable {
     public void setStatus(int status) {
         this.status = status;
     }
-
-    public String getPassword() { return password; }
-
-    public void setPassword(String password) { this.password = password; }
 
 }

@@ -1,13 +1,17 @@
 {
 	"info": {
+<<<<<<< HEAD
 		"_postman_id": "018b5909-43b8-443b-a77b-33e111723790",
 		"name": "Cliente",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "28544481",
 		"_postman_id": "d8dbb1b1-eaf5-434a-9c5c-283291f3cd86",
+=======
+		"_postman_id": "f18e987d-54cd-4795-9aac-5700f1fceb6a",
+>>>>>>> bea6f3942d241888e2933e5e9d19b077964acd66
 		"name": "Cliente",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "28517604"
+		"_exporter_id": "28894337"
 	},
 	"item": [
 		{
@@ -17,8 +21,12 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
+<<<<<<< HEAD
 					"raw": "{\r\n     \"name\": \"Anna Inter\",\r\n    \"cpfCnpj\": \"011.302.650-55\",\r\n    \"cnh\": \"8888\",\r\n    \"age\": 37,\r\n    \"telephone\": \"981220944\",\r\n    \"emergencyContact\": \"984873664\",\r\n    \"email\": \"test@gmail.com\",\r\n    \"status\": 1,\r\n    \"password\": \"nsbusbjs\"\r\n}",
 					"raw": "{\r\n    \"name\": \"Guilherme Pimentel\",\r\n    \"cpfCnpj\": \"321.345.675-55\",\r\n    \"cnh\": \"45478651324\",\r\n    \"age\": 24,\r\n    \"telephone\": \"2735467856\",\r\n    \"emergencyContact\": \"32132416543\",\r\n    \"email\": \"teste@teste.com\",\r\n    \"password\": \"udhdd\"\r\n}",
+=======
+					"raw": "{\r\n    \"name\": \"Anna\",\r\n    \"cpfCnpj\": \"016.302.650-55\",\r\n    \"cnh\": \"jhhh\",\r\n    \"age\": 37,\r\n    \"telephone\": \"981220944\",\r\n    \"emergencyContact\": \"984873664\",\r\n    \"email\": \"anna.hermes@gmail.com\",\r\n    \"status\": 1\r\n}",
+>>>>>>> bea6f3942d241888e2933e5e9d19b077964acd66
 					"options": {
 						"raw": {
 							"language": "json"
@@ -40,6 +48,7 @@
 			"response": []
 		},
 		{
+<<<<<<< HEAD
 			"name": "Search",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
@@ -58,12 +67,22 @@
 				},
 				"url": {
 					"raw": "localhost:8080/v1/client?id=45acae65-4473-4b4f-af82-62bba7930c97&cpfCnpj=01123345577&email=teste@gmail.com",
+=======
+			"name": "DeleteClient",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/client/8dfa0850-5e31-401f-aa80-3d41a48b6169",
+					"protocol": "http",
+>>>>>>> bea6f3942d241888e2933e5e9d19b077964acd66
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
 						"v1",
+<<<<<<< HEAD
 						"client"
 					],
 					"query": [
@@ -79,6 +98,10 @@
 							"key": "email",
 							"value": "teste@gmail.com"
 						}
+=======
+						"client",
+						"8dfa0850-5e31-401f-aa80-3d41a48b6169"
+>>>>>>> bea6f3942d241888e2933e5e9d19b077964acd66
 					]
 				}
 			},
