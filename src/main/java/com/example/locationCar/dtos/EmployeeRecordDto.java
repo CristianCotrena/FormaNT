@@ -15,6 +15,7 @@ public record EmployeeRecordDto(
         @NotBlank String phone,
         ContractType contractType,
         Role role,
-        @NotBlank String email,
-        @NotNull int status) {
+        @NotBlank String email
+        ) {
+
 }

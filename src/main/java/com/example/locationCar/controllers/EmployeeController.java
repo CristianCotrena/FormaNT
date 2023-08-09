@@ -4,6 +4,10 @@ import com.example.locationCar.dtos.EmployeeRecordDto;
 import com.example.locationCar.models.EmployeeModel;
 import com.example.locationCar.services.funcionarioService.EmployeeService;
 import com.example.locationCar.services.funcionarioService.SearchEmployeeService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
@@ -23,6 +27,15 @@ public class EmployeeController {
         this.searchEmployeeService = searchEmployeeService;
     }
 
+    @Operation(summary = "Create employee", description = "Add an employee to database")
+    @ApiResponse(responseCode = "201", description = "Created", content = {
+            @Content(mediaType = "text/plain", schema = @Schema(type = "string", format = "uuid"))
+    })
+    @ApiResponse(responseCode = "400", description = "Invalid data", content = {
+            @Content(mediaType = "text/plain", schema = @Schema(type = "string", example = "Já existe um employee cadastrado com este e-mail")),
+            @Content(mediaType = "text/plain", schema = @Schema(type = "string", example = "CPF ou CNPJ inválido")),
+
+    })
     @PostMapping
     public ResponseEntity<EmployeeModel> saveEmployee(@RequestBody @Valid EmployeeRecordDto employeeRecordDto) {
         EmployeeModel employeeModel = new EmployeeModel();
@@ -30,6 +43,7 @@ public class EmployeeController {
         EmployeeModel savedEmployee = employeeService.saveEmployee(employeeModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedEmployee);
     }
+
 
     @GetMapping
     public ResponseEntity<EmployeeModel> getEmployee(

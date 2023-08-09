@@ -3,6 +3,7 @@ package com.example.locationCar.models;
 import com.example.locationCar.models.enums.Position;
 import com.example.locationCar.models.enums.Role;
 import com.example.locationCar.models.enums.ContractType;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
 import java.io.Serial;
@@ -18,17 +19,44 @@ public class EmployeeModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-
+    @Schema (hidden = true)
     private UUID employeeId;
+
+
+    @Schema(example = "Marineide")
     private String name;
+
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "varchar(255)")
+    @Schema(example = "VENDEDOR")
     private Position position;
+
+
+    @Schema(example = "01630265053")
     private String cpfCnpj;
+
+
+    @Schema(example = "1212")
     private String registry;
+
+
+    @Schema(example = "(51) 3335-0435")
     private String phone;
+
+    @Schema(example = "CLT")
+    @Enumerated(EnumType.STRING)
     private ContractType contractType;
+
+    @Enumerated(EnumType.STRING)
+    @Schema(example = "VENDEDOR")
     private Role role;
+
+
+    @Schema(example = "marineide@gmail.com")
     private String email;
-    private int status;
+
+    @Schema (hidden = true)
+    private int status = 1;
 
     public EmployeeModel() {
     }
