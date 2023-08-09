@@ -15,17 +15,22 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
+import com.example.locationCar.services.clientServices.ClientService;
+
+import java.util.Optional;
+
 @RestController
 @RequestMapping("v1/client")
 @Tag(name = "Client", description = "Operations about client")
 public class ClientController {
-
+    private final ClientService clientService;
     private final CreateClientService createClientService;
     private final ListClientService listClientService;
 
-    public ClientController(CreateClientService createClientService, ListClientService listClientService) {
-        this.listClientService = listClientService;
+    public ClientController(ClientService clientService, CreateClientService createClientService, ListClientService listClientService) {
+        this.clientService = clientService;
         this.createClientService = createClientService;
+            this.listClientService = listClientService;
     }
 
     @Operation(summary = "Create client", description = "Add a client to database")
@@ -57,17 +62,34 @@ public class ClientController {
     @ApiResponse(responseCode = "400", description = "Invalid data", content = {
             @Content(mediaType = "text/plain", schema = @Schema(type = "string", example = "Idade informada precisa ser maior ou igual a 18.")),
     })
-    @GetMapping
+    @GetMapping("/list")
     public ResponseEntity<Object> listClients(@RequestParam(required = false) Integer age,
                                               @RequestParam(required = false) Integer page) {
         try {
             Page<ClientModel> clients = listClientService.listClients(age, page);
 
-            if(clients.isEmpty()) return new ResponseEntity<>("Clientes não encontrados.", HttpStatus.NOT_FOUND);
+            if (clients.isEmpty()) return new ResponseEntity<>("Clientes não encontrados.", HttpStatus.NOT_FOUND);
 
             return new ResponseEntity<>(clients, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @Operation(summary = "Delete Client", description = "Delete an client to database")
+    @ApiResponse(responseCode = "404", description = "Client not found", content = {
+            @Content(mediaType = "text/plain", schema = @Schema(type = "string", example = "Client not found")),
+    })
+    @ApiResponse(responseCode = "200", description = "OK", content = {
+            @Content(mediaType = "text/plain", schema = @Schema(type = "string", example = "Client deleted successfully"))
+    })
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteClient(@PathVariable(value = "id") UUID id) {
+        Optional<ClientModel> client = clientService.getClient(id);
+        if (client.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Client not found.");
+        }
+        clientService.deleteClient(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Client deleted successfully.");
     }
 }
