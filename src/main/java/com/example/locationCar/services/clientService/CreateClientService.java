@@ -2,7 +2,10 @@ package com.example.locationCar.services.clientService;
 
 import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.repositories.ClientRepository;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
+
 
 import java.util.UUID;
 
@@ -35,7 +38,7 @@ public class CreateClientService {
         return phone.matches("^\\d{2}\\d{4,5}-\\d{4}$") || phone.matches("^\\d{10,11}$");
     }
 
-    public UUID createClient(ClientModel clientModel) {
+    public JsonNode createClient(ClientModel clientModel) {
         String cpfCnpj = clientModel.getCpfCnpj();
         String cleanedCpfCnpj = cpfCnpj.replaceAll("[^0-9]", "");
         String getEmail = clientModel.getEmail();
@@ -92,6 +95,12 @@ public class CreateClientService {
             throw new IllegalArgumentException("Telefone do contato de emergência inválido.");
         }
 
-        return clientRepository.save(clientModel).getIdClient();
+        UUID createdId = clientRepository.save(clientModel).getIdClient();
+        ObjectMapper ObjectMapper = new ObjectMapper();
+        JsonNode jsonResponse = ObjectMapper.createObjectNode()
+                .put("mensagem", "Cliente criado com sucesso")
+                .put("id", createdId.toString());
+
+        return jsonResponse;
     }
 }
