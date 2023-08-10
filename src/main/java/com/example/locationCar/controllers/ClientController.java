@@ -1,4 +1,9 @@
 package com.example.locationCar.controllers;
+
+import com.example.locationCar.dtos.ClientUpdateDto;
+import com.example.locationCar.models.ClientModel;
+import com.example.locationCar.services.clientService.CreateClientService;
+import com.example.locationCar.services.clientService.UpdateClientService;
 import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.services.clientService.CreateClientService;
 import com.example.locationCar.services.clientService.SearchClientService;
@@ -7,10 +12,14 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
+import java.util.Optional;
 import java.util.UUID;
 
 import com.example.locationCar.services.clientService.DeleteClientService;
@@ -22,18 +31,19 @@ import java.util.Optional;
 @Tag(name = "Client", description = "Operations about client")
 public class ClientController {
 
-    CreateClientService createClientService;
-    SearchClientService searchClientService;
-    DeleteClientService deleteClientService;
-
-
+    private final CreateClientService createClientService;
+    private final UpdateClientService updateClientService;
+    private final SearchClientService searchClientService;
+    private final DeleteClientService deleteClientService;
 
     public ClientController(DeleteClientService deleteClientService,
                             CreateClientService createClientService,
-                            SearchClientService searchClientService) {
+                            SearchClientService searchClientService,
+                            UpdateClientService updateClientService) {
         this.deleteClientService = deleteClientService;
         this.createClientService = createClientService;
         this.searchClientService = searchClientService;
+        this.updateClientService = updateClientService;
     }
 
     @Operation(summary = "Search for a client", description = "Search a client into database")
@@ -84,6 +94,26 @@ public class ClientController {
         try {
             UUID newClientId = createClientService.createClient(clientModel);
             return new ResponseEntity<>(newClientId.toString(), HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Operation(summary = "Update client", description = "Update client")
+    @ApiResponse(responseCode = "200", description = "Updated", content = {
+            @Content(mediaType = "text/plain", schema = @Schema(type = "string", format = "uuid"))
+    })
+    @ApiResponse(responseCode = "400", description = "Invalid data", content = {
+            @Content(mediaType = "text/plain", schema = @Schema(type = "string", example = "Telefone inválido")),
+    })
+    @ApiResponse(responseCode = "404", description = "Not found", content = {
+            @Content(mediaType = "text/plain", schema = @Schema(type = "string", example = "Cliente não encontrado"))
+    })
+    @PutMapping("/{id}")
+    public ResponseEntity<String> updateClient(@PathVariable(value = "id") UUID id,
+                                               @RequestBody @Valid ClientUpdateDto clientUpdateDto) {
+        try {
+            return updateClientService.updateClient(id, clientUpdateDto);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
