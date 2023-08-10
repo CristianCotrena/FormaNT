@@ -1,4 +1,4 @@
-package com.example.locationCar.services.funcionarioService;
+package com.example.locationCar.services.employeeService;
 
 import com.example.locationCar.models.EmployeeModel;
 import com.example.locationCar.repositories.EmployeeRepository;
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.UUID;
 
-import static com.example.locationCar.services.funcionarioService.EmployeeService.isValidEmail;
+import static com.example.locationCar.services.employeeService.CreateEmployeeService.isValidEmail;
 
 @Service
 public class SearchEmployeeService {
