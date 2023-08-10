@@ -27,7 +27,7 @@ public class UpdateEmployeeService {
         existingEmployee.setPosition(employeeRecordDto.position());
         existingEmployee.setRegistry(employeeRecordDto.registry());
         existingEmployee.setRole(employeeRecordDto.role());
-        existingEmployee.setStatus(employeeRecordDto.status());
+
 
         if (!existingEmployee.getEmail().equals(employeeRecordDto.email())) {
             throw new IllegalArgumentException("Não é permitido alterar o e-mail do funcionário.");
