@@ -32,10 +32,10 @@ public class UpdateClientService {
 
         if (clientUpdateDto.name() != null) clientModel.setName(clientUpdateDto.name());
         if (clientUpdateDto.age() != null) clientModel.setAge(clientUpdateDto.age());
-        if (clientUpdateDto.cpfCnpj() != null) clientModel.setAge(clientUpdateDto.age());
-        if (clientUpdateDto.cnh() != null) clientModel.setAge(clientUpdateDto.age());
-        if (clientUpdateDto.telephone() != null) clientModel.setAge(clientUpdateDto.age());
-        if (clientUpdateDto.emergencyContact() != null) clientModel.setAge(clientUpdateDto.age());
+        if (clientUpdateDto.cpfCnpj() != null) clientModel.setCpfCnpj(clientUpdateDto.cpfCnpj());
+        if (clientUpdateDto.cnh() != null) clientModel.setCnh(clientUpdateDto.cnh());
+        if (clientUpdateDto.telephone() != null) clientModel.setTelephone(clientUpdateDto.telephone());
+        if (clientUpdateDto.emergencyContact() != null) clientModel.setEmergencyContact(clientUpdateDto.emergencyContact());
 
         ClientModel updatedClient = clientRepository.save(clientModel);
 
@@ -43,6 +43,9 @@ public class UpdateClientService {
     }
 
     public void validateUpdateClient(ClientUpdateDto clientUpdateDto){
+        if(clientUpdateDto.email() != null)
+            throw new IllegalArgumentException("Não é possível alterar email.");
+
         if(clientUpdateDto.age() != null && (clientUpdateDto.age() < 18))
             throw new IllegalArgumentException("Idade inválida.");
 

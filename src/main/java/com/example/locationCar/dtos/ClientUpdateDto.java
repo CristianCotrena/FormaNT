@@ -6,6 +6,7 @@ public record ClientUpdateDto(
         String cnh,
         Integer age,
         String telephone,
-        String emergencyContact
+        String emergencyContact,
+        String email
 ) {
 }
