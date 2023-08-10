@@ -10,11 +10,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.UUID;
-
 import com.example.locationCar.services.clientServices.ClientService;
-
 import java.util.Optional;
 
 @RestController
@@ -66,7 +63,11 @@ public class ClientController {
             clientService.deleteClient(idClient);
             return ResponseEntity.status(HttpStatus.OK).body("Client deleted successfully.");
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro, please enter only your Client ID.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error, please enter only your Client ID.");
         }
+    }
+    @DeleteMapping("/")
+    public ResponseEntity<Object> deleteClientError() {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error, Id cannot be null");
     }
 }
