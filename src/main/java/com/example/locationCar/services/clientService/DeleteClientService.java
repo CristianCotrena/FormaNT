@@ -1,4 +1,4 @@
-package com.example.locationCar.services.clientServices;
+package com.example.locationCar.services.clientService;
 
 import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.repositories.ClientRepository;
@@ -8,10 +8,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class ClientService {
+public class DeleteClientService {
     ClientRepository clientRepository;
 
-    public ClientService(ClientRepository clientRepository){
+    public DeleteClientService(ClientRepository clientRepository){
         this.clientRepository = clientRepository ;
     }
 
