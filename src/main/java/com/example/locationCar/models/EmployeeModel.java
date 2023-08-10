@@ -23,6 +23,8 @@ public class EmployeeModel implements Serializable {
     @Schema(example = "Marineide")
     private String name;
 
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "varchar(255)")
     @Schema(example = "VENDEDOR")
     private Position position;
 
@@ -36,16 +38,18 @@ public class EmployeeModel implements Serializable {
     private String phone;
 
     @Schema(example = "CLT")
+    @Enumerated(EnumType.STRING)
     private ContractType contractType;
 
+    @Enumerated(EnumType.STRING)
     @Schema(example = "VENDEDOR")
     private Role role;
 
     @Schema(example = "marineide@gmail.com")
     private String email;
 
-    @Schema(example = "1")
-    private int status;
+    @Schema (hidden = true)
+    private int status = 1;
 
     public EmployeeModel() {
     }
