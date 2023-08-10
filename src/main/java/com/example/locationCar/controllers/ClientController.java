@@ -100,11 +100,11 @@ public class ClientController {
     public ResponseEntity<Object> deleteClient(@PathVariable(value = "id") String id) {
         try {
             UUID idClient = UUID.fromString(id);
-            Optional<ClientModel> client = clientService.getClient(idClient);
+            Optional<ClientModel> client = deleteClientService.getClient(idClient);
             if (client.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Client not found.");
             }
-            clientService.deleteClient(idClient);
+            deleteClientService.deleteClient(idClient);
             return ResponseEntity.status(HttpStatus.OK).body("Client deleted successfully.");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro, please enter only your Client ID.");
