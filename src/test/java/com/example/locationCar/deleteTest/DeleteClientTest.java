@@ -2,7 +2,7 @@ package com.example.locationCar.deleteTest;
 
 import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.repositories.ClientRepository;
-import com.example.locationCar.services.clientServices.ClientService;
+import com.example.locationCar.services.clientService.DeleteClientService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class DeleteClientTest {
     @InjectMocks
-    private ClientService clientService;
+    private DeleteClientService deleteClientService;
 
     @Mock
     private ClientRepository clientRepository;
@@ -48,7 +48,7 @@ public class DeleteClientTest {
 
         when(clientRepository.findById(id)).thenReturn(Optional.of(clientModel));
 
-        Optional<ClientModel> result = clientService.getClient(id);
+        Optional<ClientModel> result = deleteClientService.getClient(id);
 
         assertNotNull(result);
         assertEquals(clientModel, result.get());
