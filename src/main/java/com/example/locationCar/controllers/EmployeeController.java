@@ -4,11 +4,16 @@ import com.example.locationCar.dtos.EmployeeRecordDto;
 import com.example.locationCar.models.EmployeeModel;
 import com.example.locationCar.services.funcionarioService.EmployeeService;
 import com.example.locationCar.services.funcionarioService.SearchEmployeeService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.UUID;
 
 @RestController
@@ -23,6 +28,15 @@ public class EmployeeController {
         this.searchEmployeeService = searchEmployeeService;
     }
 
+    @Operation(summary = "Create employee", description = "Add an employee to database")
+    @ApiResponse(responseCode = "201", description = "Created", content = {
+            @Content(mediaType = "text/plain", schema = @Schema(type = "string", format = "uuid"))
+    })
+    @ApiResponse(responseCode = "400", description = "Invalid data", content = {
+            @Content(mediaType = "text/plain", schema = @Schema(type = "string", example = "Já existe um employee cadastrado com este e-mail")),
+            @Content(mediaType = "text/plain", schema = @Schema(type = "string", example = "CPF ou CNPJ inválido")),
+
+    })
     @PostMapping
     public ResponseEntity<EmployeeModel> saveEmployee(@RequestBody @Valid EmployeeRecordDto employeeRecordDto) {
         EmployeeModel employeeModel = new EmployeeModel();
@@ -31,27 +45,30 @@ public class EmployeeController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedEmployee);
     }
 
+
     @GetMapping
-    public ResponseEntity<EmployeeModel> getEmployee(
+    public ResponseEntity<Object> getEmployee(
             @RequestParam(required = false) UUID id,
             @RequestParam(required = false) String cpfCnpj,
             @RequestParam(required = false) String email
     ) {
-        if (id != null) {
-            // Buscar funcionário por ID
-            EmployeeModel employee = searchEmployeeService.employeeSearchById(id);
-            return ResponseEntity.ok(employee);
-        } else if (cpfCnpj != null) {
-            // Buscar funcionário por CPF/CNPJ
-            EmployeeModel employee = searchEmployeeService.employeeSearchByCpfCnpj(cpfCnpj);
-            return ResponseEntity.ok(employee);
-        } else if (email != null) {
-            // Buscar funcionário por e-mail
-            EmployeeModel employee = searchEmployeeService.employeeSearchByEmail(email);
-            return ResponseEntity.ok(employee);
-        } else {
-            // Nenhum parâmetro foi informado
-            throw new IllegalArgumentException("Informe um ID, CPF/CNPJ ou e-mail para buscar o funcionário.");
+        try {
+            if (id != null) {
+                EmployeeModel employee = searchEmployeeService.employeeSearchById(id);
+                return ResponseEntity.ok(employee);
+            } else if (cpfCnpj != null) {
+                EmployeeModel employee = searchEmployeeService.employeeSearchByCpfCnpj(cpfCnpj);
+                return ResponseEntity.ok(employee);
+            } else if (email != null) {
+                EmployeeModel employee = searchEmployeeService.employeeSearchByEmail(email);
+                return ResponseEntity.ok(employee);
+            } else {
+                return ResponseEntity.badRequest().body("Informe um ID, CPF/CNPJ ou e-mail válido para buscar o funcionário.");
+            }
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("Informe um ID, CPF/CNPJ ou e-mail válido para buscar o funcionário.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao processar a requisição.");
         }
     }
 }
