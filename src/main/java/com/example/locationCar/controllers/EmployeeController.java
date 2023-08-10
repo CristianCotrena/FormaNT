@@ -37,6 +37,15 @@ public class EmployeeController {
         this.searchEmployeeService = searchEmployeeService;
     }
 
+    @Operation(summary = "Create employee", description = "Add an employee to database")
+    @ApiResponse(responseCode = "201", description = "Created", content = {
+            @Content(mediaType = "text/plain", schema = @Schema(type = "string", format = "uuid"))
+    })
+    @ApiResponse(responseCode = "400", description = "Invalid data", content = {
+            @Content(mediaType = "text/plain", schema = @Schema(type = "string", example = "Já existe um employee cadastrado com este e-mail")),
+            @Content(mediaType = "text/plain", schema = @Schema(type = "string", example = "CPF ou CNPJ inválido")),
+
+    })
     @PostMapping
     public ResponseEntity<EmployeeModel> saveEmployee(@RequestBody @Valid EmployeeRecordDto employeeRecordDto) {
         EmployeeModel employeeModel = new EmployeeModel();
