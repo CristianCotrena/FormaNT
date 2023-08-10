@@ -3,6 +3,7 @@ package com.example.locationCar.controllers;
 import com.example.locationCar.dtos.ClientUpdateDto;
 import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.services.clientService.CreateClientService;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.example.locationCar.services.clientService.UpdateClientService;
 import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.services.clientService.CreateClientService;
@@ -92,7 +93,7 @@ public class ClientController {
     @PostMapping
     public ResponseEntity<String> createClient(@RequestBody ClientModel clientModel) {
         try {
-            UUID newClientId = createClientService.createClient(clientModel);
+            JsonNode newClientId = createClientService.createClient(clientModel);
             return new ResponseEntity<>(newClientId.toString(), HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
