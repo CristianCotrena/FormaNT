@@ -4,15 +4,20 @@ import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.repositories.ClientRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.locationCar.services.clientService.utils.ClientRules;
 import org.springframework.stereotype.Service;
 
 
 import java.util.UUID;
 
+import static com.example.locationCar.services.clientService.utils.ClientRules.*;
+
 @Service
 public class CreateClientService {
 
-    private final ClientRepository clientRepository;
+    ClientRepository clientRepository;
+    ClientRules clientRules;
+    ClientModel clientModel;
 
     public CreateClientService(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
