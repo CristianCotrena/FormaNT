@@ -80,8 +80,8 @@ public class UpdateEmployeeTest {
                 "(51) 9035-4201",
                 ContractType.CLT,
                 Role.ADMINISTRADOR,
-                "new@example.com",
-                2
+                "new@example.com"
+                
         );
 
         when(updateEmployeeService.updateEmployee(employeeId, employeeRecordDto)).thenReturn(employeeId);
