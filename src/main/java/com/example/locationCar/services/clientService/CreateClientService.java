@@ -12,13 +12,13 @@ import static com.example.locationCar.services.clientService.utils.ClientRules.*
 @Service
 public class CreateClientService {
 
-    private final ClientRepository clientRepository;
+    ClientRepository clientRepository;
     ClientRules clientRules;
+    ClientModel clientModel;
 
     public CreateClientService(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
     }
-
 
     public UUID createClient(ClientModel clientModel) {
         String cpfCnpj = clientModel.getCpfCnpj();

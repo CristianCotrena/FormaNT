@@ -234,10 +234,12 @@
               "items": {
                 "$ref": "#/components/schemas/Client"
               }
+              
             }
           }
         }
       }
     }
   }
+  
 }

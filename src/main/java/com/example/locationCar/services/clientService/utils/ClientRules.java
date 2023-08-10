@@ -1,17 +1,6 @@
 package com.example.locationCar.services.clientService.utils;
 
-import com.example.locationCar.models.ClientModel;
-
 public class ClientRules {
-    ClientModel clientModel;
-
-    public ClientRules(ClientModel clientModel) {
-        this.clientModel = clientModel;
-    }
-
-    public static boolean isValidAge (int age) {
-        return age >= 18;
-    }
 
     public static boolean isEmailValid(String email) {
         return email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
@@ -32,5 +21,4 @@ public class ClientRules {
     public static boolean isPhoneValid(String phone) {
         return phone.matches("^\\d{2}\\d{4,5}-\\d{4}$") || phone.matches("^\\d{10,11}$");
     }
-
 }
