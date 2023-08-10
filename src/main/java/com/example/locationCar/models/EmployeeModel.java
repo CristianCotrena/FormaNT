@@ -24,10 +24,6 @@ public class EmployeeModel implements Serializable {
 
     @Schema(example = "Marineide")
     private String name;
-
-    @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "varchar(255)")
-    @Schema(example = "VENDEDOR")
     private Position position;
 
     @Schema(example = "01630265053")
