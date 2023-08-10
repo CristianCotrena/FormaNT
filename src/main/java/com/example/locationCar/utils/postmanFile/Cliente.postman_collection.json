@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "5494c190-9827-48b4-8d9b-3f5a503820b3",
+		"_postman_id": "c8a869c0-202a-48c9-bdee-ef8916b7b7a2",
 		"name": "Cliente",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "18793992",
-		"_collection_link": "https://martian-astronaut-744258.postman.co/workspace/NTConsult~7475cf8a-732e-4b57-894e-cdb19065b26d/collection/18793992-5494c190-9827-48b4-8d9b-3f5a503820b3?action=share&creator=18793992&source=collection_link"
+		"_collection_link": "https://martian-astronaut-744258.postman.co/workspace/NTConsult~7475cf8a-732e-4b57-894e-cdb19065b26d/collection/18793992-c8a869c0-202a-48c9-bdee-ef8916b7b7a2?action=share&creator=18793992&source=collection_link"
 	},
 	"item": [
 		{
@@ -82,6 +82,36 @@
 							"key": "age",
 							"value": "20"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateClient",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Felipe Miranda\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/client/771079a3-7d31-433c-aae8-24a14b2b8c46",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"client",
+						"771079a3-7d31-433c-aae8-24a14b2b8c46"
 					]
 				}
 			},
