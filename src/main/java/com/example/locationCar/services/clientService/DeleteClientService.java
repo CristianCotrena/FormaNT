@@ -16,11 +16,17 @@ public class DeleteClientService {
     }
 
     public Optional<ClientModel> getClient(UUID id) {
-        Optional<ClientModel> client = clientRepository.findById(id);
-        return client;
+        return clientRepository.findById(id);
     }
 
     public void deleteClient(UUID id) {
-        clientRepository.deleteById(id);
+        Optional<ClientModel> clientOptional = clientRepository.findById(id);
+
+        if (clientOptional.isPresent()){
+            ClientModel statusClient = clientOptional.get();
+            statusClient .setStatus(0);
+            clientRepository.save(statusClient);
+        }
     }
+
 }
