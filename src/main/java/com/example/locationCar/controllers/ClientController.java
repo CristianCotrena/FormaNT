@@ -135,6 +135,8 @@ public class ClientController {
             if (client.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Client not found.");
             }
+
+
             deleteClientService.deleteClient(idClient);
             return ResponseEntity.status(HttpStatus.OK).body("Client deleted successfully.");
         } catch (IllegalArgumentException e) {
