@@ -1,4 +1,4 @@
-package com.example.locationCar.services.funcionarioService;
+package com.example.locationCar.services.employeeService;
 
 import com.example.locationCar.models.EmployeeModel;
 import com.example.locationCar.repositories.EmployeeRepository;
@@ -16,11 +16,14 @@ public class EmployeeServiceDelete {
         this.employeeRepository = employeeRepository;
     }
 
-
     public EmployeeModel deleteEmployee(UUID employeeId) {
-        Optional<EmployeeModel> employeeO = employeeRepository.findById(employeeId);
+        Optional<EmployeeModel> employee = employeeRepository.findById(employeeId);
+        if (employee.isEmpty() || employee.get().getStatus() == 0) {
+            return null;
+        }
 
-        employeeRepository.deleteById(employeeO.get().getEmployeeId());
-        return employeeO.orElse(null);
+        employee.get().setStatus(0);
+        employeeRepository.save(employee.get());
+        return employee.get();
     }
 }
