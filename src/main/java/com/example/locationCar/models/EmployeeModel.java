@@ -24,6 +24,8 @@ public class EmployeeModel implements Serializable {
 
     @Schema(example = "Marineide")
     private String name;
+
+    @Enumerated(EnumType.STRING)
     private Position position;
 
     @Schema(example = "01630265053")
@@ -34,7 +36,11 @@ public class EmployeeModel implements Serializable {
 
     @Schema(example = "(51) 3335-0435")
     private String phone;
+
+    @Enumerated(EnumType.STRING)
     private ContractType contractType;
+
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @Schema(example = "marineide@gmail.com")
