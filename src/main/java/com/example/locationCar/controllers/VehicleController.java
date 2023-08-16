@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/v1/vehicle")
+@Tag(name = "Vehicle", description = "Operations about vehicle")
 public class VehicleController {
 
     private final ListVehicleService listVehicleService;
@@ -23,6 +24,13 @@ public class VehicleController {
         this.listVehicleService = listVehicleService;
     }
 
+    @Operation(summary = "List vehicles", description = "List vehicles3")
+    @ApiResponse(responseCode = "200", description = "Found", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = VehicleModel.class))
+    })
+    @ApiResponse(responseCode = "404", description = "Not found", content = {
+            @Content(mediaType = "text/plain", schema = @Schema(type = "string", example = "Veículos não encontrados.")),
+    })
     @GetMapping("/list")
     public BaseDto listVehicles(@RequestParam(required = false) Integer page) {
         return listVehicleService.listVehicles(page);
