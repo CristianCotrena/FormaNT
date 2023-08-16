@@ -6,8 +6,6 @@ import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.services.clientService.CreateClientService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.example.locationCar.services.clientService.UpdateClientService;
-import com.example.locationCar.models.ClientModel;
-import com.example.locationCar.services.clientService.CreateClientService;
 import com.example.locationCar.services.clientService.SearchClientService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -15,18 +13,14 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 
 import java.util.Optional;
 import java.util.UUID;
 
 import com.example.locationCar.services.clientService.DeleteClientService;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("v1/client")
@@ -136,7 +130,11 @@ public class ClientController {
             deleteClientService.deleteClient(idClient);
             return ResponseEntity.status(HttpStatus.OK).body("Client deleted successfully.");
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro, please enter only your Client ID.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error, please enter only your Client ID.");
         }
+    }
+    @DeleteMapping("/")
+    public ResponseEntity<Object> deleteClientError() {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error, Id cannot be null");
     }
 }
