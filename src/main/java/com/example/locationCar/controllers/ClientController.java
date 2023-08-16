@@ -2,12 +2,9 @@ package com.example.locationCar.controllers;
 
 import com.example.locationCar.dtos.ClientUpdateDto;
 import com.example.locationCar.models.ClientModel;
-import com.example.locationCar.models.EmployeeModel;
 import com.example.locationCar.services.clientService.CreateClientService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.example.locationCar.services.clientService.UpdateClientService;
-import com.example.locationCar.models.ClientModel;
-import com.example.locationCar.services.clientService.CreateClientService;
 import com.example.locationCar.services.clientService.SearchClientService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -15,7 +12,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,9 +22,6 @@ import java.util.UUID;
 
 import com.example.locationCar.services.clientService.DeleteClientService;
 
-import java.util.Optional;
-
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @RestController
 @RequestMapping("v1/client")
