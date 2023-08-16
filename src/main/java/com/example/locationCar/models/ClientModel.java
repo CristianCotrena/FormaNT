@@ -26,7 +26,7 @@ public class ClientModel implements Serializable {
     private String cnh;
 
     @Schema(example = "23")
-    private int age;
+    private Integer age;
 
     @Schema(example = "11999999999")
     private String telephone;
@@ -38,7 +38,7 @@ public class ClientModel implements Serializable {
     private String email;
 
     @Schema(hidden = true)
-    private int status = 1;
+    private Integer status = 1;
 
     public ClientModel() {
     }
@@ -87,11 +87,11 @@ public class ClientModel implements Serializable {
         this.cnh = cnh;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
@@ -119,11 +119,11 @@ public class ClientModel implements Serializable {
         this.email = email;
     }
 
-    public int getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
