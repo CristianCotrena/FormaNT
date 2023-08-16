@@ -1,0 +1,37 @@
+package com.example.locationCar.services.vehicleService;
+
+import com.example.locationCar.base.dto.BaseDto;
+import com.example.locationCar.builder.ResponseErrorBuilder;
+import com.example.locationCar.builder.ResponseSuccessBuilder;
+import com.example.locationCar.constants.ErrorMessage;
+import com.example.locationCar.constants.SuccessMessage;
+import com.example.locationCar.models.VehicleModel;
+import com.example.locationCar.repositories.VehicleRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+
+@Service
+public class ListVehicleService {
+    private final VehicleRepository vehicleRepository;
+
+    @Autowired
+    public ListVehicleService(VehicleRepository vehicleRepository) {
+        this.vehicleRepository = vehicleRepository;
+    }
+
+    public BaseDto listVehicles(Integer page) {
+        int pageToSearch = 0;
+
+        if (page == null) pageToSearch = 0;
+
+        PageRequest pageRequest = PageRequest.of(pageToSearch, 20);
+        Page<VehicleModel> vehicles = vehicleRepository.findAll(pageRequest);
+
+        if (vehicles.isEmpty()) return new ResponseErrorBuilder(HttpStatus.NOT_FOUND, ErrorMessage.NOT_FOUND).get();
+
+        return new ResponseSuccessBuilder<>(HttpStatus.OK, vehicles, SuccessMessage.LIST_VEHICLES).get();
+    }
+}
