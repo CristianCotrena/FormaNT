@@ -22,7 +22,6 @@ import java.util.UUID;
 
 import com.example.locationCar.services.clientService.DeleteClientService;
 
-
 @RestController
 @RequestMapping("v1/client")
 @Tag(name = "Client", description = "Operations about client")
