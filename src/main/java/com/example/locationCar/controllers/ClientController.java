@@ -3,8 +3,7 @@ package com.example.locationCar.controllers;
 import com.example.locationCar.base.dto.BaseDto;
 import com.example.locationCar.dtos.ClientUpdateDto;
 import com.example.locationCar.models.ClientModel;
-import com.example.locationCar.services.clientService.CreateClientService;
-import com.fasterxml.jackson.databind.JsonNode;
+import com.example.locationCar.services.clientService.*;
 import com.example.locationCar.services.clientService.UpdateClientService;
 import com.example.locationCar.services.clientService.SearchClientService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,11 +22,12 @@ import java.util.UUID;
 
 import com.example.locationCar.services.clientService.DeleteClientService;
 
+
 @RestController
 @RequestMapping("v1/client")
 @Tag(name = "Client", description = "Operations about client")
 public class ClientController {
-
+    private final ListClientService listClientService;
     private final CreateClientService createClientService;
     private final UpdateClientService updateClientService;
     private final SearchClientService searchClientService;
@@ -35,10 +36,12 @@ public class ClientController {
     public ClientController(DeleteClientService deleteClientService,
                             CreateClientService createClientService,
                             SearchClientService searchClientService,
+                            ListClientService listClientService,
                             UpdateClientService updateClientService) {
         this.deleteClientService = deleteClientService;
         this.createClientService = createClientService;
         this.searchClientService = searchClientService;
+        this.listClientService = listClientService;
         this.updateClientService = updateClientService;
     }
 
@@ -110,6 +113,30 @@ public class ClientController {
         }
     }
 
+    @Operation(summary = "List clients", description = "List clients")
+    @ApiResponse(responseCode = "200", description = "Found", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = ClientModel.class))
+    })
+    @ApiResponse(responseCode = "404", description = "Invalid data", content = {
+            @Content(mediaType = "text/plain", schema = @Schema(type = "string", example = "Clientes não encontrados.")),
+    })
+    @ApiResponse(responseCode = "400", description = "Invalid data", content = {
+            @Content(mediaType = "text/plain", schema = @Schema(type = "string", example = "Idade informada precisa ser maior ou igual a 18.")),
+    })
+    @GetMapping("/list")
+    public ResponseEntity<Object> listClients(@RequestParam(required = false) Integer age,
+                                              @RequestParam(required = false) Integer page) {
+        try {
+            Page<ClientModel> clients = listClientService.listClients(age, page);
+
+            if (clients.isEmpty()) return new ResponseEntity<>("Clientes não encontrados.", HttpStatus.NOT_FOUND);
+
+            return new ResponseEntity<>(clients, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @Operation(summary = "Delete Client", description = "Delete an client to database")
     @ApiResponse(responseCode = "404", description = "Client not found", content = {
             @Content(mediaType = "text/plain", schema = @Schema(type = "string", example = "Client not found")),
@@ -125,8 +152,6 @@ public class ClientController {
             if (client.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Client not found.");
             }
-
-
             deleteClientService.deleteClient(idClient);
             return ResponseEntity.status(HttpStatus.OK).body("Client deleted successfully.");
         } catch (IllegalArgumentException e) {
