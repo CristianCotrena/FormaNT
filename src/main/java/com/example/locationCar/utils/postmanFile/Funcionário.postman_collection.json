@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "0d356cbd-7aac-4f12-9169-255770f9df65",
+		"_postman_id": "2ffa848a-6d55-4b99-95d3-0515f21fac45",
 		"name": "Funcionário",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "28525027"
+		"_exporter_id": "18793992"
 	},
 	"item": [
 		{
@@ -92,6 +92,41 @@
 						{
 							"key": "email",
 							"value": "manecos@gmail.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ListEmployee",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/employee/list?page=0&role=VENDEDOR&position=ESTOQUISTA",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"employee",
+						"list"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "role",
+							"value": "VENDEDOR"
+						},
+						{
+							"key": "position",
+							"value": "ESTOQUISTA"
 						}
 					]
 				}

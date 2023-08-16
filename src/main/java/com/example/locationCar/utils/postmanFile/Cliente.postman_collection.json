@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "4ed6fdb9-7cb0-4d10-93eb-de10540043bc",
+		"_postman_id": "c8a869c0-202a-48c9-bdee-ef8916b7b7a2",
 		"name": "Cliente",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "18793992"
+		"_exporter_id": "18793992",
+		"_collection_link": "https://martian-astronaut-744258.postman.co/workspace/NTConsult~7475cf8a-732e-4b57-894e-cdb19065b26d/collection/18793992-c8a869c0-202a-48c9-bdee-ef8916b7b7a2?action=share&creator=18793992&source=collection_link"
 	},
 	"item": [
 		{
@@ -61,7 +62,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/v1/client?page=0&age=17",
+					"raw": "http://localhost:8080/v1/client/list?page=0&age=20",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -69,7 +70,8 @@
 					"port": "8080",
 					"path": [
 						"v1",
-						"client"
+						"client",
+						"list"
 					],
 					"query": [
 						{
@@ -78,7 +80,7 @@
 						},
 						{
 							"key": "age",
-							"value": "17"
+							"value": "20"
 						}
 					]
 				}
