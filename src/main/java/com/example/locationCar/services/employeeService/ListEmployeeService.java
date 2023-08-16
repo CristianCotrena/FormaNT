@@ -15,7 +15,7 @@ public class ListEmployeeService {
 
     @Autowired
     public ListEmployeeService(EmployeeRepository employeeRepository){
-        this.employeeRepository = employeeRepository;
+         this.employeeRepository = employeeRepository;
     }
 
     public Page<EmployeeModel> listEmployees(Role role, Position position, Integer page){
