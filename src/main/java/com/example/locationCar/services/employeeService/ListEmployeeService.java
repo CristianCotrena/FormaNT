@@ -19,11 +19,11 @@ public class ListEmployeeService {
     }
 
     public Page<EmployeeModel> listEmployees(Role role, Position position, Integer page){
-        int pageToSearch = 0;
+        int pageToSearch = page;
 
         if(page == null) pageToSearch = 0;
 
-        PageRequest pageRequest = PageRequest.of(pageToSearch, 20);
+        PageRequest pageRequest = PageRequest.of(pageToSearch, 1);
 
         return employeeRepository.listByRoleAndPosition(role, position, pageRequest);
     }
