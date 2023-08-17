@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "2ffa848a-6d55-4b99-95d3-0515f21fac45",
+		"_postman_id": "fd341b29-1899-4cd5-b923-96a4b7e6b402",
 		"name": "Funcionário",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "18793992"
+		"_exporter_id": "18793992",
+		"_collection_link": "https://martian-astronaut-744258.postman.co/workspace/NTConsult~7475cf8a-732e-4b57-894e-cdb19065b26d/collection/18793992-fd341b29-1899-4cd5-b923-96a4b7e6b402?action=share&source=collection_link&creator=18793992"
 	},
 	"item": [
 		{
