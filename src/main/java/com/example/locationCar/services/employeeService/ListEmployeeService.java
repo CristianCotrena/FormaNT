@@ -1,4 +1,4 @@
-package com.example.locationCar.services.funcionarioService;
+package com.example.locationCar.services.employeeService;
 
 import com.example.locationCar.models.EmployeeModel;
 import com.example.locationCar.models.enums.Position;
@@ -15,15 +15,15 @@ public class ListEmployeeService {
 
     @Autowired
     public ListEmployeeService(EmployeeRepository employeeRepository){
-        this.employeeRepository = employeeRepository;
+         this.employeeRepository = employeeRepository;
     }
 
     public Page<EmployeeModel> listEmployees(Role role, Position position, Integer page){
-        int pageToSearch = 0;
+        int pageToSearch = page;
 
         if(page == null) pageToSearch = 0;
 
-        PageRequest pageRequest = PageRequest.of(pageToSearch, 20);
+        PageRequest pageRequest = PageRequest.of(pageToSearch, 1);
 
         return employeeRepository.listByRoleAndPosition(role, position, pageRequest);
     }
