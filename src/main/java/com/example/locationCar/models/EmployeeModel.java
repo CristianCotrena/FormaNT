@@ -38,6 +38,7 @@ public class EmployeeModel implements Serializable {
     private String phone;
 
     @Enumerated(EnumType.STRING)
+    @Schema(example = "CLT")
     private ContractType contractType;
 
     @Enumerated(EnumType.STRING)
