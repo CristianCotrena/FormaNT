@@ -21,7 +21,7 @@ public class ListClientService {
             throw new IllegalArgumentException("Idade informada precisa ser maior ou igual a 18.");
         }
 
-        int pageToSearch = 0;
+        int pageToSearch = page;
 
         if (page == null) pageToSearch = 0;
 
