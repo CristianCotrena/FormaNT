@@ -6,4 +6,5 @@ public @interface ErrorMessage {
     String UNIQUE_FIELD = "Campo já cadastrado na base de dados";
     String UNDERAGE = "Idade deve ser maior que 18";
     String NOT_FOUND = "Não encontrado";
+    String INVALID_PAGE = "Página informada inválida";
 }

@@ -13,6 +13,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ListVehicleService {
     private final VehicleRepository vehicleRepository;
@@ -22,16 +24,30 @@ public class ListVehicleService {
         this.vehicleRepository = vehicleRepository;
     }
 
-    public BaseDto listVehicles(Integer page) {
+    public BaseDto listVehicles(String page) {
         int pageToSearch = 0;
 
-        if (page == null) pageToSearch = 0;
+        if(page != null) {
+            try{
+                pageToSearch = Integer.parseInt(page);
+            }catch(Exception e){
+                ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, ErrorMessage.INVALID_PAGE);
+                return result.get();
+            }
+        }
 
         PageRequest pageRequest = PageRequest.of(pageToSearch, 20);
         Page<VehicleModel> vehicles = vehicleRepository.findAll(pageRequest);
 
-        if (vehicles.isEmpty()) return new ResponseErrorBuilder(HttpStatus.NOT_FOUND, ErrorMessage.NOT_FOUND).get();
+        if ((vehicles.getTotalPages() - 1) < pageToSearch) {
+            ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, ErrorMessage.INVALID_PAGE);
+            return result.get();
+        }
 
+        if (vehicles.isEmpty()) {
+            ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, ErrorMessage.NOT_FOUND);
+            return result.get();
+        }
         return new ResponseSuccessBuilder<>(HttpStatus.OK, vehicles, SuccessMessage.LIST_VEHICLES).get();
     }
 }
