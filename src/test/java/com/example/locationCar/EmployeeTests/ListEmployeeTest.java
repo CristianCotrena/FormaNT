@@ -34,7 +34,7 @@ public class ListEmployeeTest {
     private ListEmployeeService listEmployeeService;
 
     @BeforeEach
-    public void setUp() {
+    public void setup() {
         MockitoAnnotations.openMocks(this);
         listEmployeeService = new ListEmployeeService(employeeRepository);
     }
@@ -44,7 +44,7 @@ public class ListEmployeeTest {
         Page<EmployeeModel> employeePage = new PageImpl<>(Collections.singletonList(new EmployeeModel()));
         when(employeeRepository.listByRoleAndPosition(any(), any(), any())).thenReturn(employeePage);
 
-        BaseDto responseEntity = listEmployeeService.listEmployees("VENDEDOR", "VENDEDOR", 0);
+        BaseDto responseEntity = listEmployeeService.listEmployees("VENDEDOR", "VENDEDOR", "0");
 
         assertEquals(HttpStatus.OK.value(), responseEntity.getResult().getStatusCode());
         assertEquals("Funcionários listados com sucesso", responseEntity.getResult().getDescription());
@@ -56,7 +56,7 @@ public class ListEmployeeTest {
         when(listEmployeeValidate.validateParamsToSearch(anyString(), anyString())).thenReturn(errors);
         ;
 
-        BaseDto responseEntity = listEmployeeService.listEmployees("ERRADO", "VENDEDOR", 0);
+        BaseDto responseEntity = listEmployeeService.listEmployees("ERRADO", "VENDEDOR", "0");
 
         assertEquals(HttpStatus.BAD_REQUEST.value(), responseEntity.getResult().getStatusCode());
         assertEquals("Bad Request", responseEntity.getResult().getDescription());
@@ -68,7 +68,7 @@ public class ListEmployeeTest {
         Page<EmployeeModel> employeePage = new PageImpl<>(employeeList, PageRequest.of(0, 2), 1);
         when(employeeRepository.listByRoleAndPosition(any(), any(), any())).thenReturn(employeePage);
 
-        BaseDto responseEntity = listEmployeeService.listEmployees(null, null, 5);
+        BaseDto responseEntity = listEmployeeService.listEmployees(null, null, "5");
 
         assertEquals(HttpStatus.BAD_REQUEST.value(), responseEntity.getResult().getStatusCode());
         assertEquals("Página informada inválida", responseEntity.getResult().getDescription());
