@@ -8,11 +8,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class EmployeeServiceDelete {
+public class DeleteEmployeeService {
 
     EmployeeRepository employeeRepository;
 
-    public EmployeeServiceDelete(EmployeeRepository employeeRepository) {
+    public DeleteEmployeeService(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }
 

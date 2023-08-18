@@ -2,22 +2,24 @@ package com.example.locationCar.controllers;
 
 import com.example.locationCar.dtos.EmployeeRecordDto;
 import com.example.locationCar.models.EmployeeModel;
+import com.example.locationCar.models.enums.Position;
+import com.example.locationCar.models.enums.Role;
+import com.example.locationCar.services.employeeService.ListEmployeeService;
 import com.example.locationCar.services.employeeService.CreateEmployeeService;
-import com.example.locationCar.services.employeeService.EmployeeServiceDelete;
+import com.example.locationCar.services.employeeService.DeleteEmployeeService;
 import com.example.locationCar.services.employeeService.UpdateEmployeeService;
 import com.example.locationCar.services.employeeService.SearchEmployeeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import io.swagger.v3.oas.annotations.tags.Tag;
-
-
 import java.util.UUID;
 
 @RestController
@@ -25,16 +27,18 @@ import java.util.UUID;
 @Tag(name = "Employee", description = "Operations about Employee")
 public class EmployeeController {
 
+    private final ListEmployeeService listEmployeeService;
+    private final SearchEmployeeService searchEmployeeService;
     private final CreateEmployeeService createEmployeeService;
     private final UpdateEmployeeService updateEmployeeService;
-    private final SearchEmployeeService searchEmployeeService;
-    private final EmployeeServiceDelete employeeServiceDelete;
+    private final DeleteEmployeeService deleteEmployeeService;
 
-    public EmployeeController(CreateEmployeeService createEmployeeService, UpdateEmployeeService updateEmployeeService, SearchEmployeeService searchEmployeeService, EmployeeServiceDelete employeeServiceDelete) {
+    public EmployeeController(CreateEmployeeService createEmployeeService, UpdateEmployeeService updateEmployeeService, SearchEmployeeService searchEmployeeService, ListEmployeeService listEmployeeService, DeleteEmployeeService deleteEmployeeService) {
         this.createEmployeeService = createEmployeeService;
         this.updateEmployeeService = updateEmployeeService;
         this.searchEmployeeService = searchEmployeeService;
-        this.employeeServiceDelete = employeeServiceDelete;
+        this.listEmployeeService = listEmployeeService;
+        this.deleteEmployeeService = deleteEmployeeService;
     }
 
     @Operation(summary = "Create employee", description = "Add an employee to database")
@@ -69,6 +73,30 @@ public class EmployeeController {
         return ResponseEntity.ok(updatedEmployeeId);
     }
 
+    @Operation(summary = "List employees", description = "List employees")
+    @ApiResponse(responseCode = "200", description = "Found", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = EmployeeModel.class))
+    })
+    @ApiResponse(responseCode = "404", description = "Not found", content = {
+            @Content(mediaType = "text/plain", schema = @Schema(type = "string", example = "Funcionários não encontrados.")),
+    })
+    @ApiResponse(responseCode = "400", description = "Invalid data", content = {
+            @Content(mediaType = "text/plain", schema = @Schema(type = "string", example = "Erro na solicitação de listar funcionários.")),
+    })
+    @GetMapping("/list")
+    public ResponseEntity<Object> listEmployees(@RequestParam(required = false) Role role,
+                                              @RequestParam(required = false) Position position,
+                                                @RequestParam(required = false) Integer page) {
+        try {
+            Page<EmployeeModel> employees = listEmployeeService.listEmployees(role, position, page);
+
+            if(employees.isEmpty()) return new ResponseEntity<>("Funcionários não encontrados.", HttpStatus.NOT_FOUND);
+
+            return new ResponseEntity<>(employees, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 
     @Operation(summary = "Search Employee", description = "Search an employee from database")
     @ApiResponse(responseCode = "404", description = "Employee not found", content = {
@@ -77,7 +105,6 @@ public class EmployeeController {
     @ApiResponse(responseCode = "200", description = "OK", content = {
             @Content(mediaType = "text/plain", schema = @Schema(type = "string", format = "uuid")),
     })
-
     @GetMapping
     public ResponseEntity<Object> getEmployee(
             @RequestParam(required = false) UUID id,
@@ -113,14 +140,13 @@ public class EmployeeController {
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteEmployee(@PathVariable(value = "id") UUID employeeId) {
-        EmployeeModel employee = employeeServiceDelete.deleteEmployee(employeeId);
+        EmployeeModel employee = deleteEmployeeService.deleteEmployee(employeeId);
         return (employee == null || !employee.getEmployeeId().equals(employeeId))
                 ? ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body("Employee not found")
                 : ResponseEntity.status(HttpStatus.OK).body("Employee deleted successfully");
     }
 }
-
 
 
 
