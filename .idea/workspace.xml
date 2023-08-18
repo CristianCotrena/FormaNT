@@ -4,25 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8240c21c-d21b-4955-8810-15986c9ae6f9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/locationCar/controllers/AddressController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/locationCar/dtos/AddressRecordDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/locationCar/models/AddressModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/locationCar/repositories/AddressRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/locationCar/services/funcionarioService/SearchEmployeeService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/example/locationCar/EmployeeTests/SearchEmployeeTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/locationCar/LocationCarApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/locationCar/LocationCarApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/locationCar/controllers/EmployeeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/locationCar/controllers/EmployeeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/locationCar/models/EmployeeModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/locationCar/models/EmployeeModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/locationCar/repositories/EmployeeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/locationCar/repositories/EmployeeRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/locationCar/services/funcionarioService/EmployeeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/locationCar/services/funcionarioService/EmployeeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/locationCar/utils/postmanFile/Funcionário.postman_collection.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/locationCar/utils/postmanFile/Funcionário.postman_collection.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-    </list>
+    <list default="true" id="8240c21c-d21b-4955-8810-15986c9ae6f9" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
