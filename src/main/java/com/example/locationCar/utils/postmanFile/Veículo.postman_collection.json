@@ -1,10 +1,9 @@
 {
 	"info": {
-		"_postman_id": "15b54eea-3096-4877-8c1c-0241f290207d",
+		"_postman_id": "1a3c760a-511a-417b-a914-3ebcfedb9ad2",
 		"name": "Veículo",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "18793992",
-		"_collection_link": "https://martian-astronaut-744258.postman.co/workspace/NTConsult~7475cf8a-732e-4b57-894e-cdb19065b26d/collection/18793992-15b54eea-3096-4877-8c1c-0241f290207d?action=share&creator=18793992&source=collection_link"
+		"_exporter_id": "29220711"
 	},
 	"item": [
 		{
@@ -29,6 +28,35 @@
 							"key": "page",
 							"value": "0"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateVehicle",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \r\n    \"license\": \"BRA2E18\",\r\n    \"brand\": \"tesla\",\r\n    \"model\": \"S\",\r\n    \"doorNumber\": 4,\r\n    \"color\": \"blue\",\r\n    \"fuel\": \"gasoline\",\r\n    \"dailyValue\": 50.3,\r\n    \"mileage\": 300.5,\r\n    \"rating\": 4.5\r\n} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/vehicle",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"vehicle"
 					]
 				}
 			},
