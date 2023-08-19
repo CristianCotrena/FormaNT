@@ -1,20 +1,20 @@
 {
 	"info": {
-		"_postman_id": "c8a869c0-202a-48c9-bdee-ef8916b7b7a2",
+		"_postman_id": "40effa85-fef1-4eb6-ba1c-d6dd2123b201",
 		"name": "Cliente",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "18793992",
-		"_collection_link": "https://martian-astronaut-744258.postman.co/workspace/NTConsult~7475cf8a-732e-4b57-894e-cdb19065b26d/collection/18793992-c8a869c0-202a-48c9-bdee-ef8916b7b7a2?action=share&creator=18793992&source=collection_link"
+		"_collection_link": "https://martian-astronaut-744258.postman.co/workspace/NTConsult~7475cf8a-732e-4b57-894e-cdb19065b26d/collection/18793992-40effa85-fef1-4eb6-ba1c-d6dd2123b201?action=share&source=collection_link&creator=18793992"
 	},
 	"item": [
 		{
-			"name": "CreateClient",
+			"name": "CreatClient",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Anna\",\r\n    \"cpfCnpj\": \"016.302.650-55\",\r\n    \"cnh\": \"jhhh\",\r\n    \"age\": 37,\r\n    \"telephone\": \"981220944\",\r\n    \"emergencyContact\": \"984873664\",\r\n    \"email\": \"anna.hermes@gmail.com\",\r\n    \"status\": 1\r\n}",
+					"raw": "{\r\n    \"name\": \"Bruno Ramos\",\r\n    \"cpfCnpj\": \"06210501990\",\r\n    \"cnh\": \"12356848484\",\r\n    \"age\": 37,\r\n    \"telephone\": \"41994455887\",\r\n    \"emergencyContact\": \"41994422554\",\r\n    \"email\": \"exluirtest@gmail.com\",\r\n    \"status\": 1\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -41,7 +41,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/v1/client/8dfa0850-5e31-401f-aa80-3d41a48b6169",
+					"raw": "http://localhost:8080/v1/client/b8143b41-dedd-4ff1-ad9f-fc911ea54187",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -50,19 +50,42 @@
 					"path": [
 						"v1",
 						"client",
-						"8dfa0850-5e31-401f-aa80-3d41a48b6169"
+						"b8143b41-dedd-4ff1-ad9f-fc911ea54187"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "ListClients",
+			"name": "SearchClient",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"method": "GET",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "http://localhost:8080/v1/client/list?page=0&age=20",
+					"raw": "http://localhost:8080/v1/client/list?page=0&age=21",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -80,7 +103,7 @@
 						},
 						{
 							"key": "age",
-							"value": "20"
+							"value": "21"
 						}
 					]
 				}
@@ -94,7 +117,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Felipe Miranda\"\r\n}",
+					"raw": "{\r\n    \"name\": \"Anna H.\",\r\n    \"cpfCnpj\": \"016.302.6500-00\",\r\n    \"cnh\": \"7777111111122\",\r\n    \"age\": 36,\r\n    \"telephone\": \"5121981220922\",\r\n    \"emergencyContact\": \"5121984873622\",\r\n    \"email\": \"anna.hermes@gmail.com\",\r\n    \"status\": 1\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -102,7 +125,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/v1/client/771079a3-7d31-433c-aae8-24a14b2b8c46",
+					"raw": "http://localhost:8080/v1/client/e3d9795f-374f-45e8-b013-04be52ba409c",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -111,7 +134,7 @@
 					"path": [
 						"v1",
 						"client",
-						"771079a3-7d31-433c-aae8-24a14b2b8c46"
+						"e3d9795f-374f-45e8-b013-04be52ba409c"
 					]
 				}
 			},

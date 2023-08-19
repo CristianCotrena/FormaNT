@@ -5,7 +5,7 @@ import com.example.locationCar.models.EmployeeModel;
 
 import com.example.locationCar.models.enums.Position;
 import com.example.locationCar.models.enums.Role;
-import com.example.locationCar.services.funcionarioService.ListEmployeeService;
+import com.example.locationCar.services.employeeService.ListEmployeeService;
 
 import com.example.locationCar.services.employeeService.CreateEmployeeService;
 import com.example.locationCar.services.employeeService.UpdateEmployeeService;
@@ -15,10 +15,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;

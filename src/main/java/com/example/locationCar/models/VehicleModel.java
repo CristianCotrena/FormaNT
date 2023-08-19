@@ -23,6 +23,7 @@ public class VehicleModel implements Serializable {
     private Integer doorNumber; // 2 ou 4
 
     private String color;
+
     private String fuel;
 
     private BigDecimal dailyValue;
@@ -32,6 +33,23 @@ public class VehicleModel implements Serializable {
     private Integer status;
 
     private BigDecimal rating;
+
+    public VehicleModel() {
+    }
+
+    public VehicleModel(UUID idVehicle, String license, String brand, String model, int doorNumber, String color, String fuel, BigDecimal dailyValue, BigDecimal mileage, int status, BigDecimal rating) {
+        this.idVehicle = idVehicle;
+        this.license = license;
+        this.brand = brand;
+        this.model = model;
+        this.doorNumber = doorNumber;
+        this.color = color;
+        this.fuel = fuel;
+        this.dailyValue = dailyValue;
+        this.mileage = mileage;
+        this.status = status;
+        this.rating = rating;
+    }
 
     public UUID getIdVehicle() {
         return idVehicle;

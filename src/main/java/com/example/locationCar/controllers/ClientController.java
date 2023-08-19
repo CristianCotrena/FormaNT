@@ -22,7 +22,6 @@ import java.util.UUID;
 
 import com.example.locationCar.services.clientService.DeleteClientService;
 
-
 @RestController
 @RequestMapping("v1/client")
 @Tag(name = "Client", description = "Operations about client")
@@ -61,22 +60,24 @@ public class ClientController {
             @Schema(description = "Email that you created in POST")
             @RequestParam(value = "email", required = false) String email) {
 
-        if (idClient != null) {
-            ClientModel clientModel = searchClientService.findUserById(idClient);
-            return ResponseEntity.status(HttpStatus.OK).body(clientModel);
+        try {
+            if (idClient != null) {
+                ClientModel clientModel = searchClientService.findUserById(idClient);
+                return ResponseEntity.status(HttpStatus.OK).body(clientModel);
+            } else if (cpfCnpj != null) {
+                ClientModel clientModel = searchClientService.findUserByCpfCnpj(cpfCnpj);
+                return ResponseEntity.status(HttpStatus.OK).body(clientModel);
+            }else if (email != null) {
+                ClientModel clientModel = searchClientService.findUserByEmail(email);
+                return ResponseEntity.status(HttpStatus.OK).body(clientModel);
+            }else {
+                return ResponseEntity.badRequest().body("Client not found");
+            }
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("Informe um ID, CPF/CNPJ ou e-mail válido para buscar o cliente.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao processar a requisição.");
         }
-
-        if (cpfCnpj != null) {
-            ClientModel clientModel = searchClientService.findUserByCpfCnpj(cpfCnpj);
-            return ResponseEntity.status(HttpStatus.OK).body(clientModel);
-        }
-
-        if (email != null) {
-            ClientModel clientModel = searchClientService.findUserByEmail(email);
-            return ResponseEntity.status(HttpStatus.OK).body(clientModel);
-        }
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Client not found");
     }
 
     @Operation(summary = "Create client", description = "Add a client to database")
