@@ -1,9 +1,66 @@
 {
 	"info": {
-		"_postman_id": "c0e04e4a-3ffb-4183-ba88-4ae12ced6c78",
+		"_postman_id": "1a3c760a-511a-417b-a914-3ebcfedb9ad2",
 		"name": "Veículo",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "28517604"
+		"_exporter_id": "29220711"
 	},
-	"item": []
+	"item": [
+		{
+			"name": "ListVehicles",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/vehicle/list?page=0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"vehicle",
+						"list"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateVehicle",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \r\n    \"license\": \"BRA2E18\",\r\n    \"brand\": \"tesla\",\r\n    \"model\": \"S\",\r\n    \"doorNumber\": 4,\r\n    \"color\": \"blue\",\r\n    \"fuel\": \"gasoline\",\r\n    \"dailyValue\": 50.3,\r\n    \"mileage\": 300.5,\r\n    \"rating\": 4.5\r\n} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/vehicle",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"vehicle"
+					]
+				}
+			},
+			"response": []
+		}
+	]
 }

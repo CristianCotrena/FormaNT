@@ -1,62 +1,39 @@
-package com.example.locationCar.models;
+package com.example.locationCar.dtos.input;
 
-import jakarta.persistence.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.UUID;
 
-@Entity
-@Table(name = "TB_VEHICLE")
-public class VehicleModel implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID idVehicle;
+public class VehicleInputDto {
 
+    @Schema(example = "BRA2E18")
     private String license;
 
+    @Schema(example = "tesla")
     private String brand;
 
+    @Schema(example = "s")
     private String model;
 
+    @Schema(example = "4")
     private Integer doorNumber; // 2 ou 4
 
+    @Schema(example = "black")
     private String color;
 
+    @Schema(example = "gasoline")
     private String fuel;
 
+    @Schema(example = "43.3")
     private BigDecimal dailyValue;
 
+    @Schema(example =  "2500.5")
     private BigDecimal mileage;
 
-    private Integer status;
-
+    @Schema(example = "2.5")
     private BigDecimal rating;
 
-    public VehicleModel() {
-    }
-
-    public VehicleModel(UUID idVehicle, String license, String brand, String model, int doorNumber, String color, String fuel, BigDecimal dailyValue, BigDecimal mileage, int status, BigDecimal rating) {
-        this.idVehicle = idVehicle;
-        this.license = license;
-        this.brand = brand;
-        this.model = model;
-        this.doorNumber = doorNumber;
-        this.color = color;
-        this.fuel = fuel;
-        this.dailyValue = dailyValue;
-        this.mileage = mileage;
-        this.status = status;
-        this.rating = rating;
-    }
-
-    public UUID getIdVehicle() {
-        return idVehicle;
-    }
-
-    public void setIdVehicle(UUID idVehicle) {
-        this.idVehicle = idVehicle;
+    public VehicleInputDto() {
     }
 
     public String getLicense() {
@@ -121,14 +98,6 @@ public class VehicleModel implements Serializable {
 
     public void setMileage(BigDecimal mileage) {
         this.mileage = mileage;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
     }
 
     public BigDecimal getRating() {
