@@ -17,6 +17,6 @@ public interface ClientRepository extends JpaRepository<ClientModel, UUID> {
 
     ClientModel findByEmailAndCpfCnpj(String email, String cpfCnpj);
 
-    @Query("SELECT c FROM ClientModel c WHERE (:age IS NULL OR c.age >= :age)")
-    Page<ClientModel> listByAgeGreaterThan(Integer age, PageRequest pageRequest);
+    @Query("SELECT c FROM ClientModel c WHERE (:age IS NULL OR c.age = :age)")
+    Page<ClientModel> listByAge(Integer age, PageRequest pageRequest);
 }
