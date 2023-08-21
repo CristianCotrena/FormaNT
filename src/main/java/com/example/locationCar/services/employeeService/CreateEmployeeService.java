@@ -6,7 +6,6 @@ import com.example.locationCar.models.enums.Role;
 import com.example.locationCar.models.enums.ContractType;
 import com.example.locationCar.repositories.EmployeeRepository;
 import org.apache.commons.validator.routines.EmailValidator;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import java.util.regex.Pattern;
 
