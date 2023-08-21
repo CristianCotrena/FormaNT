@@ -9,4 +9,5 @@ public @interface RegexValues {
     String CNPJ_LENGTH = "^\\d{14}$";
     String PHONE = "^\\d{2}\\d{4,5}-\\d{4}$";
     String PHONE_LENGTH = "^\\d{10,11}$";
+    String LICENSE = "[A-Z]{3}[0-9][0-9A-Z][0-9]{2}";
 }
