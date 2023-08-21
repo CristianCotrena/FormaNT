@@ -1,9 +1,8 @@
 package com.example.locationCar.controllers;
 
+import com.example.locationCar.base.dto.BaseDto;
 import com.example.locationCar.dtos.EmployeeRecordDto;
 import com.example.locationCar.models.EmployeeModel;
-import com.example.locationCar.models.enums.Position;
-import com.example.locationCar.models.enums.Role;
 import com.example.locationCar.services.employeeService.ListEmployeeService;
 import com.example.locationCar.services.employeeService.CreateEmployeeService;
 import com.example.locationCar.services.employeeService.DeleteEmployeeService;
@@ -16,7 +15,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -84,18 +82,12 @@ public class EmployeeController {
             @Content(mediaType = "text/plain", schema = @Schema(type = "string", example = "Erro na solicitação de listar funcionários.")),
     })
     @GetMapping("/list")
-    public ResponseEntity<Object> listEmployees(@RequestParam(required = false) Role role,
-                                              @RequestParam(required = false) Position position,
-                                                @RequestParam(required = false) Integer page) {
-        try {
-            Page<EmployeeModel> employees = listEmployeeService.listEmployees(role, position, page);
+    public ResponseEntity<BaseDto> listEmployees(@RequestParam(required = false) String role,
+                                 @RequestParam(required = false) String position,
+                                 @RequestParam(required = false) String page) {
+        BaseDto baseDto = listEmployeeService.listEmployees(role, position, page);
 
-            if(employees.isEmpty()) return new ResponseEntity<>("Funcionários não encontrados.", HttpStatus.NOT_FOUND);
-
-            return new ResponseEntity<>(employees, HttpStatus.OK);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+        return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
     }
 
     @Operation(summary = "Search Employee", description = "Search an employee from database")

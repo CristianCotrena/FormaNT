@@ -1,30 +1,68 @@
 package com.example.locationCar.services.employeeService;
 
+import com.example.locationCar.base.dto.BaseDto;
+import com.example.locationCar.base.dto.BaseErrorDto;
+import com.example.locationCar.builder.ResponseErrorBuilder;
+import com.example.locationCar.constants.ErrorMessage;
+import com.example.locationCar.builder.ResponseSuccessBuilder;
+import com.example.locationCar.constants.SuccessMessage;
 import com.example.locationCar.models.EmployeeModel;
 import com.example.locationCar.models.enums.Position;
 import com.example.locationCar.models.enums.Role;
 import com.example.locationCar.repositories.EmployeeRepository;
+import com.example.locationCar.validate.employee.ListEmployeeValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ListEmployeeService {
     private final EmployeeRepository employeeRepository;
 
     @Autowired
-    public ListEmployeeService(EmployeeRepository employeeRepository){
-         this.employeeRepository = employeeRepository;
+    public ListEmployeeService(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
     }
 
-    public Page<EmployeeModel> listEmployees(Role role, Position position, Integer page){
-        int pageToSearch = page;
+    public BaseDto listEmployees(String role, String position, String page) {
+        List<BaseErrorDto> errors = new ListEmployeeValidate().validateParamsToSearch(role, position);
 
-        if(page == null) pageToSearch = 0;
+        if (errors.size() > 0) {
+            ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, errors);
+            return result.get();
+        }
 
-        PageRequest pageRequest = PageRequest.of(pageToSearch, 1);
+        int pageToSearch = 0;
 
-        return employeeRepository.listByRoleAndPosition(role, position, pageRequest);
+        if(page != null) {
+            try{
+                pageToSearch = Integer.parseInt(page);
+            }catch(Exception e){
+                ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, ErrorMessage.INVALID_PAGE);
+                return result.get();
+            }
+        }
+
+        Role roleToSearch = role != null ? Role.valueOf(role) : null;
+        Position positionToSearch = position != null ? Position.valueOf(position) : null;
+
+        PageRequest pageRequest = PageRequest.of(pageToSearch, 20);
+        Page<EmployeeModel> employees = employeeRepository.listByRoleAndPosition(roleToSearch, positionToSearch, pageRequest);
+
+        if ((employees.getTotalPages() - 1) < pageToSearch) {
+            ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, ErrorMessage.INVALID_PAGE);
+            return result.get();
+        }
+
+        if (employees.isEmpty()) {
+            ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, ErrorMessage.NOT_FOUND);
+            return result.get();
+        }
+
+        return new ResponseSuccessBuilder<>(HttpStatus.OK, employees, SuccessMessage.LIST_EMPLOYEES).get();
     }
 }
