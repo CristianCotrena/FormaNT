@@ -7,8 +7,6 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.UUID;
 
-import static com.example.locationCar.services.employeeService.CreateEmployeeService.isValidEmail;
-
 @Service
 public class SearchEmployeeService {
 
