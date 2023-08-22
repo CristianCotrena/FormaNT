@@ -1,5 +1,8 @@
 package com.example.locationCar.validate.client;
 
+import br.com.caelum.stella.validation.CNPJValidator;
+import br.com.caelum.stella.validation.CPFValidator;
+import br.com.caelum.stella.validation.InvalidStateException;
 import com.example.locationCar.base.dto.BaseErrorDto;
 import com.example.locationCar.constants.ErrorMessage;
 import com.example.locationCar.constants.RegexValues;
@@ -58,15 +61,9 @@ public class CreateClientValidate {
             errors.add(new BaseErrorDto("cnh", ErrorMessage.INVALID_FIELD));
         }
 
-        if (!(
-                Pattern.compile(RegexValues.CPF).matcher(clientModel.getCpfCnpj()).matches() ||
-                        Pattern.compile(RegexValues.CPF_LENGTH).matcher(clientModel.getCpfCnpj()).matches()
-        ) && !(
-                Pattern.compile(RegexValues.CNPJ).matcher(clientModel.getCpfCnpj()).matches() ||
-                        Pattern.compile(RegexValues.CNPJ_LENGTH).matcher(clientModel.getCpfCnpj()).matches()
-        )) {
-            errors.add(new BaseErrorDto("cpfCnpj", ErrorMessage.INVALID_FIELD));
-        }
+        if (!validarCPF(clientModel.getCpfCnpj()) && !validarCNPJ(clientModel.getCpfCnpj())) {
+                errors.add(new BaseErrorDto("cpfCnpj", ErrorMessage.INVALID_FIELD));
+            }
 
         if (!Pattern.compile(RegexValues.PHONE).matcher(clientModel.getTelephone()).matches() &&
                 !Pattern.compile(RegexValues.PHONE_LENGTH).matcher(clientModel.getTelephone()).matches()) {
@@ -83,8 +80,26 @@ public class CreateClientValidate {
         }
 
         return errors;
-
     }
 
+    private boolean validarCPF(String cpf){
+        CPFValidator cpfValidator = new CPFValidator();
+        try {
+            cpfValidator.assertValid(cpf);
+            return true;
+        } catch (InvalidStateException e) {
+            return false;
+        }
+    }
+
+    private boolean validarCNPJ(String cnpj){
+        CNPJValidator cnpjValidator = new CNPJValidator();
+        try {
+            cnpjValidator.assertValid(cnpj);
+            return true;
+        } catch (InvalidStateException e) {
+            return false;
+        }
+    }
 
 }
