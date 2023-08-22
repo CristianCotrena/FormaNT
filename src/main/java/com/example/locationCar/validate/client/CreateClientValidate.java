@@ -65,13 +65,11 @@ public class CreateClientValidate {
                 errors.add(new BaseErrorDto("cpfCnpj", ErrorMessage.INVALID_FIELD));
             }
 
-        if (!Pattern.compile(RegexValues.PHONE).matcher(clientModel.getTelephone()).matches() &&
-                !Pattern.compile(RegexValues.PHONE_LENGTH).matcher(clientModel.getTelephone()).matches()) {
+        if (!Pattern.compile(RegexValues.PHONE).matcher(clientModel.getTelephone()).matches()) {
             errors.add(new BaseErrorDto("telephone", ErrorMessage.INVALID_FIELD));
         }
 
-        if (!Pattern.compile(RegexValues.PHONE).matcher(clientModel.getEmergencyContact()).matches() &&
-                !Pattern.compile(RegexValues.PHONE_LENGTH).matcher(clientModel.getEmergencyContact()).matches()) {
+        if (!Pattern.compile(RegexValues.PHONE).matcher(clientModel.getEmergencyContact()).matches()) {
             errors.add(new BaseErrorDto("emergencyContact", ErrorMessage.INVALID_FIELD));
         }
 
