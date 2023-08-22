@@ -22,4 +22,5 @@ public enum Position {
         }
         throw new IllegalArgumentException("Invalid Position value: " + value);
     }
+
 }

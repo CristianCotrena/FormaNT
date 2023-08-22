@@ -15,6 +15,7 @@ import com.example.locationCar.models.enums.Role;
 import com.example.locationCar.repositories.EmployeeRepository;
 import com.example.locationCar.validate.employee.CreateEmployeeValidate;
 import org.springframework.http.HttpStatus;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -21,3 +21,4 @@ public interface EmployeeRepository extends JpaRepository<EmployeeModel, UUID> {
     @Query("SELECT c FROM EmployeeModel c WHERE (:role IS NULL OR c.role >= :role) AND (:position IS NULL OR c.position = :position)")
     Page<EmployeeModel> listByRoleAndPosition(@Param("role") Role role, @Param("position") Position position, PageRequest pageRequest);
 }
+

@@ -5,21 +5,20 @@ import com.example.locationCar.models.enums.Role;
 import com.example.locationCar.models.enums.ContractType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name = "TB_FUNCIONARIO")
+@Table(name = "TB_EMPLOYEE")
 public class EmployeeModel implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Schema (hidden = true)
+    @Schema(hidden = true)
     private UUID employeeId;
 
     @Schema(example = "Marineide")
