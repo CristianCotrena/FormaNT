@@ -5,6 +5,7 @@ import com.example.locationCar.base.dto.BaseErrorDto;
 import com.example.locationCar.constants.ErrorMessage;
 import com.example.locationCar.constants.RegexValues;
 import com.example.locationCar.dtos.EmployeeDto;
+import com.example.locationCar.validate.caelumStringValidator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,16 +62,13 @@ public class CreateEmployeeValidate {
             errors.add(new BaseErrorDto("email", ErrorMessage.INVALID_FIELD));
         }
 
-        boolean isValidCpfCnpj = Pattern.compile(RegexValues.CPF).matcher(employeeDto.getCpfCnpj()).matches() ||
-                Pattern.compile(RegexValues.CPF_LENGTH).matcher(employeeDto.getCpfCnpj()).matches() ||
-                Pattern.compile(RegexValues.CNPJ).matcher(employeeDto.getCpfCnpj()).matches() ||
-                Pattern.compile(RegexValues.CNPJ_LENGTH).matcher(employeeDto.getCpfCnpj()).matches();
-
-        if (!Pattern.compile(RegexValues.PHONE).matcher(employeeDto.getPhone()).matches() &&
-                !Pattern.compile(RegexValues.PHONE_LENGTH).matcher(employeeDto.getPhone()).matches()) {
-            errors.add(new BaseErrorDto("phone", ErrorMessage.INVALID_FIELD));
+        if (!caelumStringValidator.validarCPF(employeeDto.getCpfCnpj()) && !caelumStringValidator.validarCNPJ(employeeDto.getCpfCnpj())) {
+            errors.add(new BaseErrorDto("cpfCnpj", ErrorMessage.INVALID_FIELD));
         }
 
+        if (!Pattern.compile(RegexValues.PHONE).matcher(employeeDto.getPhone()).matches()) {
+            errors.add(new BaseErrorDto("phone", ErrorMessage.INVALID_FIELD));
+        }
 
         if (!"VENDEDOR".equals(employeeDto.getPosition()) && !"ESTOQUISTA".equals(employeeDto.getPosition())) {
             errors.add(new BaseErrorDto("position", ErrorMessage.INVALID_FIELD));
@@ -85,35 +83,15 @@ public class CreateEmployeeValidate {
         }
 
         if ("CLT".equals(employeeDto.getContractType())) {
-            if (!validarCPF(employeeDto.getCpfCnpj())) {
+            if (!caelumStringValidator.validarCPF(employeeDto.getCpfCnpj())) {
                 errors.add(new BaseErrorDto("cpfCnpj", ErrorMessage.INVALID_FIELD));
             }
         } else if ("CNPJ".equals(employeeDto.getContractType())) {
-            if (!validarCNPJ(employeeDto.getCpfCnpj())) {
+            if (!caelumStringValidator.validarCNPJ(employeeDto.getCpfCnpj())) {
                 errors.add(new BaseErrorDto("cpfCnpj", ErrorMessage.INVALID_FIELD));
             }
         }
 
         return errors;
     }
-
-    private boolean validarCPF(String cpf) {
-        CPFValidator cpfValidator = new CPFValidator();
-        try {
-            cpfValidator.assertValid(cpf);
-            return true;
-        } catch (InvalidStateException e) {
-            return false;
-        }
-    }
-    private boolean validarCNPJ(String cnpj) {
-        CNPJValidator cnpjValidator = new CNPJValidator();
-        try {
-            cnpjValidator.assertValid(cnpj);
-            return true;
-        } catch (InvalidStateException e) {
-            return false;
-        }
-    }
-
 }
