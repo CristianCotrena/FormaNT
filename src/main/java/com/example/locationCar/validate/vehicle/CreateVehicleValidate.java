@@ -66,7 +66,7 @@ public class CreateVehicleValidate {
             errors.add(new BaseErrorDto("doorNumber", ErrorMessage.INVALID_FIELD));
         }
 
-        if (doubleValue(vehicleInputDto.getDailyValue()) <  0) {
+        if (doubleValue(vehicleInputDto.getDailyValue()) <=  0) {
             errors.add(new BaseErrorDto("dailyValue", ErrorMessage.NEGATIVE_DAILY_VALUE));
         }
 
