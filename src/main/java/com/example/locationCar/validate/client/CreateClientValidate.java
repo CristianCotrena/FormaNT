@@ -1,12 +1,10 @@
 package com.example.locationCar.validate.client;
 
-import br.com.caelum.stella.validation.CNPJValidator;
-import br.com.caelum.stella.validation.CPFValidator;
-import br.com.caelum.stella.validation.InvalidStateException;
 import com.example.locationCar.base.dto.BaseErrorDto;
 import com.example.locationCar.constants.ErrorMessage;
 import com.example.locationCar.constants.RegexValues;
 import com.example.locationCar.models.ClientModel;
+import com.example.locationCar.validate.caelumStringValidator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +59,7 @@ public class CreateClientValidate {
             errors.add(new BaseErrorDto("cnh", ErrorMessage.INVALID_FIELD));
         }
 
-        if (!validarCPF(clientModel.getCpfCnpj()) && !validarCNPJ(clientModel.getCpfCnpj())) {
+        if (!caelumStringValidator.validarCPF(clientModel.getCpfCnpj()) && !caelumStringValidator.validarCNPJ(clientModel.getCpfCnpj())) {
                 errors.add(new BaseErrorDto("cpfCnpj", ErrorMessage.INVALID_FIELD));
             }
 
@@ -79,25 +77,4 @@ public class CreateClientValidate {
 
         return errors;
     }
-
-    private boolean validarCPF(String cpf){
-        CPFValidator cpfValidator = new CPFValidator();
-        try {
-            cpfValidator.assertValid(cpf);
-            return true;
-        } catch (InvalidStateException e) {
-            return false;
-        }
-    }
-
-    private boolean validarCNPJ(String cnpj){
-        CNPJValidator cnpjValidator = new CNPJValidator();
-        try {
-            cnpjValidator.assertValid(cnpj);
-            return true;
-        } catch (InvalidStateException e) {
-            return false;
-        }
-    }
-
 }
