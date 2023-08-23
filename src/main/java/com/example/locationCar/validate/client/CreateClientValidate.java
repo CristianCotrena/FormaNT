@@ -4,6 +4,7 @@ import com.example.locationCar.base.dto.BaseErrorDto;
 import com.example.locationCar.constants.ErrorMessage;
 import com.example.locationCar.constants.RegexValues;
 import com.example.locationCar.models.ClientModel;
+import com.example.locationCar.validate.caelumStringValidator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,23 +59,15 @@ public class CreateClientValidate {
             errors.add(new BaseErrorDto("cnh", ErrorMessage.INVALID_FIELD));
         }
 
-        if (!(
-                Pattern.compile(RegexValues.CPF).matcher(clientModel.getCpfCnpj()).matches() ||
-                        Pattern.compile(RegexValues.CPF_LENGTH).matcher(clientModel.getCpfCnpj()).matches()
-        ) && !(
-                Pattern.compile(RegexValues.CNPJ).matcher(clientModel.getCpfCnpj()).matches() ||
-                        Pattern.compile(RegexValues.CNPJ_LENGTH).matcher(clientModel.getCpfCnpj()).matches()
-        )) {
-            errors.add(new BaseErrorDto("cpfCnpj", ErrorMessage.INVALID_FIELD));
-        }
+        if (!caelumStringValidator.validarCPF(clientModel.getCpfCnpj()) && !caelumStringValidator.validarCNPJ(clientModel.getCpfCnpj())) {
+                errors.add(new BaseErrorDto("cpfCnpj", ErrorMessage.INVALID_FIELD));
+            }
 
-        if (!Pattern.compile(RegexValues.PHONE).matcher(clientModel.getTelephone()).matches() &&
-                !Pattern.compile(RegexValues.PHONE_LENGTH).matcher(clientModel.getTelephone()).matches()) {
+        if (!Pattern.compile(RegexValues.PHONE).matcher(clientModel.getTelephone()).matches()) {
             errors.add(new BaseErrorDto("telephone", ErrorMessage.INVALID_FIELD));
         }
 
-        if (!Pattern.compile(RegexValues.PHONE).matcher(clientModel.getEmergencyContact()).matches() &&
-                !Pattern.compile(RegexValues.PHONE_LENGTH).matcher(clientModel.getEmergencyContact()).matches()) {
+        if (!Pattern.compile(RegexValues.PHONE).matcher(clientModel.getEmergencyContact()).matches()) {
             errors.add(new BaseErrorDto("emergencyContact", ErrorMessage.INVALID_FIELD));
         }
 
@@ -83,8 +76,5 @@ public class CreateClientValidate {
         }
 
         return errors;
-
     }
-
-
 }
