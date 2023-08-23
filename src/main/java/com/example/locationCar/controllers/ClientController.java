@@ -4,6 +4,7 @@ import com.example.locationCar.base.dto.BaseDto;
 import com.example.locationCar.dtos.ClientUpdateDto;
 import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.services.clientService.*;
+import com.example.locationCar.services.clientService.CreateClientService;
 import com.example.locationCar.services.clientService.UpdateClientService;
 import com.example.locationCar.services.clientService.SearchClientService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,7 +22,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.example.locationCar.services.clientService.DeleteClientService;
-
 
 @RestController
 @RequestMapping("v1/client")
@@ -61,22 +61,24 @@ public class ClientController {
             @Schema(description = "Email that you created in POST")
             @RequestParam(value = "email", required = false) String email) {
 
-        if (idClient != null) {
-            ClientModel clientModel = searchClientService.findUserById(idClient);
-            return ResponseEntity.status(HttpStatus.OK).body(clientModel);
+        try {
+            if (idClient != null) {
+                ClientModel clientModel = searchClientService.findUserById(idClient);
+                return ResponseEntity.status(HttpStatus.OK).body(clientModel);
+            } else if (cpfCnpj != null) {
+                ClientModel clientModel = searchClientService.findUserByCpfCnpj(cpfCnpj);
+                return ResponseEntity.status(HttpStatus.OK).body(clientModel);
+            } else if (email != null) {
+                ClientModel clientModel = searchClientService.findUserByEmail(email);
+                return ResponseEntity.status(HttpStatus.OK).body(clientModel);
+            } else {
+                return ResponseEntity.badRequest().body("Client not found");
+            }
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("Informe um ID, CPF/CNPJ ou e-mail válido para buscar o cliente.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao processar a requisição.");
         }
-
-        if (cpfCnpj != null) {
-            ClientModel clientModel = searchClientService.findUserByCpfCnpj(cpfCnpj);
-            return ResponseEntity.status(HttpStatus.OK).body(clientModel);
-        }
-
-        if (email != null) {
-            ClientModel clientModel = searchClientService.findUserByEmail(email);
-            return ResponseEntity.status(HttpStatus.OK).body(clientModel);
-        }
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Client not found");
     }
 
     @Operation(summary = "Create client", description = "Add a client to database")
@@ -90,7 +92,7 @@ public class ClientController {
     })
     @PostMapping
     public BaseDto createClient(@RequestBody ClientModel clientModel) {
-            return createClientService.createClient(clientModel);
+        return createClientService.createClient(clientModel);
     }
 
     @Operation(summary = "Update client", description = "Update client")
@@ -118,23 +120,17 @@ public class ClientController {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ClientModel.class))
     })
     @ApiResponse(responseCode = "404", description = "Invalid data", content = {
-            @Content(mediaType = "text/plain", schema = @Schema(type = "string", example = "Clientes não encontrados.")),
+            @Content(mediaType = "application/json", schema = @Schema(type = "string", example = "Clientes não encontrados.")),
     })
     @ApiResponse(responseCode = "400", description = "Invalid data", content = {
-            @Content(mediaType = "text/plain", schema = @Schema(type = "string", example = "Idade informada precisa ser maior ou igual a 18.")),
+            @Content(mediaType = "application/json", schema = @Schema(type = "string", example = "Idade informada precisa ser maior ou igual a 18.")),
     })
     @GetMapping("/list")
-    public ResponseEntity<Object> listClients(@RequestParam(required = false) Integer age,
-                                              @RequestParam(required = false) Integer page) {
-        try {
-            Page<ClientModel> clients = listClientService.listClients(age, page);
+    public ResponseEntity<BaseDto> listClients(@RequestParam(required = false) String age,
+                                               @RequestParam(required = false) String page) {
+        BaseDto baseDto = listClientService.listClients(age, page);
 
-            if (clients.isEmpty()) return new ResponseEntity<>("Clientes não encontrados.", HttpStatus.NOT_FOUND);
-
-            return new ResponseEntity<>(clients, HttpStatus.OK);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+        return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
     }
 
     @Operation(summary = "Delete Client", description = "Delete an client to database")
@@ -158,8 +154,9 @@ public class ClientController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error, please enter only your Client ID.");
         }
     }
+
     @DeleteMapping("/")
     public ResponseEntity<Object> deleteClientError() {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error, Id cannot be null");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error, Id cannot be null");
     }
 }

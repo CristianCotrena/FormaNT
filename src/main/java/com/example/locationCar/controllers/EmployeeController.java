@@ -1,20 +1,14 @@
 package com.example.locationCar.controllers;
 
+import com.example.locationCar.base.dto.BaseDto;
+import com.example.locationCar.dtos.EmployeeDto;
 import com.example.locationCar.dtos.EmployeeRecordDto;
 import com.example.locationCar.models.EmployeeModel;
-
-import com.example.locationCar.models.enums.Position;
-import com.example.locationCar.models.enums.Role;
-import com.example.locationCar.services.funcionarioService.ListEmployeeService;
-
+import com.example.locationCar.services.employeeService.ListEmployeeService;
 import com.example.locationCar.services.employeeService.CreateEmployeeService;
+import com.example.locationCar.services.employeeService.DeleteEmployeeService;
 import com.example.locationCar.services.employeeService.UpdateEmployeeService;
 import com.example.locationCar.services.employeeService.SearchEmployeeService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -22,28 +16,28 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/v1/employee")
-@Tag(name = "Employee", description = "Operations about employee")
+@Tag(name = "Employee", description = "Operations about Employee")
 public class EmployeeController {
 
     private final ListEmployeeService listEmployeeService;
     private final SearchEmployeeService searchEmployeeService;
     private final CreateEmployeeService createEmployeeService;
     private final UpdateEmployeeService updateEmployeeService;
+    private final DeleteEmployeeService deleteEmployeeService;
 
-    public EmployeeController(CreateEmployeeService createEmployeeService, UpdateEmployeeService updateEmployeeService, SearchEmployeeService searchEmployeeService, ListEmployeeService listEmployeeService) {
+    public EmployeeController(CreateEmployeeService createEmployeeService, UpdateEmployeeService updateEmployeeService, SearchEmployeeService searchEmployeeService, ListEmployeeService listEmployeeService, DeleteEmployeeService deleteEmployeeService) {
         this.createEmployeeService = createEmployeeService;
         this.updateEmployeeService = updateEmployeeService;
         this.searchEmployeeService = searchEmployeeService;
         this.listEmployeeService = listEmployeeService;
+        this.deleteEmployeeService = deleteEmployeeService;
     }
 
     @Operation(summary = "Create employee", description = "Add an employee to database")
@@ -56,12 +50,10 @@ public class EmployeeController {
 
     })
     @PostMapping
-    public ResponseEntity<EmployeeModel> saveEmployee(@RequestBody @Valid EmployeeRecordDto employeeRecordDto) {
-        var employeeModel = new EmployeeModel();
-        BeanUtils.copyProperties(employeeRecordDto, employeeModel);
-        EmployeeModel savedEmployee = createEmployeeService.saveEmployee(employeeModel);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedEmployee)  ;
+    public ResponseEntity<BaseDto> createEmployee(@RequestBody EmployeeDto employeeDto) {
+        System.out.println("Received employeeDto: " + employeeDto);
+        BaseDto baseDto = createEmployeeService.createEmployee(employeeDto);
+        return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
     }
 
     @Operation(summary = "Atualizar funcionário", description = "Atualizar um funcionário existente no banco de dados")
@@ -89,20 +81,21 @@ public class EmployeeController {
             @Content(mediaType = "text/plain", schema = @Schema(type = "string", example = "Erro na solicitação de listar funcionários.")),
     })
     @GetMapping("/list")
-    public ResponseEntity<Object> listEmployees(@RequestParam(required = false) Role role,
-                                              @RequestParam(required = false) Position position,
-                                                @RequestParam(required = false) Integer page) {
-        try {
-            Page<EmployeeModel> employees = listEmployeeService.listEmployees(role, position, page);
+    public ResponseEntity<BaseDto> listEmployees(@RequestParam(required = false) String role,
+                                 @RequestParam(required = false) String position,
+                                 @RequestParam(required = false) String page) {
+        BaseDto baseDto = listEmployeeService.listEmployees(role, position, page);
 
-            if(employees.isEmpty()) return new ResponseEntity<>("Funcionários não encontrados.", HttpStatus.NOT_FOUND);
-
-            return new ResponseEntity<>(employees, HttpStatus.OK);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+        return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
     }
 
+    @Operation(summary = "Search Employee", description = "Search an employee from database")
+    @ApiResponse(responseCode = "404", description = "Employee not found", content = {
+            @Content(mediaType = "text/plain", schema = @Schema(type = "string", example = "Funcionário não encontrado pelo ID informado."))
+    })
+    @ApiResponse(responseCode = "200", description = "OK", content = {
+            @Content(mediaType = "text/plain", schema = @Schema(type = "string", format = "uuid")),
+    })
     @GetMapping
     public ResponseEntity<Object> getEmployee(
             @RequestParam(required = false) UUID id,
@@ -127,6 +120,22 @@ public class EmployeeController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao processar a requisição.");
         }
+    }
+
+    @Operation(summary = "Delete Employee", description = "Delete an employee to database")
+    @ApiResponse(responseCode = "200", description = "OK", content = {
+            @Content(mediaType = "text/plain", schema = @Schema(type = "string", example = "Employee deleted successfully"))
+    })
+    @ApiResponse(responseCode = "404", description = "Employee not found", content = {
+            @Content(mediaType = "text/plain", schema = @Schema(type = "string", example = "Employee not found")),
+    })
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteEmployee(@PathVariable(value = "id") UUID employeeId) {
+        EmployeeModel employee = deleteEmployeeService.deleteEmployee(employeeId);
+        return (employee == null || !employee.getEmployeeId().equals(employeeId))
+                ? ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("Employee not found")
+                : ResponseEntity.status(HttpStatus.OK).body("Employee deleted successfully");
     }
 }
 

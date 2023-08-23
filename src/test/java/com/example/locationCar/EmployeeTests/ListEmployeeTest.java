@@ -1,135 +1,76 @@
 package com.example.locationCar.EmployeeTests;
 
-import com.example.locationCar.controllers.EmployeeController;
+import com.example.locationCar.base.dto.BaseDto;
+import com.example.locationCar.base.dto.BaseErrorDto;
 import com.example.locationCar.models.EmployeeModel;
-import com.example.locationCar.models.enums.ContractType;
-import com.example.locationCar.models.enums.Position;
-import com.example.locationCar.models.enums.Role;
-import com.example.locationCar.services.funcionarioService.ListEmployeeService;
+import com.example.locationCar.repositories.EmployeeRepository;
+import com.example.locationCar.services.employeeService.ListEmployeeService;
+import com.example.locationCar.validate.employee.ListEmployeeValidate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 public class ListEmployeeTest {
+
     @Mock
+    private EmployeeRepository employeeRepository;
+
+    @Mock
+    private ListEmployeeValidate listEmployeeValidate;
+
     private ListEmployeeService listEmployeeService;
-
-    @InjectMocks
-    private EmployeeController employeeController;
-
-    private List<EmployeeModel> employees;
 
     @BeforeEach
     public void setup() {
-        MockitoAnnotations.initMocks(this);
-        employees = new ArrayList<>();
-        employees.add(new EmployeeModel(UUID.fromString("03126285-ff54-4b26-86d6-fccd155cc4fc"), "Funcionário 1", Position.VENDEDOR, "11111111111", "123456", "1111111111", ContractType.CLT, Role.ADMINISTRADOR, "employee1@gmail.com", 1));
-        employees.add(new EmployeeModel(UUID.fromString("03126285-ff54-4b26-86d6-fccd155cc4fd"), "Funcionário 2", Position.VENDEDOR, "22222222222", "1234567", "2222222222", ContractType.CNPJ, Role.VENDEDOR,"employee2@gmail.com", 1));
-        employees.add(new EmployeeModel(UUID.fromString("03126285-ff54-4b26-86d6-fccd155cc4fe"), "Funcionário 3", Position.ESTOQUISTA, "33333333333", "12345678", "3333333333", ContractType.CLT, Role.VENDEDOR,"employee3@gmail.com", 1));
+        MockitoAnnotations.openMocks(this);
+        listEmployeeService = new ListEmployeeService(employeeRepository);
     }
 
     @Test
-    public void testListEmployees_AllEmployees() {
-        when(listEmployeeService.listEmployees(null, null, null)).thenReturn(new PageImpl<>(employees));
+    public void testListEmployees_Success() {
+        Page<EmployeeModel> employeePage = new PageImpl<>(Collections.singletonList(new EmployeeModel()));
+        when(employeeRepository.listByRoleAndPosition(any(), any(), any())).thenReturn(employeePage);
 
-        ResponseEntity<Object> responseEntity = employeeController.listEmployees(null, null, null);
+        BaseDto responseEntity = listEmployeeService.listEmployees("VENDEDOR", "VENDEDOR", "0");
 
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals(employees, ((Page<EmployeeModel>) responseEntity.getBody()).getContent());
+        assertEquals(HttpStatus.OK.value(), responseEntity.getResult().getStatusCode());
+        assertEquals("Funcionários listados com sucesso", responseEntity.getResult().getDescription());
     }
 
     @Test
-    public void testListEmployees_RoleFilter() {
-        Role roleFilter = Role.VENDEDOR;
+    public void testListEmployees_InvalidData() {
+        List<BaseErrorDto> errors = Collections.singletonList(new BaseErrorDto("role", "Campo inválido"));
+        when(listEmployeeValidate.validateParamsToSearch(anyString(), anyString())).thenReturn(errors);
+        ;
 
-        List<EmployeeModel> filteredEmployees = new ArrayList<>();
-        for (EmployeeModel employee : employees) {
-            if (employee.getRole() == roleFilter) {
-                filteredEmployees.add(employee);
-            }
-        }
+        BaseDto responseEntity = listEmployeeService.listEmployees("ERRADO", "VENDEDOR", "0");
 
-        when(listEmployeeService.listEmployees(roleFilter, null, null)).thenReturn(new PageImpl<>(filteredEmployees));
-
-        ResponseEntity<Object> responseEntity = employeeController.listEmployees(roleFilter, null, null);
-
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals(filteredEmployees, ((Page<EmployeeModel>) responseEntity.getBody()).getContent());
+        assertEquals(HttpStatus.BAD_REQUEST.value(), responseEntity.getResult().getStatusCode());
+        assertEquals("Bad Request", responseEntity.getResult().getDescription());
     }
 
     @Test
-    public void testListEmployees_PositionFilter() {
-        Position positionFilter = Position.ESTOQUISTA;
+    public void testListEmployees_WrongPagination() {
+        List<EmployeeModel> employeeList = Collections.singletonList(new EmployeeModel());
+        Page<EmployeeModel> employeePage = new PageImpl<>(employeeList, PageRequest.of(0, 2), 1);
+        when(employeeRepository.listByRoleAndPosition(any(), any(), any())).thenReturn(employeePage);
 
-        List<EmployeeModel> filteredEmployees = new ArrayList<>();
-        for (EmployeeModel employee : employees) {
-            if (employee.getPosition() == positionFilter) {
-                filteredEmployees.add(employee);
-            }
-        }
+        BaseDto responseEntity = listEmployeeService.listEmployees(null, null, "5");
 
-        when(listEmployeeService.listEmployees(null, positionFilter, null)).thenReturn(new PageImpl<>(filteredEmployees));
-
-        ResponseEntity<Object> responseEntity = employeeController.listEmployees(null, positionFilter, null);
-
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals(filteredEmployees, ((Page<EmployeeModel>) responseEntity.getBody()).getContent());
-    }
-
-    @Test
-    public void testListEmployees_PositionFilterWithRoleAndPage() {
-        Position position = Position.VENDEDOR;
-        Role role = Role.VENDEDOR;
-        int page = 1;
-        List<EmployeeModel> filteredEmployees = new ArrayList<>();
-        for (EmployeeModel employee : employees) {
-            if (employee.getPosition() == position && employee.getRole() == role) {
-                filteredEmployees.add(employee);
-            }
-        }
-
-        when(listEmployeeService.listEmployees(role, position, page)).thenReturn(new PageImpl<>(filteredEmployees));
-
-        ResponseEntity<Object> responseEntity = employeeController.listEmployees(role, position, page);
-
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals(filteredEmployees, ((Page<EmployeeModel>) responseEntity.getBody()).getContent());
-    }
-
-    @Test
-    public void testListEmployees_Pagination() {
-        int page = 1;
-        int pageSize = 2;
-        List<EmployeeModel> paginatedEmployees = employees.subList(page * pageSize, Math.min((page + 1) * pageSize, employees.size()));
-
-        when(listEmployeeService.listEmployees(null, null, page)).thenReturn(new PageImpl<>(paginatedEmployees));
-
-        ResponseEntity<Object> responseEntity = employeeController.listEmployees(null, null, page);
-
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals(paginatedEmployees, ((Page<EmployeeModel>) responseEntity.getBody()).getContent());
-    }
-
-    @Test
-    public void testListEmployees_NotFound() {
-        when(listEmployeeService.listEmployees(null, null, null)).thenReturn(Page.empty());
-
-        ResponseEntity<Object> responseEntity = employeeController.listEmployees(null, null, null);
-
-        assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
-        assertEquals("Funcionários não encontrados.", responseEntity.getBody());
+        assertEquals(HttpStatus.BAD_REQUEST.value(), responseEntity.getResult().getStatusCode());
+        assertEquals("Página informada inválida", responseEntity.getResult().getDescription());
     }
 }
