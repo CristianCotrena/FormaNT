@@ -39,15 +39,16 @@ public class ListVehicleService {
         PageRequest pageRequest = PageRequest.of(pageToSearch, 20);
         Page<VehicleModel> vehicles = vehicleRepository.findAll(pageRequest);
 
+        if (vehicles.isEmpty()) {
+            ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, ErrorMessage.NOT_FOUND);
+            return result.get();
+        }
+
         if ((vehicles.getTotalPages() - 1) < pageToSearch) {
             ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, ErrorMessage.INVALID_PAGE);
             return result.get();
         }
 
-        if (vehicles.isEmpty()) {
-            ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, ErrorMessage.NOT_FOUND);
-            return result.get();
-        }
         return new ResponseSuccessBuilder<>(HttpStatus.OK, vehicles, SuccessMessage.LIST_VEHICLES).get();
     }
 }

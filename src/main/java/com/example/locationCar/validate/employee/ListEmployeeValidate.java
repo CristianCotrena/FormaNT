@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ListEmployeeValidate {
 
-    public List<BaseErrorDto> validateParamsToSearch(String role, String position) {
+    public List<BaseErrorDto> validateParamsToSearch(String role, String position, String page) {
         List<BaseErrorDto> errors = new ArrayList<>();
 
         if (role != null) {
@@ -23,6 +23,14 @@ public class ListEmployeeValidate {
         if (position != null) {
             if (!isValidPosition(position)) {
                 errors.add(new BaseErrorDto("position", ErrorMessage.INVALID_FIELD));
+            }
+        }
+
+        if (page != null) {
+            try {
+                Integer.parseInt(page);
+            } catch (Exception e) {
+                errors.add(new BaseErrorDto("page", ErrorMessage.INVALID_PAGE));
             }
         }
 
