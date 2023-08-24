@@ -7,32 +7,42 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public class EmployeeDto {
+public class EmployeeUpdateDto {
 
-    @NotBlank
+
     @Schema(example = "Joao Pedro") String name;
 
-    @NotNull @Schema(example = "VENDEDOR")String position;
+    @Schema(example = "VENDEDOR")String position;
 
-    @NotBlank @Schema(example = "44190639800") String cpfCnpj;
+    @Schema(example = "44190639800") String cpfCnpj;
 
-    @NotBlank @Schema(example = "1212") String registry;
+    @Schema(example = "1212") String registry;
 
-    @NotBlank @Schema(example = "(51) 9999-9999") String phone;
+    @Schema(example = "(51) 9999-9999") String phone;
 
-    @NotNull @Schema(example = "CLT")String  contractType;
+    @Schema(example = "CLT")String  contractType;
 
-    @NotNull @Schema(example = "VENDEDOR") String role;
+     @Schema(example = "VENDEDOR") String role;
 
-    @NotBlank @Schema(example = "joaopedro@teste.com") String email;
+    @Schema(example = "joaopedro@teste.com") String email;
+
+    @Schema(example = "1" )Integer status;
 
 
 
-    public EmployeeDto(String newName, Position position, String number, String number1, String s, ContractType contractType, Role role, String mail) {
+    public EmployeeUpdateDto(String newName, Position position, String number, String number1, String s, ContractType contractType, Role role, String mail, Integer status) {
     }
 
-    public EmployeeDto() {
+    public EmployeeUpdateDto() {
 
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public String getName() {

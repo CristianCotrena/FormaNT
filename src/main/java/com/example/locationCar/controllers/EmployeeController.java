@@ -3,6 +3,7 @@ package com.example.locationCar.controllers;
 import com.example.locationCar.base.dto.BaseDto;
 import com.example.locationCar.dtos.EmployeeDto;
 import com.example.locationCar.dtos.EmployeeRecordDto;
+import com.example.locationCar.dtos.EmployeeUpdateDto;
 import com.example.locationCar.models.EmployeeModel;
 import com.example.locationCar.services.employeeService.ListEmployeeService;
 import com.example.locationCar.services.employeeService.CreateEmployeeService;
@@ -65,8 +66,8 @@ public class EmployeeController {
             @Content(mediaType = "text/plain", schema = @Schema(type = "string", example = "Dados de entrada inválidos"))
     })
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateEmployee(@PathVariable UUID id, @RequestBody @Valid EmployeeRecordDto employeeRecordDto) {
-        UUID updatedEmployeeId = updateEmployeeService.updateEmployee(id, employeeRecordDto);
+    public ResponseEntity<?> updateEmployee(@PathVariable UUID id, @RequestBody EmployeeUpdateDto employeeDto) {
+        BaseDto updatedEmployeeId = updateEmployeeService.updateEmployee(id, employeeDto, true);
         return ResponseEntity.ok(updatedEmployeeId);
     }
 

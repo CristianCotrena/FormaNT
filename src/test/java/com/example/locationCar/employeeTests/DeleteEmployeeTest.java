@@ -1,11 +1,10 @@
-package com.example.locationCar.employeeTests;
+package com.example.locationCar.EmployeeTests;
 
 import com.example.locationCar.controllers.EmployeeController;
 import com.example.locationCar.models.EmployeeModel;
 import com.example.locationCar.models.enums.ContractType;
 import com.example.locationCar.models.enums.Position;
 import com.example.locationCar.repositories.EmployeeRepository;
-import com.example.locationCar.services.funcionarioService.EmployeeServiceDelete;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -22,7 +21,7 @@ import static org.mockito.Mockito.when;
 public class DeleteEmployeeTest {
 
     @Mock
-    private EmployeeServiceDelete employeeServiceDelete;
+    private DeleteEmployeeTest employeeServiceDelete;
 
     @InjectMocks
     private EmployeeController employeeController;

@@ -8,4 +8,5 @@ public @interface ErrorMessage {
     String NEGATIVE_DAILY_VALUE = "O valor da diária deve ser maior que 0";
     String NOT_FOUND = "Não encontrado";
     String INVALID_PAGE = "Página informada inválida";
+    String NEGATIVE_UPDATE = "Não é possível alterar esse campo";
 }
