@@ -62,9 +62,9 @@ public class CreateEmployeeValidate {
             errors.add(new BaseErrorDto("email", ErrorMessage.INVALID_FIELD));
         }
 
-        if (!caelumStringValidator.validarCPF(employeeDto.getCpfCnpj()) && !caelumStringValidator.validarCNPJ(employeeDto.getCpfCnpj())) {
-            errors.add(new BaseErrorDto("cpfCnpj", ErrorMessage.INVALID_FIELD));
-        }
+//        if (!caelumStringValidator.validarCPF(employeeDto.getCpfCnpj()) && !caelumStringValidator.validarCNPJ(employeeDto.getCpfCnpj())) {
+//            errors.add(new BaseErrorDto("cpfCnpj", ErrorMessage.INVALID_FIELD));
+//        }
 
         if (!Pattern.compile(RegexValues.PHONE).matcher(employeeDto.getPhone()).matches()) {
             errors.add(new BaseErrorDto("phone", ErrorMessage.INVALID_FIELD));
