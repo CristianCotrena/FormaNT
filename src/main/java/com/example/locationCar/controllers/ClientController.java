@@ -70,7 +70,7 @@ public class ClientController {
             }else if (email != null) {
                 ClientModel clientModel = searchClientService.findUserByEmail(email);
                 return ResponseEntity.status(HttpStatus.OK).body(clientModel);
-            }else {
+            } else {
                 return ResponseEntity.badRequest().body("Customer not found, check posted values.");
             }
         } catch (IllegalArgumentException e) {
