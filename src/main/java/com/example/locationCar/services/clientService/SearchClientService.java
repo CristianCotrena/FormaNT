@@ -21,7 +21,7 @@ public class SearchClientService {
         if (client != null) {
             return client;
         } else {
-            throw new IllegalArgumentException("Cliente não encontrado");
+            throw new IllegalArgumentException("Client not found");
         }
 
     }
@@ -31,7 +31,7 @@ public class SearchClientService {
         if (client != null) {
             return client;
         } else {
-            throw new IllegalArgumentException("Cliente não encontrado");
+            throw new IllegalArgumentException("Client not found");
         }
 
     }
@@ -41,7 +41,7 @@ public class SearchClientService {
             if (client.isPresent()) {
                 return client.get();
             } else {
-                throw new IllegalArgumentException("Cliente não encontrado");
+                throw new IllegalArgumentException("Client not found");
         }
     }
 }

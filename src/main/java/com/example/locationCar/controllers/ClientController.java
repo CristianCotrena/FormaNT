@@ -71,12 +71,12 @@ public class ClientController {
                 ClientModel clientModel = searchClientService.findUserByEmail(email);
                 return ResponseEntity.status(HttpStatus.OK).body(clientModel);
             }else {
-                return ResponseEntity.badRequest().body("Client not found");
+                return ResponseEntity.badRequest().body("Customer not found, check posted values.");
             }
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body("Informe um ID, CPF/CNPJ ou e-mail válido para buscar o cliente.");
+            return ResponseEntity.badRequest().body("Enter a valid ID, CPF/CNPJ or email to pick up the customer.");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao processar a requisição.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Enter a valid ID, Cpf/Cnpj or Email.");
         }
     }
 
