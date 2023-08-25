@@ -51,10 +51,6 @@ public class UpdateEmployeeService {
         if (recontratar) {
             if (employeeToUpdate.getStatus() == 0) {
                 employeeToUpdate.setStatus(1);
-            } else {
-                BaseErrorDto error = new BaseErrorDto("status", ErrorMessage.NEGATIVE_UPDATE);
-                ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, List.of(error));
-                return result.get();
             }
         }
 
