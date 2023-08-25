@@ -7,6 +7,7 @@ import com.example.locationCar.builder.ResponseSuccessBuilder;
 import com.example.locationCar.constants.ErrorMessage;
 import com.example.locationCar.constants.SuccessMessage;
 import com.example.locationCar.dtos.CreateClientDto;
+import com.example.locationCar.dtos.CreateEmployeeDto;
 import com.example.locationCar.dtos.EmployeeDto;
 import com.example.locationCar.models.EmployeeModel;
 import com.example.locationCar.models.enums.ContractType;
@@ -69,7 +70,7 @@ public class CreateEmployeeService {
 
         UUID createdId = employeeRepository.save(employeeModel).getIdClient();
 
-        return new ResponseSuccessBuilder<CreateClientDto>(HttpStatus.CREATED ,new CreateClientDto(createdId.toString()), SuccessMessage.CREATE_CLIENT).get();
+        return new ResponseSuccessBuilder<CreateEmployeeDto>(HttpStatus.CREATED ,new CreateEmployeeDto(createdId.toString()), SuccessMessage.CREATE_EMPLOYEE).get();
     }
 
 
