@@ -47,10 +47,10 @@ public class UpdateClientService {
         if(clientUpdateDto.age() != null && (clientUpdateDto.age() < 18))
             throw new IllegalArgumentException("Idade inválida.");
 
-        if(clientUpdateDto.telephone() != null && (clientUpdateDto.telephone().length() > 13 || clientUpdateDto.telephone().length() < 12))
+        if(clientUpdateDto.telephone() != null && (clientUpdateDto.telephone().length() > 11 || clientUpdateDto.telephone().length() < 10))
             throw new IllegalArgumentException("Telefone inválido.");
 
-        if(clientUpdateDto.emergencyContact() != null && (clientUpdateDto.emergencyContact().length() > 13 || clientUpdateDto.emergencyContact().length() < 12))
+        if(clientUpdateDto.emergencyContact() != null && (clientUpdateDto.emergencyContact().length() > 11 || clientUpdateDto.emergencyContact().length() < 10))
             throw new IllegalArgumentException("Telefone de emergência inválido.");
     }
 }
