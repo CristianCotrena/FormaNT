@@ -1,20 +1,19 @@
 {
 	"info": {
-		"_postman_id": "c8a869c0-202a-48c9-bdee-ef8916b7b7a2",
+		"_postman_id": "2490eb52-6964-47ac-9edb-6f70d56c42a8",
 		"name": "Cliente",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "18793992",
-		"_collection_link": "https://martian-astronaut-744258.postman.co/workspace/NTConsult~7475cf8a-732e-4b57-894e-cdb19065b26d/collection/18793992-c8a869c0-202a-48c9-bdee-ef8916b7b7a2?action=share&creator=18793992&source=collection_link"
+		"_exporter_id": "28525027"
 	},
 	"item": [
 		{
-			"name": "CreatClient",
+			"name": "CreateClient",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Bruno Ramos\",\r\n    \"cpfCnpj\": \"06210501990\",\r\n    \"cnh\": \"12356848484\",\r\n    \"age\": 37,\r\n    \"telephone\": \"41994455887\",\r\n    \"emergencyContact\": \"41994422554\",\r\n    \"email\": \"exluirtest@gmail.com\",\r\n    \"status\": 1\r\n}",
+					"raw": "{\r\n    \"name\": \"sah\",\r\n    \"cpfCnpj\": \"76587687676\",\r\n    \"cnh\": \"111111111111\",\r\n    \"age\": 37,\r\n    \"telephone\": \"51981220944\",\r\n    \"emergencyContact\": \"51984873664\",\r\n    \"email\": \"sfsflkji@gmail.com\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -41,7 +40,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/v1/client/b8143b41-dedd-4ff1-ad9f-fc911ea54187",
+					"raw": "http://localhost:8080/v1/client/8dfa0850-5e31-401f-aa80-3d41a48b6169",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -50,42 +49,19 @@
 					"path": [
 						"v1",
 						"client",
-						"b8143b41-dedd-4ff1-ad9f-fc911ea54187"
+						"8dfa0850-5e31-401f-aa80-3d41a48b6169"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "SearchClient",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
+			"name": "ListClients",
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
-					"raw": "http://localhost:8080/v1/client/list?page=0&age=20",
+					"raw": "http://localhost:8080/v1/client/list?page=1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -98,12 +74,13 @@
 					],
 					"query": [
 						{
-							"key": "page",
-							"value": "0"
+							"key": "age",
+							"value": "17",
+							"disabled": true
 						},
 						{
-							"key": "age",
-							"value": "20"
+							"key": "page",
+							"value": "1"
 						}
 					]
 				}
@@ -117,7 +94,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Anna H.\",\r\n    \"cpfCnpj\": \"016.302.6500-00\",\r\n    \"cnh\": \"7777111111122\",\r\n    \"age\": 36,\r\n    \"telephone\": \"5121981220922\",\r\n    \"emergencyContact\": \"5121984873622\",\r\n    \"email\": \"anna.hermes@gmail.com\",\r\n    \"status\": 1\r\n}",
+					"raw": "{\r\n    \"name\": \"anna\",\r\n    \"cpfCnpj\": \"01630265055\",\r\n    \"cnh\": \"111111111111\",\r\n    \"age\": 37,\r\n    \"telephone\": \"51 98122-0948\",\r\n    \"emergencyContact\": \"51 98487-3664\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -125,7 +102,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/v1/client/e3d9795f-374f-45e8-b013-04be52ba409c",
+					"raw": "http://localhost:8080/v1/client/0f15fc3e-51b7-439d-a788-eb7c368c1d2e",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -134,7 +111,43 @@
 					"path": [
 						"v1",
 						"client",
-						"e3d9795f-374f-45e8-b013-04be52ba409c"
+						"0f15fc3e-51b7-439d-a788-eb7c368c1d2e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SearchClient",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/client?id=0f15fc3e-51b7-439d-a788-eb7c368c1d2e",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"client"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "0f15fc3e-51b7-439d-a788-eb7c368c1d2e"
+						},
+						{
+							"key": "email",
+							"value": "sah@gmail.com",
+							"disabled": true
+						},
+						{
+							"key": "cpfCnpj",
+							"value": "546.667.550-35",
+							"disabled": true
+						}
 					]
 				}
 			},

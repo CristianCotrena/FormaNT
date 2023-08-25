@@ -1,0 +1,13 @@
+version: '3'
+services:
+  container-aluguel-carros:
+    image: postgres:12-alpine
+    container_name: container-aluguel-carros
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
+    restart: always
+
+

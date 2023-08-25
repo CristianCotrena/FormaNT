@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "2ffa848a-6d55-4b99-95d3-0515f21fac45",
+		"_postman_id": "75f8ba4e-ba70-46e6-8d5b-e094a132c54e",
 		"name": "Funcionário",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "18793992"
+		"_exporter_id": "28525027"
 	},
 	"item": [
 		{
@@ -12,15 +12,15 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/v1/funcionario/4d152cf5-a03f-4eb2-979e-5d2e434ca38b",
+					"raw": "localhost:8080/v1/employee/ea70202e-b48b-4bb8-85ec-cb3594daf3af",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
 						"v1",
-						"funcionario",
-						"4d152cf5-a03f-4eb2-979e-5d2e434ca38b"
+						"employee",
+						"ea70202e-b48b-4bb8-85ec-cb3594daf3af"
 					]
 				}
 			},
@@ -31,8 +31,17 @@
 			"request": {
 				"method": "PUT",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Anna Carolina\",\r\n    \"position\": \"ESTOQUISTA\",\r\n    \"cpfCnpj\": \"01630265055\",\r\n    \"registry\": \"1313\",\r\n    \"phone\": \"(51) 99992-1234\",\r\n    \"contractType\": \"CLT\",\r\n    \"role\": \"ADMINISTRADOR\",\r\n    \"email\": \"anna@teste.com\"\r\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "localhost:8080/v1/employee/47c2ba33-9314-4076-8b21-a98af0e4e9e3",
+					"raw": "localhost:8080/v1/employee/ea70202e-b48b-4bb8-85ec-cb3594daf3af",
 					"host": [
 						"localhost"
 					],
@@ -40,7 +49,7 @@
 					"path": [
 						"v1",
 						"employee",
-						"47c2ba33-9314-4076-8b21-a98af0e4e9e3"
+						"ea70202e-b48b-4bb8-85ec-cb3594daf3af"
 					]
 				}
 			},
@@ -51,6 +60,15 @@
 			"request": {
 				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Vicente\",\r\n    \"position\": \"ESTOQUISTA\",\r\n    \"cpfCnpj\": \"01867170086\",\r\n    \"registry\": \"1212\",\r\n    \"phone\": \"5599999998\",\r\n    \"contractType\": \"CLT\",\r\n    \"role\": \"ADMINISTRADOR\",\r\n    \"email\": \"vico@teste.com\"\r\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
 					"raw": "localhost:8080/v1/employee",
 					"host": [
@@ -71,7 +89,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/v1/employee?id=45ca972c-5c69-47f9-a641-2bfabb5c387c&cpfCnpj=01630265055&email=manecos@gmail.com",
+					"raw": "localhost:8080/v1/employee?cpfCnpj=01630265055",
 					"host": [
 						"localhost"
 					],
@@ -83,7 +101,8 @@
 					"query": [
 						{
 							"key": "id",
-							"value": "45ca972c-5c69-47f9-a641-2bfabb5c387c"
+							"value": "162f704c-4bbf-444a-b36c-a76fc28a48b2",
+							"disabled": true
 						},
 						{
 							"key": "cpfCnpj",
@@ -91,7 +110,8 @@
 						},
 						{
 							"key": "email",
-							"value": "manecos@gmail.com"
+							"value": "mario@teste.com",
+							"disabled": true
 						}
 					]
 				}
@@ -104,7 +124,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/v1/employee/list?page=0&role=VENDEDOR&position=ESTOQUISTA",
+					"raw": "http://localhost:8080/v1/employee/list?page=0",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -122,11 +142,13 @@
 						},
 						{
 							"key": "role",
-							"value": "VENDEDOR"
+							"value": "VENDEDOR",
+							"disabled": true
 						},
 						{
 							"key": "position",
-							"value": "ESTOQUISTA"
+							"value": "ESTOQUISTA",
+							"disabled": true
 						}
 					]
 				}

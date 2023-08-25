@@ -17,7 +17,7 @@ public class SearchClientService {
     }
 
     public ClientModel findUserByEmail(String Email) {
-        ClientModel client = clientRepository.findByEmail(Email);
+        ClientModel client = clientRepository.findByEmail(Email).get();
         if (client != null) {
             return client;
         } else {
@@ -27,7 +27,7 @@ public class SearchClientService {
     }
 
     public ClientModel findUserByCpfCnpj(String CpfCnpj) {
-        ClientModel client = clientRepository.findByCpfCnpj(CpfCnpj);
+        ClientModel client = clientRepository.findByCpfCnpj(CpfCnpj).get();
         if (client != null) {
             return client;
         } else {

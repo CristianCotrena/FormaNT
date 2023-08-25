@@ -7,16 +7,17 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
 public interface ClientRepository extends JpaRepository<ClientModel, UUID> {
-    ClientModel findByCpfCnpj(String cpfCnpj);
+    Optional<ClientModel> findByCpfCnpj(String cpfCnpj);
 
-    ClientModel findByEmail(String email);
+    Optional<ClientModel> findByEmail(String email);
 
     ClientModel findByEmailAndCpfCnpj(String email, String cpfCnpj);
 
-    @Query("SELECT c FROM ClientModel c WHERE (:age IS NULL OR c.age >= :age)")
-    Page<ClientModel> listByAgeGreaterThan(Integer age, PageRequest pageRequest);
+    @Query("SELECT c FROM ClientModel c WHERE (:age IS NULL OR c.age = :age)")
+    Page<ClientModel> listByAge(Integer age, PageRequest pageRequest);
 }

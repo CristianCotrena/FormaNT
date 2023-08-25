@@ -2,7 +2,6 @@ package com.example.locationCar.models;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -19,7 +18,7 @@ public class ClientModel implements Serializable {
     @Schema(example = "Carlitos Tevez")
     private String name;
 
-    @Schema(example = "435.763.342-22")
+    @Schema(example = "43576334222")
     private String cpfCnpj;
 
     @Schema(example = "874658935467")
