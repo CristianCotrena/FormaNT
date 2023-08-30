@@ -10,5 +10,6 @@ public @interface ErrorMessage {
     String INVALID_PAGE = "Página informada inválida";
     String NEGATIVE_UPDATE = "Não é possível alterar esse campo";
     String AGE_GREATER_THAN_OR_EQUAL_18 = "Idade deve ser maior ou igual a 18";
+    String INVALID_JSON = "JSON - Formato inválido";
 
 }
