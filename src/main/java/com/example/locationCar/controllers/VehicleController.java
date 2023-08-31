@@ -5,12 +5,14 @@ import com.example.locationCar.builder.ResponseSuccessBuilder;
 import com.example.locationCar.dtos.input.VehicleInputDto;
 import com.example.locationCar.services.vehicleService.CreateVehicleService;
 import com.example.locationCar.models.VehicleModel;
+import com.example.locationCar.services.vehicleService.ListVehicleParamService;
 import com.example.locationCar.services.vehicleService.ListVehicleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,24 +28,24 @@ public class VehicleController {
   
     private CreateVehicleService createVehicleService;
 
-    private final ListVehicleService listVehicleService;
+    private ListVehicleParamService listVehicleParamService;
 
-    public VehicleController(ListVehicleService listVehicleService, CreateVehicleService createVehicleService) {
-        this.listVehicleService = listVehicleService;
+    public VehicleController(ListVehicleParamService listVehicleParamService, CreateVehicleService createVehicleService) {
+        this.listVehicleParamService = listVehicleParamService;
         this.createVehicleService = createVehicleService;
     }
 
-    @Operation(summary = "List vehicles", description = "List vehicles3")
-    @ApiResponse(responseCode = "200", description = "Found", content = {
-            @Content(mediaType = "application/json", schema = @Schema(implementation = VehicleModel.class))
-    })
-    @ApiResponse(responseCode = "404", description = "Not found", content = {
-            @Content(mediaType = "text/plain", schema = @Schema(type = "string", example = "Veículos não encontrados.")),
-    })
+    @Operation(summary = "List vehicles Param", description = "List vehicles Param")
+    @ApiResponse(responseCode = "200", description = "Found")
+    @ApiResponse(responseCode = "400", description = "Invalid data")
     @GetMapping("/list")
-    public ResponseEntity<BaseDto> listVehicles(@RequestParam(required = false) String page) {
-        BaseDto baseDto = listVehicleService.listVehicles(page);
-
+    public ResponseEntity<BaseDto> searchCars(
+            @RequestParam(required = false) String color,
+            @RequestParam(required = false) Double rating,
+            @RequestParam(required = false) Double max,
+            @RequestParam(required = false) Double min,
+            Pageable pageable) {
+        BaseDto baseDto = listVehicleParamService.listVehicles(pageable, color, rating, max, min);
         return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
     }
   
