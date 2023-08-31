@@ -5,7 +5,8 @@ import com.example.locationCar.models.enums.ContractType;
 import com.example.locationCar.models.enums.Position;
 import com.example.locationCar.models.enums.Role;
 import com.example.locationCar.repositories.EmployeeRepository;
-import com.example.locationCar.services.funcionarioService.SearchEmployeeService;
+
+import com.example.locationCar.services.employeeService.SearchEmployeeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

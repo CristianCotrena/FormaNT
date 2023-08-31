@@ -32,12 +32,14 @@ public class UpdateEmployeeService {
 
     public BaseDto updateEmployee(UUID employeeId, EmployeeUpdateDto employeeUpdateDto, boolean recontratar) {
 
+        List<BaseErrorDto> errorList = new ArrayList<>();
+
         EmployeeModel employeeToUpdate = employeeRepository.findById(employeeId)
                 .orElse(null);
 
         if (employeeToUpdate == null) {
             BaseErrorDto error = new BaseErrorDto("ID", ErrorMessage.NOT_FOUND);
-            ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.NOT_FOUND, (List<BaseErrorDto>) error);
+            ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, ErrorMessage.NOT_FOUND, errorList);
             return result.get();
         }
 
