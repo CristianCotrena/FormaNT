@@ -18,7 +18,7 @@ public class ListClientValidate {
                 Integer ageToSearch = Integer.parseInt(age);
 
                 if (ageToSearch < 18) {
-                    errors.add(new BaseErrorDto("age", ErrorMessage.UNDERAGE));
+                    errors.add(new BaseErrorDto("age", ErrorMessage.AGE_GREATER_THAN_OR_EQUAL_18));
                 }
             } catch (Exception e) {
                 errors.add(new BaseErrorDto("age", ErrorMessage.INVALID_FIELD));
