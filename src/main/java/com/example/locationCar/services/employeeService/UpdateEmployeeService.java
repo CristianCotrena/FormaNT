@@ -43,6 +43,8 @@ public class UpdateEmployeeService {
 
         List<BaseErrorDto> errors = new UpdateEmployeeValidate().validate(employeeUpdateDto);
 
+        employeeToUpdate.setRegistry(employeeUpdateDto.getRegistry());
+
         if (!errors.isEmpty()) {
             ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, errors);
             return result.get();
@@ -54,13 +56,11 @@ public class UpdateEmployeeService {
             }
         }
 
-
         if (!("CLT".equals(employeeUpdateDto.getContractType()) || "CNPJ".equals((employeeUpdateDto.getContractType())))) {
             errors.add((new BaseErrorDto("contractType", ErrorMessage.NEGATIVE_UPDATE)));
             ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, errors);
             return result.get();
         }
-
 
         if (!employeeToUpdate.getContractType().equals(ContractType.fromString(employeeUpdateDto.getContractType())) ||
                 !employeeToUpdate.getCpfCnpj().equals(employeeUpdateDto.getCpfCnpj()) ||
@@ -72,9 +72,6 @@ public class UpdateEmployeeService {
             ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, List.of(error));
             return result.get();
         }
-
-
-
 
         employeeToUpdate.setRole(Role.fromString(employeeUpdateDto.getRole()));
         employeeToUpdate.setPosition(Position.fromString(employeeUpdateDto.getPosition()));
