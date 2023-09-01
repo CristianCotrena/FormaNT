@@ -15,8 +15,7 @@ public class UpdateEmployeeValidate {
     public List<BaseErrorDto> validate(EmployeeUpdateDto employeeUpdateDto) {
         List<BaseErrorDto> errors = new ArrayList<>();
 
-        String positionUperCase = employeeUpdateDto.getPosition().toUpperCase();
-        if (!("VENDEDOR".equals(positionUperCase) || "ESTOQUISTA".equals((positionUperCase)))) {
+        if (!("VENDEDOR".equals(employeeUpdateDto.getPosition()) || "ESTOQUISTA".equals((employeeUpdateDto.getPosition())))) {
             errors.add((new BaseErrorDto("position", ErrorMessage.INVALID_FIELD)));
         }
 
@@ -24,10 +23,10 @@ public class UpdateEmployeeValidate {
                 errors.add(new BaseErrorDto("phone", ErrorMessage.INVALID_FIELD));
         }
 
-        String roleUpperCase = employeeUpdateDto.getRole().toUpperCase();
-        if (!("VENDEDOR".equals(roleUpperCase) || "ADMINISTRADOR".equals(roleUpperCase))) {
+        if (!("VENDEDOR".equals(employeeUpdateDto.getRole()) || "ADMINISTRADOR".equals((employeeUpdateDto.getRole())))) {
             errors.add((new BaseErrorDto("role", ErrorMessage.INVALID_FIELD)));
         }
+
 
         return errors;
 
