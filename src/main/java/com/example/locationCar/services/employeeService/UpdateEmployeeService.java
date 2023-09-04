@@ -35,6 +35,7 @@ public class UpdateEmployeeService {
         EmployeeModel employeeToUpdate = employeeRepository.findById(employeeId)
                 .orElse(null);
 
+
         if (employeeToUpdate == null) {
             BaseErrorDto error = new BaseErrorDto("ID", ErrorMessage.NOT_FOUND);
             ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.NOT_FOUND, (List<BaseErrorDto>) error);
@@ -42,6 +43,8 @@ public class UpdateEmployeeService {
         }
 
         List<BaseErrorDto> errors = new UpdateEmployeeValidate().validate(employeeUpdateDto);
+
+        employeeToUpdate.setRegistry(employeeUpdateDto.getRegistry());
 
         if (!errors.isEmpty()) {
             ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, errors);
@@ -54,13 +57,11 @@ public class UpdateEmployeeService {
             }
         }
 
-
         if (!("CLT".equals(employeeUpdateDto.getContractType()) || "CNPJ".equals((employeeUpdateDto.getContractType())))) {
             errors.add((new BaseErrorDto("contractType", ErrorMessage.NEGATIVE_UPDATE)));
             ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, errors);
             return result.get();
         }
-
 
         if (!employeeToUpdate.getContractType().equals(ContractType.fromString(employeeUpdateDto.getContractType())) ||
                 !employeeToUpdate.getCpfCnpj().equals(employeeUpdateDto.getCpfCnpj()) ||
@@ -73,9 +74,6 @@ public class UpdateEmployeeService {
             return result.get();
         }
 
-
-
-
         employeeToUpdate.setRole(Role.fromString(employeeUpdateDto.getRole()));
         employeeToUpdate.setPosition(Position.fromString(employeeUpdateDto.getPosition()));
         employeeToUpdate.setPhone(employeeUpdateDto.getPhone());
@@ -84,6 +82,7 @@ public class UpdateEmployeeService {
         employeeRepository.save(employeeToUpdate);
 
         return new ResponseSuccessBuilder<CreateEmployeeDto>(HttpStatus.OK, new CreateEmployeeDto(employeeId.toString()), SuccessMessage.UPDATE_EMPLOYEE).get();
+
     }
 
     private String getUpdatedFieldNames(EmployeeModel employeeToUpdate, EmployeeUpdateDto employeeUpdateDto) {
@@ -95,6 +94,10 @@ public class UpdateEmployeeService {
 
         if (!employeeToUpdate.getEmail().equals(employeeUpdateDto.getEmail())) {
             updatedFields.add("email");
+        }
+
+        if (!employeeToUpdate.getContractType().equals(employeeUpdateDto.getContractType())) {
+            updatedFields.add("contractType");
         }
 
         return String.join(", ", updatedFields);
