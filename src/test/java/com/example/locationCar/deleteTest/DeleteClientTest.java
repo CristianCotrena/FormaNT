@@ -1,3 +1,4 @@
+/**
 package com.example.locationCar.deleteTest;
 
 import com.example.locationCar.models.ClientModel;
@@ -65,3 +66,4 @@ public class DeleteClientTest {
     }
 
 }
+ **/

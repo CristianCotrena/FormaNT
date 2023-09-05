@@ -8,4 +8,6 @@ public @interface ErrorMessage {
     String NEGATIVE_DAILY_VALUE = "O valor da diária deve ser maior que 0";
     String NOT_FOUND = "Não encontrado";
     String INVALID_PAGE = "Página informada inválida";
+    String AT_LEAST_ONE = "Pelo menos um desses campos deve ser informado.";
+    String NOT_FOUND_BY_PARAMS = "Não foi possível localizar na base de dados com os seguinte parâmetros: ";
 }
