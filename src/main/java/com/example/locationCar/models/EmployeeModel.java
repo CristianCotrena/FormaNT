@@ -174,4 +174,8 @@ public class EmployeeModel implements Serializable {
                 ", status=" + status +
                 '}';
     }
+
+    public UUID getIdClient() {
+        return employeeId;
+    }
 }

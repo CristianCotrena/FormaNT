@@ -10,4 +10,8 @@ public @interface ErrorMessage {
     String INVALID_PAGE = "Página informada inválida";
     String AT_LEAST_ONE = "Pelo menos um desses campos deve ser informado.";
     String NOT_FOUND_BY_PARAMS = "Não foi possível localizar na base de dados com os seguinte parâmetros: ";
+    String NEGATIVE_UPDATE = "Não é possível alterar esse campo";
+    String AGE_GREATER_THAN_OR_EQUAL_18 = "Idade deve ser maior ou igual a 18";
+    String INVALID_JSON = "JSON - Formato inválido";
+
 }

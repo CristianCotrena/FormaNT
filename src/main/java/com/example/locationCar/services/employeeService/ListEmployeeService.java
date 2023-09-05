@@ -29,7 +29,7 @@ public class ListEmployeeService {
     }
 
     public BaseDto listEmployees(String role, String position, String page) {
-        List<BaseErrorDto> errors = new ListEmployeeValidate().validateParamsToSearch(role, position);
+        List<BaseErrorDto> errors = new ListEmployeeValidate().validateParamsToSearch(role, position, page);
 
         if (errors.size() > 0) {
             ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, errors);
@@ -38,14 +38,7 @@ public class ListEmployeeService {
 
         int pageToSearch = 0;
 
-        if(page != null) {
-            try{
-                pageToSearch = Integer.parseInt(page);
-            }catch(Exception e){
-                ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, ErrorMessage.INVALID_PAGE);
-                return result.get();
-            }
-        }
+        if (page != null) pageToSearch = Integer.parseInt(page);
 
         Role roleToSearch = role != null ? Role.valueOf(role) : null;
         Position positionToSearch = position != null ? Position.valueOf(position) : null;
@@ -53,13 +46,13 @@ public class ListEmployeeService {
         PageRequest pageRequest = PageRequest.of(pageToSearch, 20);
         Page<EmployeeModel> employees = employeeRepository.listByRoleAndPosition(roleToSearch, positionToSearch, pageRequest);
 
-        if ((employees.getTotalPages() - 1) < pageToSearch) {
-            ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, ErrorMessage.INVALID_PAGE);
+        if (employees.isEmpty()) {
+            ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, ErrorMessage.NOT_FOUND);
             return result.get();
         }
 
-        if (employees.isEmpty()) {
-            ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, ErrorMessage.NOT_FOUND);
+        if ((employees.getTotalPages() - 1) < pageToSearch) {
+            ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, ErrorMessage.INVALID_PAGE);
             return result.get();
         }
 

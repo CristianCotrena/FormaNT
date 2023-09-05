@@ -1,19 +1,45 @@
 {
 	"info": {
-		"_postman_id": "1a3c760a-511a-417b-a914-3ebcfedb9ad2",
+		"_postman_id": "f7a66d13-1e75-4c99-826b-0c85178db243",
 		"name": "Veículo",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "29220711"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "ListVehicles",
+			"name": "CreateVehicle",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"license\":\"NEJ9138\",\n    \"brand\":\"Toyota\",\n    \"model\":\"X5\",\n    \"doorNumber\": 2,\n    \"color\":\"red\",\n    \"fuel\":\"diesel\",\n    \"dailyValue\": 150,\n    \"mileage\": 40.5,\n    \"rating\": 5",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/v1/vehicle",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"vehicle"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ListVehicleWithParams",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/v1/vehicle/list?page=0",
-					"protocol": "http",
+					"raw": "localhost:8080/v1/vehicle/list?color=blue&max=60&min=10&rating=4.5&page=0&size=3",
 					"host": [
 						"localhost"
 					],
@@ -25,38 +51,29 @@
 					],
 					"query": [
 						{
+							"key": "color",
+							"value": "blue"
+						},
+						{
+							"key": "max",
+							"value": "60"
+						},
+						{
+							"key": "min",
+							"value": "10"
+						},
+						{
+							"key": "rating",
+							"value": "4.5"
+						},
+						{
 							"key": "page",
 							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "3"
 						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "CreateVehicle",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{   \r\n    \"license\": \"BRA2E18\",\r\n    \"brand\": \"tesla\",\r\n    \"model\": \"S\",\r\n    \"doorNumber\": 4,\r\n    \"color\": \"blue\",\r\n    \"fuel\": \"gasoline\",\r\n    \"dailyValue\": 50.3,\r\n    \"mileage\": 300.5,\r\n    \"rating\": 4.5\r\n} ",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/v1/vehicle",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"v1",
-						"vehicle"
 					]
 				}
 			},

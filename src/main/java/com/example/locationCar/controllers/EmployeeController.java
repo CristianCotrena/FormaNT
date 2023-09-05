@@ -1,7 +1,9 @@
 package com.example.locationCar.controllers;
 
 import com.example.locationCar.base.dto.BaseDto;
+import com.example.locationCar.dtos.EmployeeDto;
 import com.example.locationCar.dtos.EmployeeRecordDto;
+import com.example.locationCar.dtos.EmployeeUpdateDto;
 import com.example.locationCar.models.EmployeeModel;
 import com.example.locationCar.services.employeeService.ListEmployeeService;
 import com.example.locationCar.services.employeeService.CreateEmployeeService;
@@ -49,12 +51,10 @@ public class EmployeeController {
 
     })
     @PostMapping
-    public ResponseEntity<EmployeeModel> saveEmployee(@RequestBody @Valid EmployeeRecordDto employeeRecordDto) {
-        var employeeModel = new EmployeeModel();
-        BeanUtils.copyProperties(employeeRecordDto, employeeModel);
-        EmployeeModel savedEmployee = createEmployeeService.saveEmployee(employeeModel);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedEmployee)  ;
+    public ResponseEntity<BaseDto> createEmployee(@RequestBody EmployeeDto employeeDto) {
+        System.out.println("Received employeeDto: " + employeeDto);
+        BaseDto baseDto = createEmployeeService.createEmployee(employeeDto);
+        return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
     }
 
     @Operation(summary = "Atualizar funcionário", description = "Atualizar um funcionário existente no banco de dados")
@@ -66,8 +66,8 @@ public class EmployeeController {
             @Content(mediaType = "text/plain", schema = @Schema(type = "string", example = "Dados de entrada inválidos"))
     })
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateEmployee(@PathVariable UUID id, @RequestBody @Valid EmployeeRecordDto employeeRecordDto) {
-        UUID updatedEmployeeId = updateEmployeeService.updateEmployee(id, employeeRecordDto);
+    public ResponseEntity<?> updateEmployee(@PathVariable UUID id, @RequestBody EmployeeUpdateDto employeeDto) {
+        BaseDto updatedEmployeeId = updateEmployeeService.updateEmployee(id, employeeDto, true);
         return ResponseEntity.ok(updatedEmployeeId);
     }
 

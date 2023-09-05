@@ -13,6 +13,7 @@ import com.example.locationCar.validate.client.CreateClientValidate;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.example.locationCar.services.clientService.utils.ClientRules;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,7 @@ import static com.example.locationCar.services.clientService.utils.ClientRules.*
 @Service
 public class CreateClientService {
 
-    ClientRepository clientRepository;
+    private ClientRepository clientRepository;
     ClientRules clientRules;
     ClientModel clientModel;
 
@@ -40,11 +41,11 @@ public class CreateClientService {
             return result.get();
         }
 
-        if (clientRepository.findByEmail(clientModel.getEmail()) != null){
+        if (!clientRepository.findByEmail(clientModel.getEmail()).isEmpty()){
             errors.add(new BaseErrorDto("email", ErrorMessage.UNIQUE_FIELD));
         }
 
-        if (clientRepository.findByCpfCnpj(clientModel.getCpfCnpj()) != null){
+        if (!clientRepository.findByCpfCnpj(clientModel.getCpfCnpj()).isEmpty()){
             errors.add(new BaseErrorDto("cpfCnpj", ErrorMessage.UNIQUE_FIELD));
         }
 

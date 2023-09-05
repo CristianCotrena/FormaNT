@@ -17,21 +17,21 @@ public class SearchClientService {
     }
 
     public ClientModel findUserByEmail(String Email) {
-        ClientModel client = clientRepository.findByEmail(Email);
+        ClientModel client = clientRepository.findByEmail(Email).get();
         if (client != null) {
             return client;
         } else {
-            throw new IllegalArgumentException("Cliente não encontrado");
+            throw new IllegalArgumentException("Client not found");
         }
 
     }
 
     public ClientModel findUserByCpfCnpj(String CpfCnpj) {
-        ClientModel client = clientRepository.findByCpfCnpj(CpfCnpj);
+        ClientModel client = clientRepository.findByCpfCnpj(CpfCnpj).get();
         if (client != null) {
             return client;
         } else {
-            throw new IllegalArgumentException("Cliente não encontrado");
+            throw new IllegalArgumentException("Client not found");
         }
 
     }
@@ -41,7 +41,7 @@ public class SearchClientService {
             if (client.isPresent()) {
                 return client.get();
             } else {
-                throw new IllegalArgumentException("Cliente não encontrado");
+                throw new IllegalArgumentException("Client not found");
         }
     }
 }

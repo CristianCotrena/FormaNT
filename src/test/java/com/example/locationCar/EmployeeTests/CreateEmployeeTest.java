@@ -1,5 +1,4 @@
-/**
-package com.example.locationCar.employeeService.Test;
+package com.example.locationCar.EmployeeTests;
 
 import com.example.locationCar.models.enums.ContractType;
 import com.example.locationCar.models.enums.Position;
