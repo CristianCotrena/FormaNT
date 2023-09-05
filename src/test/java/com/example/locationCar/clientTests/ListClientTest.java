@@ -1,4 +1,3 @@
-/**
 package com.example.locationCar.clientTests;
 
 import com.example.locationCar.base.dto.BaseDto;
@@ -74,4 +73,3 @@ public class ListClientTest {
         assertEquals("Página informada inválida", responseEntity.getResult().getDescription());
     }
 }
- **/

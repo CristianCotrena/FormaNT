@@ -1,4 +1,3 @@
-/**
 package com.example.locationCar.clientTests;
 
 
@@ -89,4 +88,3 @@ public class SearchClientTest {
 
 
 }
- **/
