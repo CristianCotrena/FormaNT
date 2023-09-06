@@ -40,7 +40,8 @@ public class UpdateClientTest {
                 "12345677",
                 25,
                 "11952222222",
-                "11952223333"
+                "11952223333",
+                "user@domain.com.br"
         );
 
         when(updateClientService.updateClient(clientId, clientUpdateDto))
@@ -62,7 +63,8 @@ public class UpdateClientTest {
                 "12345677",
                 25,
                 "1234",
-                "11952223333"
+                "11952223333",
+                "user@domain.com.br"
         );
 
         when(updateClientService.updateClient(clientId, clientUpdateDto))
@@ -84,7 +86,8 @@ public class UpdateClientTest {
                 "12345677",
                 15,
                 "11952222222",
-                "11952223333"
+                "11952223333",
+                "user@domain.com.br"
         );
 
         when(updateClientService.updateClient(clientId, clientUpdateDto))

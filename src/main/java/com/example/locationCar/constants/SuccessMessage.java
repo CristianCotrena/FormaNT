@@ -6,6 +6,7 @@ public @interface SuccessMessage {
     String LIST_EMPLOYEES = "Funcionários listados com sucesso";
     String CREATE_VEHICLE = "Veículo criado com sucesso";
     String LIST_VEHICLES = "Veículos listados com sucesso";
+    String DELETE_SUCCESS = "Deletado com sucesso.";
     String CREATE_EMPLOYEE = "Funcionário criado com sucesso";
     String UPDATE_EMPLOYEE = "Funcionário atualizado com sucesso";
 }
