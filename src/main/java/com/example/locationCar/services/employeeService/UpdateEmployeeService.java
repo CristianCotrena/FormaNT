@@ -63,15 +63,27 @@ public class UpdateEmployeeService {
             return result.get();
         }
 
-        if (!employeeToUpdate.getContractType().equals(ContractType.fromString(employeeUpdateDto.getContractType())) ||
-                !employeeToUpdate.getCpfCnpj().equals(employeeUpdateDto.getCpfCnpj()) ||
-                !employeeToUpdate.getEmail().equals(employeeUpdateDto.getEmail())) {
+        if (!employeeToUpdate.getContractType().equals(ContractType.fromString(employeeUpdateDto.getContractType()))) {
 
-            String fieldNames = getUpdatedFieldNames(employeeToUpdate, employeeUpdateDto);
-
-            BaseErrorDto error = new BaseErrorDto(fieldNames, ErrorMessage.NEGATIVE_UPDATE);
+            BaseErrorDto error = new BaseErrorDto("contractType", ErrorMessage.NEGATIVE_UPDATE);
             ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, List.of(error));
             return result.get();
+        }
+
+        if (!employeeToUpdate.getCpfCnpj().equals(employeeUpdateDto.getCpfCnpj())) {
+
+            BaseErrorDto error = new BaseErrorDto("cpfCnpj", ErrorMessage.NEGATIVE_UPDATE);
+            ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, List.of(error));
+            return result.get();
+
+        }
+
+        if (!employeeToUpdate.getEmail().equals(employeeUpdateDto.getEmail())) {
+
+            BaseErrorDto error = new BaseErrorDto("email", ErrorMessage.NEGATIVE_UPDATE);
+            ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, List.of(error));
+            return result.get();
+
         }
 
         employeeToUpdate.setRole(Role.fromString(employeeUpdateDto.getRole()));
@@ -83,24 +95,6 @@ public class UpdateEmployeeService {
 
         return new ResponseSuccessBuilder<CreateEmployeeDto>(HttpStatus.OK, new CreateEmployeeDto(employeeId.toString()), SuccessMessage.UPDATE_EMPLOYEE).get();
 
-    }
-
-    private String getUpdatedFieldNames(EmployeeModel employeeToUpdate, EmployeeUpdateDto employeeUpdateDto) {
-        List<String> updatedFields = new ArrayList<>();
-
-        if (!employeeToUpdate.getCpfCnpj().equals(employeeUpdateDto.getCpfCnpj())) {
-            updatedFields.add("cpfCnpj");
-        }
-
-        if (!employeeToUpdate.getEmail().equals(employeeUpdateDto.getEmail())) {
-            updatedFields.add("email");
-        }
-
-        if (!employeeToUpdate.getContractType().equals(employeeUpdateDto.getContractType())) {
-            updatedFields.add("contractType");
-        }
-
-        return String.join(", ", updatedFields);
     }
 }
 
