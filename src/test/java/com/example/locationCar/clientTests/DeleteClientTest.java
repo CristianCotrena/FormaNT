@@ -1,4 +1,4 @@
-package com.example.locationCar.deleteTest;
+package com.example.locationCar.clientTests;
 
 import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.repositories.ClientRepository;
@@ -9,10 +9,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import java.util.Optional;
 import java.util.UUID;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertFalse;

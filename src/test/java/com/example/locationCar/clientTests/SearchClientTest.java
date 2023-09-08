@@ -1,6 +1,5 @@
 package com.example.locationCar.clientTests;
 
-
 import com.example.locationCar.controllers.ClientController;
 import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.services.clientService.SearchClientService;
@@ -15,7 +14,6 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-
 public class SearchClientTest {
 
     @Mock
@@ -29,7 +27,7 @@ public class SearchClientTest {
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        // Cofiguração de um client de exemplo
+        // Configuração de um client de exemplo
         UUID idClient = UUID.randomUUID();
         String cpfCnpj = "12345678900";
         String email = "client@teste.com";
@@ -44,7 +42,7 @@ public class SearchClientTest {
 
    @Test
     public void testSearchClient_ClientFoundById() {
-        // Configurção do comportamento simulado do clientServiceSearch
+        // Configuração do comportamento simulado do clientServiceSearch
         when(searchClientService.findUserById(clientModel.getIdClient()))
                 .thenReturn(clientModel);
 
@@ -58,7 +56,7 @@ public class SearchClientTest {
 
     @Test
     public void testSearchClient_ClientFoundByCpfCnpj() {
-        // Configurção do comportamento simulado do clientServiceSearch
+        // Configuração do comportamento simulado do clientServiceSearch
         when(searchClientService.findUserByCpfCnpj(clientModel.getCpfCnpj()))
                 .thenReturn(clientModel);
 
@@ -72,7 +70,7 @@ public class SearchClientTest {
 
     @Test
     public void testSearchClient_ClientFoundByEmail() {
-        // Configurção do comportamento simulado do clientServiceSearch
+        // Configuração do comportamento simulado do clientServiceSearch
         when(searchClientService.findUserByEmail(clientModel.getEmail()))
                 .thenReturn(clientModel);
 
@@ -83,8 +81,5 @@ public class SearchClientTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(clientModel, response.getBody());
     }
-
-
-
 
 }

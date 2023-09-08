@@ -6,13 +6,11 @@ import com.example.locationCar.repositories.ClientRepository;
 import com.example.locationCar.services.clientService.CreateClientService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.Mock;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
-
 import java.util.Optional;
 import java.util.UUID;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -23,7 +21,7 @@ public class CreateClientTest {
     @MockBean
     private ClientRepository clientRepository;
 
-    @Autowired
+    @Mock
     private CreateClientService createClientService;
 
     private ClientModel clientModel;
