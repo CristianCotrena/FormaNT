@@ -54,6 +54,9 @@ public class ListEmployeeTest {
     public void testListEmployees_InvalidData() {
         List<BaseErrorDto> errors = Collections.singletonList(new BaseErrorDto("role", "Campo inválido"));
 
+        when(listEmployeeValidate.validateParamsToSearch(anyString(), anyString(), anyString())).thenReturn(errors);
+        ;
+
         BaseDto responseEntity = listEmployeeService.listEmployees("ERRADO", "VENDEDOR", "0");
 
         assertEquals(HttpStatus.BAD_REQUEST.value(), responseEntity.getResult().getStatusCode());

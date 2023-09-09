@@ -1,9 +1,8 @@
 {
 	"info": {
-		"_postman_id": "d1eebf25-48d1-473a-a7e3-9bf59d762675",
+		"_postman_id": "f7a66d13-1e75-4c99-826b-0c85178db243",
 		"name": "Veículo",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "28525027"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -29,6 +28,52 @@
 					"path": [
 						"v1",
 						"vehicle"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ListVehicleWithParams",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/vehicle/list?color=blue&max=60&min=10&rating=4.5&page=0&size=3",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"vehicle",
+						"list"
+					],
+					"query": [
+						{
+							"key": "color",
+							"value": "blue"
+						},
+						{
+							"key": "max",
+							"value": "60"
+						},
+						{
+							"key": "min",
+							"value": "10"
+						},
+						{
+							"key": "rating",
+							"value": "4.5"
+						},
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "3"
+						}
 					]
 				}
 			},

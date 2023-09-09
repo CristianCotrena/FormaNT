@@ -1,53 +1,58 @@
-package com.example.locationCar.dtos.input;
+package com.example.locationCar.dtos;
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import com.example.locationCar.models.VehicleModel;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
-public class VehicleInputDto {
+public class VehicleRecordDto {
 
-    @Schema(example = "BRA2E18")
+    private UUID idVehicle;
+
     private String license;
 
-    @Schema(example = "tesla")
     private String brand;
 
-    @Schema(example = "s")
     private String model;
 
-    @Schema(example = "4")
-    private Integer doorNumber; // 2 ou 4
+    private Integer doorNumber;
 
-    @Schema(example = "black")
     private String color;
 
-    @Schema(example = "gasoline")
     private String fuel;
 
-    @Schema(example = "43.3")
     private BigDecimal dailyValue;
 
-    @Schema(example =  "2500.5")
     private BigDecimal mileage;
 
-    @Schema(example = "2.5")
+    private Integer status;
+
     private BigDecimal rating;
 
-    public VehicleInputDto() {
+    public VehicleRecordDto() {
     }
 
-    public VehicleInputDto(String license, String brand, String model, Integer doorNumber, String color, String fuel, BigDecimal dailyValue, BigDecimal mileage, BigDecimal rating) {
-        this.license = license;
-        this.brand = brand;
-        this.model = model;
-        this.doorNumber = doorNumber;
-        this.color = color;
-        this.fuel = fuel;
-        this.dailyValue = dailyValue;
-        this.mileage = mileage;
-        this.rating = rating;
+    public VehicleRecordDto(VehicleModel vehicleModel) {
+        this.idVehicle = vehicleModel.getIdVehicle();
+        this.license = vehicleModel.getLicense();
+        this.brand = vehicleModel.getBrand();
+        this.model = vehicleModel.getModel();
+        this.doorNumber = vehicleModel.getDoorNumber();
+        this.color = vehicleModel.getColor();
+        this.fuel = vehicleModel.getFuel();
+        this.dailyValue = vehicleModel.getDailyValue();
+        this.mileage = vehicleModel.getMileage();
+        this.status = vehicleModel.getStatus();
+        this.rating = vehicleModel.getRating();
     }
 
+    public UUID getIdVehicle() {
+        return idVehicle;
+    }
+
+    public void setIdVehicle(UUID idVehicle) {
+        this.idVehicle = idVehicle;
+    }
 
     public String getLicense() {
         return license;
@@ -111,6 +116,14 @@ public class VehicleInputDto {
 
     public void setMileage(BigDecimal mileage) {
         this.mileage = mileage;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public BigDecimal getRating() {

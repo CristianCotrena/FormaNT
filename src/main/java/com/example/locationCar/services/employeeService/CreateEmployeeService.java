@@ -1,12 +1,10 @@
 package com.example.locationCar.services.employeeService;
-
 import com.example.locationCar.base.dto.BaseDto;
 import com.example.locationCar.base.dto.BaseErrorDto;
 import com.example.locationCar.builder.ResponseErrorBuilder;
 import com.example.locationCar.builder.ResponseSuccessBuilder;
 import com.example.locationCar.constants.ErrorMessage;
 import com.example.locationCar.constants.SuccessMessage;
-import com.example.locationCar.dtos.CreateClientDto;
 import com.example.locationCar.dtos.CreateEmployeeDto;
 import com.example.locationCar.dtos.EmployeeDto;
 import com.example.locationCar.models.EmployeeModel;
@@ -18,7 +16,6 @@ import com.example.locationCar.validate.employee.CreateEmployeeValidate;
 import org.springframework.http.HttpStatus;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.UUID;
 

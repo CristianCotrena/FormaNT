@@ -1,30 +1,21 @@
 package com.example.locationCar.EmployeeTests;
-
 import com.example.locationCar.base.dto.BaseDto;
 import com.example.locationCar.dtos.EmployeeDto;
-import com.example.locationCar.dtos.input.VehicleInputDto;
 import com.example.locationCar.models.EmployeeModel;
-import com.example.locationCar.models.enums.ContractType;
-import com.example.locationCar.models.enums.Position;
-import com.example.locationCar.models.enums.Role;
 import com.example.locationCar.repositories.EmployeeRepository;
-import com.example.locationCar.repositories.VehicleRepository;
 import com.example.locationCar.services.employeeService.CreateEmployeeService;
-import com.example.locationCar.services.vehicleService.CreateVehicleService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
-
-import java.math.BigDecimal;
-import java.util.UUID;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import java.math.BigDecimal;
+import java.util.UUID;
 
 public class CreateEmployeeTest {
 

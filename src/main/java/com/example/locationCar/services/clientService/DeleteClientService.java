@@ -24,7 +24,7 @@ public class DeleteClientService {
 
         if (clientOptional.isPresent()){
             ClientModel statusClient = clientOptional.get();
-            statusClient .setStatus(0);
+            statusClient.setStatus(0);
             clientRepository.save(statusClient);
         }
     }

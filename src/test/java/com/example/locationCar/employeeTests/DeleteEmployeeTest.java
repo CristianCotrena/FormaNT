@@ -27,6 +27,12 @@ import static org.mockito.Mockito.when;
 public class DeleteEmployeeTest {
 
     @Mock
+    private DeleteEmployeeService employeeServiceDelete;
+
+    @InjectMocks
+    private EmployeeController employeeController;
+
+    @Mock
     private EmployeeRepository employeeRepository;
 
     @InjectMocks
