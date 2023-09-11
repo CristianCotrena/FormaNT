@@ -13,42 +13,44 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class ListVehicleService {
-    private final VehicleRepository vehicleRepository;
+  private final VehicleRepository vehicleRepository;
 
-    @Autowired
-    public ListVehicleService(VehicleRepository vehicleRepository) {
-        this.vehicleRepository = vehicleRepository;
+  @Autowired
+  public ListVehicleService(VehicleRepository vehicleRepository) {
+    this.vehicleRepository = vehicleRepository;
+  }
+
+  public BaseDto listVehicles(String page) {
+    int pageToSearch = 0;
+
+    if (page != null) {
+      try {
+        pageToSearch = Integer.parseInt(page);
+      } catch (Exception e) {
+        ResponseErrorBuilder result =
+            new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, ErrorMessage.INVALID_PAGE);
+        return result.get();
+      }
     }
 
-    public BaseDto listVehicles(String page) {
-        int pageToSearch = 0;
+    PageRequest pageRequest = PageRequest.of(pageToSearch, 20);
+    Page<VehicleModel> vehicles = vehicleRepository.findAll(pageRequest);
 
-        if(page != null) {
-            try{
-                pageToSearch = Integer.parseInt(page);
-            }catch(Exception e){
-                ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, ErrorMessage.INVALID_PAGE);
-                return result.get();
-            }
-        }
-
-        PageRequest pageRequest = PageRequest.of(pageToSearch, 20);
-        Page<VehicleModel> vehicles = vehicleRepository.findAll(pageRequest);
-
-        if (vehicles.isEmpty()) {
-            ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, ErrorMessage.NOT_FOUND);
-            return result.get();
-        }
-
-        if ((vehicles.getTotalPages() - 1) < pageToSearch) {
-            ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, ErrorMessage.INVALID_PAGE);
-            return result.get();
-        }
-
-        return new ResponseSuccessBuilder<>(HttpStatus.OK, vehicles, SuccessMessage.LIST_VEHICLES).get();
+    if (vehicles.isEmpty()) {
+      ResponseErrorBuilder result =
+          new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, ErrorMessage.NOT_FOUND);
+      return result.get();
     }
+
+    if ((vehicles.getTotalPages() - 1) < pageToSearch) {
+      ResponseErrorBuilder result =
+          new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, ErrorMessage.INVALID_PAGE);
+      return result.get();
+    }
+
+    return new ResponseSuccessBuilder<>(HttpStatus.OK, vehicles, SuccessMessage.LIST_VEHICLES)
+        .get();
+  }
 }

@@ -159,6 +159,27 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>com.spotify.fmt</groupId>
+                <artifactId>fmt-maven-plugin</artifactId>
+                <version>2.20</version>
+                <configuration>
+                    <sourceDirectory>src/main/java</sourceDirectory>
+                    <testSourceDirectory>src/test/java</testSourceDirectory>
+                    <verbose>false</verbose>
+                    <filesNamePattern>.*\.java</filesNamePattern>
+                    <skip>false</skip>
+                    <skipSortingImports>false</skipSortingImports>
+                    <style>google</style>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 

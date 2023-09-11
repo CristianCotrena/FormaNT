@@ -1,7 +1,6 @@
 package com.example.locationCar.models;
 
 import jakarta.persistence.*;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -9,133 +8,144 @@ import java.util.UUID;
 @Entity
 @Table(name = "TB_VEHICLE")
 public class VehicleModel implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID idVehicle;
+  private static final long serialVersionUID = 1L;
 
-    private String license;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private UUID idVehicle;
 
-    private String brand;
+  private String license;
 
-    private String model;
+  private String brand;
 
-    private Integer doorNumber; // 2 ou 4
+  private String model;
 
-    private String color;
+  private Integer doorNumber; // 2 ou 4
 
-    private String fuel;
+  private String color;
 
-    private BigDecimal dailyValue;
+  private String fuel;
 
-    private BigDecimal mileage;
+  private BigDecimal dailyValue;
 
-    private Integer status;
+  private BigDecimal mileage;
 
-    private BigDecimal rating;
+  private Integer status;
 
-    public VehicleModel() {
-    }
+  private BigDecimal rating;
 
-    public VehicleModel(UUID idVehicle, String license, String brand, String model, int doorNumber, String color, String fuel, BigDecimal dailyValue, BigDecimal mileage, int status, BigDecimal rating) {
-        this.idVehicle = idVehicle;
-        this.license = license;
-        this.brand = brand;
-        this.model = model;
-        this.doorNumber = doorNumber;
-        this.color = color;
-        this.fuel = fuel;
-        this.dailyValue = dailyValue;
-        this.mileage = mileage;
-        this.status = status;
-        this.rating = rating;
-    }
+  public VehicleModel() {}
 
-    public UUID getIdVehicle() {
-        return idVehicle;
-    }
+  public VehicleModel(
+      UUID idVehicle,
+      String license,
+      String brand,
+      String model,
+      int doorNumber,
+      String color,
+      String fuel,
+      BigDecimal dailyValue,
+      BigDecimal mileage,
+      int status,
+      BigDecimal rating) {
+    this.idVehicle = idVehicle;
+    this.license = license;
+    this.brand = brand;
+    this.model = model;
+    this.doorNumber = doorNumber;
+    this.color = color;
+    this.fuel = fuel;
+    this.dailyValue = dailyValue;
+    this.mileage = mileage;
+    this.status = status;
+    this.rating = rating;
+  }
 
-    public void setIdVehicle(UUID idVehicle) {
-        this.idVehicle = idVehicle;
-    }
+  public UUID getIdVehicle() {
+    return idVehicle;
+  }
 
-    public String getLicense() {
-        return license;
-    }
+  public void setIdVehicle(UUID idVehicle) {
+    this.idVehicle = idVehicle;
+  }
 
-    public void setLicense(String license) {
-        this.license = license;
-    }
+  public String getLicense() {
+    return license;
+  }
 
-    public String getBrand() {
-        return brand;
-    }
+  public void setLicense(String license) {
+    this.license = license;
+  }
 
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
+  public String getBrand() {
+    return brand;
+  }
 
-    public String getModel() {
-        return model;
-    }
+  public void setBrand(String brand) {
+    this.brand = brand;
+  }
 
-    public void setModel(String model) {
-        this.model = model;
-    }
+  public String getModel() {
+    return model;
+  }
 
-    public Integer getDoorNumber() {
-        return doorNumber;
-    }
+  public void setModel(String model) {
+    this.model = model;
+  }
 
-    public void setDoorNumber(Integer doorNumber) {
-        this.doorNumber = doorNumber;
-    }
+  public Integer getDoorNumber() {
+    return doorNumber;
+  }
 
-    public String getColor() {
-        return color;
-    }
+  public void setDoorNumber(Integer doorNumber) {
+    this.doorNumber = doorNumber;
+  }
 
-    public void setColor(String color) {
-        this.color = color;
-    }
+  public String getColor() {
+    return color;
+  }
 
-    public String getFuel() {
-        return fuel;
-    }
+  public void setColor(String color) {
+    this.color = color;
+  }
 
-    public void setFuel(String fuel) {
-        this.fuel = fuel;
-    }
+  public String getFuel() {
+    return fuel;
+  }
 
-    public BigDecimal getDailyValue() {
-        return dailyValue;
-    }
+  public void setFuel(String fuel) {
+    this.fuel = fuel;
+  }
 
-    public void setDailyValue(BigDecimal dailyValue) {
-        this.dailyValue = dailyValue;
-    }
+  public BigDecimal getDailyValue() {
+    return dailyValue;
+  }
 
-    public BigDecimal getMileage() {
-        return mileage;
-    }
+  public void setDailyValue(BigDecimal dailyValue) {
+    this.dailyValue = dailyValue;
+  }
 
-    public void setMileage(BigDecimal mileage) {
-        this.mileage = mileage;
-    }
+  public BigDecimal getMileage() {
+    return mileage;
+  }
 
-    public Integer getStatus() {
-        return status;
-    }
+  public void setMileage(BigDecimal mileage) {
+    this.mileage = mileage;
+  }
 
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
+  public Integer getStatus() {
+    return status;
+  }
 
-    public BigDecimal getRating() {
-        return rating;
-    }
+  public void setStatus(Integer status) {
+    this.status = status;
+  }
 
-    public void setRating(BigDecimal rating) {
-        this.rating = rating;
-    }
+  public BigDecimal getRating() {
+    return rating;
+  }
+
+  public void setRating(BigDecimal rating) {
+    this.rating = rating;
+  }
 }
