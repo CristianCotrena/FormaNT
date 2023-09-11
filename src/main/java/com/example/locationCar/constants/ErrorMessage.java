@@ -13,5 +13,10 @@ public @interface ErrorMessage {
     String NEGATIVE_UPDATE = "Não é possível alterar esse campo";
     String AGE_GREATER_THAN_OR_EQUAL_18 = "Idade deve ser maior ou igual a 18";
     String INVALID_JSON = "JSON - Formato inválido";
+    String EMPLOYEE_ID_OR_CLIENT_ID = "Só pode ser passado um ID, ou de cliente ou de funcionário";
+    String CLIENT_DOESNT_EXIST = "O cliente não existe";
+    String CLIENT_ALREADY_HAS_AN_ADDRESS = "O cliente já possui um endereço cadastrado";
+    String EMPLOYEE_DOESNT_EXIST = "O funcionário não existe";
+    String EMPLOYEE_ALREADY_HAS_AN_ADDRESS = "O funcionário já possui um endereço cadastrado";
 
 }
