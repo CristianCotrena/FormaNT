@@ -14,6 +14,7 @@ import com.example.locationCar.models.enums.Position;
 import com.example.locationCar.models.enums.Role;
 import com.example.locationCar.repositories.EmployeeRepository;
 import com.example.locationCar.validate.employee.UpdateEmployeeValidate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.http.HttpStatus;
@@ -31,12 +32,14 @@ public class UpdateEmployeeService {
   public BaseDto updateEmployee(
       UUID employeeId, EmployeeUpdateDto employeeUpdateDto, boolean recontratar) {
 
+    List<BaseErrorDto> errorList = new ArrayList<>();
+
     EmployeeModel employeeToUpdate = employeeRepository.findById(employeeId).orElse(null);
 
     if (employeeToUpdate == null) {
       BaseErrorDto error = new BaseErrorDto("ID", ErrorMessage.NOT_FOUND);
       ResponseErrorBuilder result =
-          new ResponseErrorBuilder(HttpStatus.NOT_FOUND, (List<BaseErrorDto>) error);
+          new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, ErrorMessage.NOT_FOUND, errorList);
       return result.get();
     }
 

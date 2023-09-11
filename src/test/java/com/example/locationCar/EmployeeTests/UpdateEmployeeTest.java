@@ -2,87 +2,87 @@ package com.example.locationCar.EmployeeTests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 import com.example.locationCar.base.dto.BaseDto;
-import com.example.locationCar.base.dto.BaseErrorDto;
-import com.example.locationCar.constants.ErrorMessage;
-import com.example.locationCar.constants.SuccessMessage;
-import com.example.locationCar.dtos.EmployeeDto;
+import com.example.locationCar.dtos.EmployeeUpdateDto;
 import com.example.locationCar.models.EmployeeModel;
+import com.example.locationCar.models.enums.ContractType;
+import com.example.locationCar.models.enums.Position;
+import com.example.locationCar.models.enums.Role;
 import com.example.locationCar.repositories.EmployeeRepository;
 import com.example.locationCar.services.employeeService.UpdateEmployeeService;
-import com.example.locationCar.validate.employee.UpdateEmployeeValidate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 
+@SpringBootTest
 public class UpdateEmployeeTest {
 
-  @Mock private EmployeeRepository employeeRepository;
+  @MockBean private EmployeeRepository employeeRepository;
 
-  private UpdateEmployeeService updateEmployeeService;
+  @Autowired private UpdateEmployeeService updateEmployeeService;
+
+  private EmployeeUpdateDto employeeUpdateDto;
 
   @BeforeEach
-  void setUp() {
+  public void setUp() {
     MockitoAnnotations.openMocks(this);
-    updateEmployeeService = new UpdateEmployeeService(employeeRepository);
+
+    employeeUpdateDto = new EmployeeUpdateDto();
+    employeeUpdateDto.setName("Adrielly");
+    employeeUpdateDto.setContractType("CLT");
+    employeeUpdateDto.setCpfCnpj("44190639800");
+    employeeUpdateDto.setEmail("novo@email.com");
+    employeeUpdateDto.setRole("ADMINISTRADOR");
+    employeeUpdateDto.setPosition("VENDEDOR");
+    employeeUpdateDto.setPhone("11980354201");
   }
 
   @Test
-  void testUpdateEmployeeSuccess() {
+  public void updateEmployee_UpdateName_Success() {
     UUID employeeId = UUID.randomUUID();
-    EmployeeDto employeeUpdateDto = new EmployeeDto();
-    employeeUpdateDto.setRole("ROLE_ADMIN");
-    employeeUpdateDto.setPosition("MANAGER");
-    employeeUpdateDto.setPhone("1234567890");
-    employeeUpdateDto.setName("John Doe");
+    EmployeeModel existingEmployee = new EmployeeModel();
+    existingEmployee.setEmployeeId(employeeId);
+    existingEmployee.setName("Adrielly Pasetto");
+    existingEmployee.setContractType(ContractType.valueOf("CLT"));
+    existingEmployee.setCpfCnpj("44190639800");
+    existingEmployee.setEmail("novo@email.com");
+    existingEmployee.setRole(Role.valueOf("ADMINISTRADOR"));
+    existingEmployee.setPosition(Position.valueOf("VENDEDOR"));
+    existingEmployee.setPhone("11980354201");
 
-    EmployeeModel employeeToUpdate = new EmployeeModel();
-    Mockito.when(employeeRepository.findById(Mockito.eq(employeeId)))
-        .thenReturn(Optional.of(employeeToUpdate));
+    when(employeeRepository.findById(employeeId)).thenReturn(Optional.of(existingEmployee));
+    when(employeeRepository.save(any(EmployeeModel.class))).thenReturn(existingEmployee);
 
-    BaseDto result = updateEmployeeService.updateEmployee(employeeId, employeeUpdateDto);
+    BaseDto result = updateEmployeeService.updateEmployee(employeeId, employeeUpdateDto, true);
 
-    assertEquals(HttpStatus.OK, result.getResult());
-    assertEquals(SuccessMessage.UPDATE_EMPLOYEE, result.getData());
+    assertEquals(HttpStatus.OK.value(), result.getResult().getStatusCode());
+    assertEquals("Funcionário atualizado com sucesso", result.getResult().getDescription());
   }
 
   @Test
-  void testUpdateEmployeeNotFound() {
+  public void updateEmployee_AttemptToUpdateContractType_E_CpfCnpj_Failure() {
     UUID employeeId = UUID.randomUUID();
-    EmployeeDto employeeUpdateDto = new EmployeeDto();
+    EmployeeModel existingEmployee = new EmployeeModel();
+    existingEmployee.setEmployeeId(employeeId);
+    existingEmployee.setContractType(ContractType.valueOf("CLT"));
+    existingEmployee.setCpfCnpj("02516072082");
+    existingEmployee.setEmail("novo@email.com");
+    existingEmployee.setRole(Role.valueOf("ADMINISTRADOR"));
+    existingEmployee.setPosition(Position.valueOf("VENDEDOR"));
+    existingEmployee.setPhone("11980354201");
+    when(employeeRepository.findById(employeeId)).thenReturn(Optional.of(existingEmployee));
 
-    Mockito.when(employeeRepository.findById(Mockito.eq(employeeId))).thenReturn(Optional.empty());
+    BaseDto result = updateEmployeeService.updateEmployee(employeeId, employeeUpdateDto, true);
 
-    BaseDto result = updateEmployeeService.updateEmployee(employeeId, employeeUpdateDto);
-
-    assertEquals(HttpStatus.NOT_FOUND, result.getData());
-    assertEquals(ErrorMessage.NOT_FOUND, result.getErrors());
-  }
-
-  @Test
-  void testUpdateEmployeeValidationErrors() {
-    UUID employeeId = UUID.randomUUID();
-    EmployeeDto employeeUpdateDto = new EmployeeDto();
-
-    EmployeeModel employeeToUpdate = new EmployeeModel();
-    Mockito.when(employeeRepository.findById(Mockito.eq(employeeId)))
-        .thenReturn(Optional.of(employeeToUpdate));
-
-    List<BaseErrorDto> errors = new ArrayList<>();
-    errors.add(new BaseErrorDto("role", "Função inválida"));
-    Mockito.when(new UpdateEmployeeValidate().validate(any())).thenReturn(errors);
-
-    BaseDto result = updateEmployeeService.updateEmployee(employeeId, employeeUpdateDto);
-
-    assertEquals(HttpStatus.BAD_REQUEST, result.getErrors());
-    assertEquals(BaseErrorDto.class, result.getErrors().get(0).getClass());
+    assertEquals(HttpStatus.BAD_REQUEST.value(), result.getResult().getStatusCode());
+    assertEquals("Bad Request", result.getResult().getDescription());
   }
 }

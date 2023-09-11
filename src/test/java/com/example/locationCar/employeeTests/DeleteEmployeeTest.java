@@ -1,20 +1,19 @@
 package com.example.locationCar.EmployeeTests;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 import com.example.locationCar.controllers.EmployeeController;
 import com.example.locationCar.models.EmployeeModel;
-import com.example.locationCar.models.enums.ContractType;
-import com.example.locationCar.models.enums.Position;
 import com.example.locationCar.repositories.EmployeeRepository;
 import com.example.locationCar.services.employeeService.DeleteEmployeeService;
+import java.util.Optional;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
@@ -26,34 +25,39 @@ public class DeleteEmployeeTest {
 
   @Mock private EmployeeRepository employeeRepository;
 
-  private EmployeeModel employeeModel;
+  @InjectMocks private DeleteEmployeeService deleteEmployeeService;
 
   @BeforeEach
-  void setUp() {
-    employeeModel = new EmployeeModel();
-    employeeModel.setEmployeeId(UUID.randomUUID());
-    employeeModel.setName("Teste");
-    employeeModel.setCpfCnpj("12345678910");
-    employeeModel.setRegistry("123456789");
-    employeeModel.setPhone("1212345678");
-    employeeModel.setEmail("teste@teste.com");
-    employeeModel.setPosition(Position.ESTOQUISTA);
-    employeeModel.setContractType(ContractType.CLT);
+  public void setUp() {
+    MockitoAnnotations.initMocks(this); // Inicializa os mocks
 
-    // Configurando o comportamento do mock do EmployeeServiceDelete
-    when(employeeServiceDelete.deleteEmployee(any(UUID.class))).thenReturn(employeeModel);
+    // Instancia o serviço a ser testado, passando os mocks configurados
+    deleteEmployeeService = new DeleteEmployeeService(employeeRepository);
   }
 
   @Test
-  public void deleteEmployee() {
-    // a partir de um funcionario já criado, recuperar seu id e deletá-lo por meio dele.
+  public void deleteEmployee_Success() {
+    UUID employeeId = UUID.randomUUID();
+    EmployeeModel employee = new EmployeeModel();
+    employee.setEmployeeId(employeeId);
+    employee.setStatus(1);
 
-    UUID funcionarioId = employeeModel.getEmployeeId();
+    when(employeeRepository.findById(employeeId)).thenReturn(Optional.of(employee));
+    when(employeeRepository.save(employee)).thenReturn(employee);
 
-    employeeRepository.deleteById(funcionarioId);
+    EmployeeModel result = deleteEmployeeService.deleteEmployee(employeeId);
 
-    // verificar se o funcionario foi deletado
+    assertNotNull(result);
+    assertEquals(0, result.getStatus());
+  }
 
-    assertFalse(employeeRepository.existsById(funcionarioId));
+  @Test
+  public void deleteEmployee_NotFound() {
+    UUID employeeId = UUID.randomUUID();
+    when(employeeRepository.findById(employeeId)).thenReturn(Optional.empty());
+
+    EmployeeModel result = deleteEmployeeService.deleteEmployee(employeeId);
+
+    assertNull(result);
   }
 }
