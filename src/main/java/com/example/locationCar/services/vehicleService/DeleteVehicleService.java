@@ -11,63 +11,63 @@ import com.example.locationCar.models.VehicleModel;
 import com.example.locationCar.repositories.VehicleRepository;
 import com.example.locationCar.validate.vehicle.DeleteVehicleValidate;
 import jakarta.transaction.Transactional;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 
 @Service
 public class DeleteVehicleService {
 
-    VehicleRepository vehicleRepository;
+  VehicleRepository vehicleRepository;
 
-    public DeleteVehicleService (VehicleRepository vehicleRepository) {
+  public DeleteVehicleService(VehicleRepository vehicleRepository) {
 
-        this.vehicleRepository = vehicleRepository;
+    this.vehicleRepository = vehicleRepository;
+  }
+
+  @Transactional
+  public BaseDto execute(UUID idVehicle, String license) {
+
+    List<BaseErrorDto> errors = new DeleteVehicleValidate().execute(idVehicle, license);
+
+    if (errors.size() > 0) {
+      ResponseErrorBuilder errorBuilder = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, errors);
+      return errorBuilder.get();
     }
 
-    @Transactional
-    public BaseDto execute (UUID idVehicle, String license) {
+    if (idVehicle != null && license != null) {
+      Optional<VehicleModel> vehicleModelOptional = vehicleRepository.findById(idVehicle);
 
-        List<BaseErrorDto> errors = new DeleteVehicleValidate().execute(idVehicle, license);
-
-        if (errors.size() > 0) {
-            ResponseErrorBuilder errorBuilder = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, errors);
-            return errorBuilder.get();
-        }
-
-        if (idVehicle != null && license != null) {
-            Optional<VehicleModel> vehicleModelOptional = vehicleRepository.findById(idVehicle);
-
-            if (!(vehicleModelOptional.isPresent() && vehicleModelOptional.get().getLicense().equals(license))) {
-                return generateError(Arrays.asList(idVehicle.toString(), license));
-            }
-            vehicleRepository.deleteById(idVehicle);
-        } else if (idVehicle != null) {
-            if (!vehicleRepository.existsById(idVehicle)) {
-                return generateError(Arrays.asList(idVehicle.toString()));
-            }
-            vehicleRepository.deleteById(idVehicle);
-        } else if (license != null) {
-            if (!vehicleRepository.existsByLicense(license).get()) {
-                return generateError(Arrays.asList(license));
-            }
-            vehicleRepository.deleteByLicense(license);
-        }
-
-        DeleteVehicleDto deleteVehicleDto = new DeleteVehicleDto(true);
-        ResponseSuccessBuilder<DeleteVehicleDto> responseSuccessBuilder = new ResponseSuccessBuilder<>(HttpStatus.ACCEPTED, deleteVehicleDto, SuccessMessage.DELETE_SUCCESS);
-        return responseSuccessBuilder.get();
+      if (!(vehicleModelOptional.isPresent()
+          && vehicleModelOptional.get().getLicense().equals(license))) {
+        return generateError(Arrays.asList(idVehicle.toString(), license));
+      }
+      vehicleRepository.deleteById(idVehicle);
+    } else if (idVehicle != null) {
+      if (!vehicleRepository.existsById(idVehicle)) {
+        return generateError(Arrays.asList(idVehicle.toString()));
+      }
+      vehicleRepository.deleteById(idVehicle);
+    } else if (license != null) {
+      if (!vehicleRepository.existsByLicense(license).get()) {
+        return generateError(Arrays.asList(license));
+      }
+      vehicleRepository.deleteByLicense(license);
     }
 
-    private BaseDto generateError (List<String> fields) {
-        ResponseErrorBuilder errorBuilder = new ResponseErrorBuilder(
-                HttpStatus.BAD_REQUEST,
-                ErrorMessage.NOT_FOUND_BY_PARAMS + fields
-        );
-        return errorBuilder.get();
-    }
+    DeleteVehicleDto deleteVehicleDto = new DeleteVehicleDto(true);
+    ResponseSuccessBuilder<DeleteVehicleDto> responseSuccessBuilder =
+        new ResponseSuccessBuilder<>(
+            HttpStatus.ACCEPTED, deleteVehicleDto, SuccessMessage.DELETE_SUCCESS);
+    return responseSuccessBuilder.get();
+  }
+
+  private BaseDto generateError(List<String> fields) {
+    ResponseErrorBuilder errorBuilder =
+        new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, ErrorMessage.NOT_FOUND_BY_PARAMS + fields);
+    return errorBuilder.get();
+  }
 }

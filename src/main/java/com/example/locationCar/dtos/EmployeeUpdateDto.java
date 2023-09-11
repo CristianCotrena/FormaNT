@@ -4,122 +4,145 @@ import com.example.locationCar.models.enums.ContractType;
 import com.example.locationCar.models.enums.Position;
 import com.example.locationCar.models.enums.Role;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 public class EmployeeUpdateDto {
 
+  @Schema(example = "Joao Pedro")
+  String name;
 
-    @Schema(example = "Joao Pedro") String name;
+  @Schema(example = "VENDEDOR")
+  String position;
 
-    @Schema(example = "VENDEDOR")String position;
+  @Schema(example = "44190639800")
+  String cpfCnpj;
 
-    @Schema(example = "44190639800") String cpfCnpj;
+  @Schema(example = "1212")
+  String registry;
 
-    @Schema(example = "1212") String registry;
+  @Schema(example = "(51) 9999-9999")
+  String phone;
 
-    @Schema(example = "(51) 9999-9999") String phone;
+  @Schema(example = "CLT")
+  String contractType;
 
-    @Schema(example = "CLT")String  contractType;
+  @Schema(example = "VENDEDOR")
+  String role;
 
-     @Schema(example = "VENDEDOR") String role;
+  @Schema(example = "joaopedro@teste.com")
+  String email;
 
-    @Schema(example = "joaopedro@teste.com") String email;
+  @Schema(example = "1")
+  Integer status;
 
-    @Schema(example = "1" )Integer status;
+  public EmployeeUpdateDto(
+      String newName,
+      Position position,
+      String number,
+      String number1,
+      String s,
+      ContractType contractType,
+      Role role,
+      String mail,
+      Integer status) {}
 
+  public EmployeeUpdateDto() {}
 
+  public Integer getStatus() {
+    return status;
+  }
 
-    public EmployeeUpdateDto(String newName, Position position, String number, String number1, String s, ContractType contractType, Role role, String mail, Integer status) {
-    }
+  public void setStatus(Integer status) {
+    this.status = status;
+  }
 
-    public EmployeeUpdateDto() {
+  public String getName() {
+    return name;
+  }
 
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public Integer getStatus() {
-        return status;
-    }
+  public String getPosition() {
+    return position;
+  }
 
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
+  public void setPosition(String position) {
+    this.position = position;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getCpfCnpj() {
+    return cpfCnpj;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setCpfCnpj(String cpfCnpj) {
+    this.cpfCnpj = cpfCnpj;
+  }
 
-    public String getPosition() {
-        return position;
-    }
+  public String getRegistry() {
+    return registry;
+  }
 
-    public void setPosition(String position) {
-        this.position = position;
-    }
+  public void setRegistry(String registry) {
+    this.registry = registry;
+  }
 
-    public String getCpfCnpj() {
-        return cpfCnpj;
-    }
+  public String getPhone() {
+    return phone;
+  }
 
-    public void setCpfCnpj(String cpfCnpj) {
-        this.cpfCnpj = cpfCnpj;
-    }
+  public void setPhone(String phone) {
+    this.phone = phone;
+  }
 
-    public String getRegistry() {
-        return registry;
-    }
+  public String getContractType() {
+    return contractType;
+  }
 
-    public void setRegistry(String registry) {
-        this.registry = registry;
-    }
+  public void setContractType(String contractType) {
+    this.contractType = contractType;
+  }
 
-    public String getPhone() {
-        return phone;
-    }
+  public String getRole() {
+    return role;
+  }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
+  public void setRole(String role) {
+    this.role = role;
+  }
 
-    public String  getContractType() {
-        return contractType;
-    }
+  public String getEmail() {
+    return email;
+  }
 
-    public void setContractType(String  contractType) {
-        this.contractType = contractType;
-    }
+  public void setEmail(String email) {
+    this.email = email;
+  }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    @Override
-    public String toString() {
-        return "EmployeeDto{" +
-                "name='" + name + '\'' +
-                ", position=" + position +
-                ", cpfCnpj='" + cpfCnpj + '\'' +
-                ", registry='" + registry + '\'' +
-                ", phone='" + phone + '\'' +
-                ", contractType=" + contractType +
-                ", role=" + role +
-                ", email='" + email + '\'' +
-                '}';
-    }
+  @Override
+  public String toString() {
+    return "EmployeeDto{"
+        + "name='"
+        + name
+        + '\''
+        + ", position="
+        + position
+        + ", cpfCnpj='"
+        + cpfCnpj
+        + '\''
+        + ", registry='"
+        + registry
+        + '\''
+        + ", phone='"
+        + phone
+        + '\''
+        + ", contractType="
+        + contractType
+        + ", role="
+        + role
+        + ", email='"
+        + email
+        + '\''
+        + '}';
+  }
 }
