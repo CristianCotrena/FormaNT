@@ -53,6 +53,7 @@ public class ListEmployeeTest {
     @Test
     public void testListEmployees_InvalidData() {
         List<BaseErrorDto> errors = Collections.singletonList(new BaseErrorDto("role", "Campo inválido"));
+
         when(listEmployeeValidate.validateParamsToSearch(anyString(), anyString(), anyString())).thenReturn(errors);
         ;
 

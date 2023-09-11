@@ -1,107 +1,178 @@
 package com.example.locationCar.EmployeeTests;
-
-/*
-
-import com.example.locationCar.models.enums.ContractType;
-import com.example.locationCar.models.enums.Position;
-import com.example.locationCar.models.enums.Role;
+import com.example.locationCar.base.dto.BaseDto;
+import com.example.locationCar.dtos.EmployeeDto;
+import com.example.locationCar.models.EmployeeModel;
 import com.example.locationCar.repositories.EmployeeRepository;
 import com.example.locationCar.services.employeeService.CreateEmployeeService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import java.math.BigDecimal;
+import java.util.UUID;
 
 public class CreateEmployeeTest {
 
+    @MockBean
+    private EmployeeRepository employeeRepository;
+
+    @Autowired
     private CreateEmployeeService employeeService;
 
-    @Test
-    public void deveriaValidarCpfCnpj() {
-
-        String cpfCnpjNaoValido = "15151";
-        String cpfValido = "02516072082";
-        String cnpjValido = "48740351000165";
-
-        assertEquals(false, employeeService.isValidCpfCnpj(cpfCnpjNaoValido));
-        assertEquals(true, employeeService.isValidCpfCnpj(cpfValido));
-        assertEquals(true, employeeService.isValidCpfCnpj(cnpjValido));
-    }
-
-    @Test
-    public void deveriaValidarTelefone() {
-        String telefoneValido = "(51) 4825-9918";
-        String telefoneInvalido = "(51) 378 2578";
-        assertEquals(true, employeeService.isValidTelefone(telefoneValido));
-        assertEquals(false, employeeService.isValidTelefone(telefoneInvalido));
-    }
-
-    @Test
-    public void deveriaValidarEmail() {
-        String emailValido = "teste@teste.com";
-        String emailNaoValido = "teste@teste";
-        assertEquals(true, employeeService.isValidEmail(emailValido));
-        assertEquals(false, employeeService.isValidEmail(emailNaoValido));
-
-    }
-
-    @Test
-    public void deveriaValidarContrato() {
-        // Criar um objeto CreateEmployeeService para testar
-        CreateEmployeeService createEmployeeService = new CreateEmployeeService((EmployeeRepository) employeeService);
-
-        // Testar contrato CLT
-        boolean isValidCLT = createEmployeeService.isValidTipoContrato(ContractType.CLT);
-        assertTrue(isValidCLT);
-
-        // Testar contrato CNPJ
-        boolean isValidCNPJ = createEmployeeService.isValidTipoContrato(ContractType.CNPJ);
-        assertTrue(isValidCNPJ);
-
-        // Testar contrato inválido (deve retornar falso)
-        boolean isValidInvalid = createEmployeeService.isValidTipoContrato(null);
-        assertFalse(isValidInvalid);
+    private EmployeeDto employeeDto;
 
 
-    }
+    @BeforeEach
+    public void test() {
+        employeeRepository = mock(EmployeeRepository.class);
+        employeeService = new CreateEmployeeService(employeeRepository);
 
-    @Test
-    public void deveriaValidarRole() {
-        // Criar um objeto CreateEmployeeService para testar
-        CreateEmployeeService createEmployeeService = new CreateEmployeeService((EmployeeRepository) employeeService);
-
-        // Testar role VENDEDOR (deve ser válido)
-        boolean isValidRoleVendedor = createEmployeeService.isValidRole(Role.VENDEDOR);
-        assertTrue(isValidRoleVendedor);
-
-        // Testar role ADMINISTRADOR (deve ser válido)
-        boolean isValidRoleAdministrador = createEmployeeService.isValidRole(Role.ADMINISTRADOR);
-        assertTrue(isValidRoleAdministrador);
-
-        // Testar role inválido (deve ser inválido)
-        boolean isValidInvalid = createEmployeeService.isValidRole(null);
-        assertFalse(isValidInvalid);
+        employeeDto = new EmployeeDto();
+        employeeDto.setName("Adrielly");
+        employeeDto.setCpfCnpj("44190639800");
+        employeeDto.setEmail("teste@teste.com");
+        employeeDto.setPhone("11447523780");
+        employeeDto.setRegistry("001");
+        employeeDto.setPosition("ESTOQUISTA");
+        employeeDto.setContractType("CLT");
+        employeeDto.setRole("ADMINISTRADOR");
     }
 
 
     @Test
-    public void deveriaValidarCargo() {
+    public void createEmployee_test() {
+        when(employeeRepository.findByEmail(anyString())).thenReturn(null);
+        when(employeeRepository.findByCpfCnpj(anyString())).thenReturn(null);
 
-        CreateEmployeeService createEmployeeService = new CreateEmployeeService((EmployeeRepository) employeeService);
+        UUID validUUID = UUID.randomUUID();
+        EmployeeModel savedEmployee = new EmployeeModel();
+        savedEmployee.setEmployeeId(validUUID);
+        when(employeeRepository.save(any(EmployeeModel.class))).thenReturn(savedEmployee);
 
-        // Testar cargo VENDEDOR (deve ser válido)
-        boolean isValidCargoVendedor = createEmployeeService.isValidCargo(Position.VENDEDOR);
-        assertTrue(isValidCargoVendedor);
+        BaseDto result = employeeService.createEmployee(employeeDto);
 
-        // Testar cargo ESTOQUISTA (deve ser válido)
-        boolean isValidCargoEstoquista = createEmployeeService.isValidCargo(Position.ESTOQUISTA);
-        assertTrue(isValidCargoEstoquista);
+        assertEquals(HttpStatus.CREATED.value(), result.getResult().getStatusCode());
+        assertEquals("Funcionário criado com sucesso", result.getResult().getDescription());
+    }
 
-        // Testar cargo inválido (deve ser inválido)
-        boolean isValidInvalid = createEmployeeService.isValidCargo(null);
-        assertFalse(isValidInvalid);
+    @Test
+    public void createEmployee_InvalidCpf_test() {
+        when(employeeRepository.findByEmail(anyString())).thenReturn(null);
+        when(employeeRepository.findByCpfCnpj(anyString())).thenReturn(null);
 
+        employeeDto.setCpfCnpj("000.000.000-00");
+
+        BaseDto result = employeeService.createEmployee(employeeDto);
+
+        assertEquals(HttpStatus.BAD_REQUEST.value(), result.getResult().getStatusCode());
+        assertEquals("Bad Request", result.getResult().getDescription());
+
+    }
+
+    @Test
+    public void createEmployee_InvalidEmail_test() {
+        when(employeeRepository.findByEmail(anyString())).thenReturn(null);
+        when(employeeRepository.findByCpfCnpj(anyString())).thenReturn(null);
+
+        employeeDto.setEmail("xxx@");
+
+        BaseDto result = employeeService.createEmployee(employeeDto);
+
+        assertEquals(HttpStatus.BAD_REQUEST.value(), result.getResult().getStatusCode());
+        assertEquals("Bad Request", result.getResult().getDescription());
+    }
+
+    @Test
+    public void createEmployee_InvalidPhone_test() {
+        when(employeeRepository.findByEmail(anyString())).thenReturn(null);
+        when(employeeRepository.findByCpfCnpj(anyString())).thenReturn(null);
+
+        employeeDto.setPhone("1100000");
+
+        BaseDto result = employeeService.createEmployee(employeeDto);
+
+        assertEquals(HttpStatus.BAD_REQUEST.value(), result.getResult().getStatusCode());
+        assertEquals("Bad Request", result.getResult().getDescription());
+    }
+
+    @Test
+    public void createEmployee_InvalidContractType_test() {
+        when(employeeRepository.findByEmail(anyString())).thenReturn(null);
+        when(employeeRepository.findByCpfCnpj(anyString())).thenReturn(null);
+
+        employeeDto.setContractType("XXX");
+
+        BaseDto result = employeeService.createEmployee(employeeDto);
+
+        assertEquals(HttpStatus.BAD_REQUEST.value(), result.getResult().getStatusCode());
+        assertEquals("Bad Request", result.getResult().getDescription());
+    }
+
+    @Test
+    public void createEmployee_InvalidRole_test() {
+        when(employeeRepository.findByEmail(anyString())).thenReturn(null);
+        when(employeeRepository.findByCpfCnpj(anyString())).thenReturn(null);
+
+        employeeDto.setRole("XXX");
+
+        BaseDto result = employeeService.createEmployee(employeeDto);
+
+        assertEquals(HttpStatus.BAD_REQUEST.value(), result.getResult().getStatusCode());
+        assertEquals("Bad Request", result.getResult().getDescription());
+    }
+
+    @Test
+    public void createEmployee_InvalidPosition_test() {
+        when(employeeRepository.findByEmail(anyString())).thenReturn(null);
+        when(employeeRepository.findByCpfCnpj(anyString())).thenReturn(null);
+
+        employeeDto.setPosition("XXX");
+
+        BaseDto result = employeeService.createEmployee(employeeDto);
+
+        assertEquals(HttpStatus.BAD_REQUEST.value(), result.getResult().getStatusCode());
+        assertEquals("Bad Request", result.getResult().getDescription());
+    }
+
+    @Test
+    public void createEmployee_CpfAsCnpjAndContractTypeAsCnpj_test() {
+        when(employeeRepository.findByEmail(anyString())).thenReturn(null);
+        when(employeeRepository.findByCpfCnpj(anyString())).thenReturn(null);
+
+        employeeDto.setCpfCnpj("44190639800");
+        employeeDto.setContractType("CNPJ");
+
+        BaseDto result = employeeService.createEmployee(employeeDto);
+
+        assertEquals(HttpStatus.BAD_REQUEST.value(), result.getResult().getStatusCode());
+        assertEquals("Bad Request", result.getResult().getDescription());
+    }
+
+    @Test
+    public void createEmployee_DuplicateCpfCnpjOrEmail_test() {
+        when(employeeRepository.findByEmail(anyString())).thenReturn(new EmployeeModel());
+        when(employeeRepository.findByCpfCnpj(anyString())).thenReturn(null);
+
+        BaseDto result = employeeService.createEmployee(employeeDto);
+
+        assertEquals(HttpStatus.BAD_REQUEST.value(), result.getResult().getStatusCode());
+        assertEquals("Bad Request", result.getResult().getDescription());
     }
 
 
 }
-*/
+
+
+
+
+
+
+
+
+
