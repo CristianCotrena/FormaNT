@@ -4,11 +4,8 @@ import com.example.locationCar.base.dto.BaseDto;
 import com.example.locationCar.base.dto.BaseErrorDto;
 import com.example.locationCar.dtos.DeleteVehicleDto;
 import com.example.locationCar.dtos.input.VehicleInputDto;
-import com.example.locationCar.services.vehicleService.CreateVehicleService;
+import com.example.locationCar.services.vehicleService.*;
 import com.example.locationCar.models.VehicleModel;
-import com.example.locationCar.services.vehicleService.DeleteVehicleService;
-import com.example.locationCar.services.vehicleService.ListVehicleParamService;
-import com.example.locationCar.services.vehicleService.ListVehicleService;
 import com.fasterxml.jackson.databind.ser.Serializers;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -26,17 +23,20 @@ import java.util.UUID;
 @RequestMapping("/v1/vehicle")
 @Tag(name = "Vehicle", description = "Operations about vehicle")
 public class VehicleController {
-  
+
     private CreateVehicleService createVehicleService;
 
     private ListVehicleParamService listVehicleParamService;
 
     private DeleteVehicleService deleteVehicleService;
 
-    public VehicleController(ListVehicleParamService listVehicleParamService, CreateVehicleService createVehicleService, DeleteVehicleService deleteVehicleService) {
+    private SearchVehicleService searchVehicleService;
+
+    public VehicleController(ListVehicleParamService listVehicleParamService, CreateVehicleService createVehicleService, DeleteVehicleService deleteVehicleService, SearchVehicleService searchVehicleService) {
         this.listVehicleParamService = listVehicleParamService;
         this.createVehicleService = createVehicleService;
         this.deleteVehicleService = deleteVehicleService;
+        this.searchVehicleService = searchVehicleService;
     }
 
     @Operation(summary = "List vehicles Param", description = "List vehicles Param")
@@ -52,8 +52,8 @@ public class VehicleController {
         BaseDto baseDto = listVehicleParamService.listVehicles(pageable, color, rating, max, min);
         return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
     }
-  
-  
+
+
     @Operation(summary = "Create vehicle", description = "Add a vehicle to the database")
     @ApiResponse(responseCode = "201", description = "Created")
     @ApiResponse(responseCode = "400", description = "Invalid data")
@@ -71,11 +71,34 @@ public class VehicleController {
             @Content(mediaType = "application/json", schema = @Schema(type = "string", example = "Não foi possível localizar na base de dados com os seguinte parâmetros:")),
     })
     @DeleteMapping("/")
-    public ResponseEntity<BaseDto> deleteVehicle (
-            @RequestParam (required = false) UUID idVehicle,
-            @RequestParam (required = false) String license
+    public ResponseEntity<BaseDto> deleteVehicle(
+            @RequestParam(required = false) UUID idVehicle,
+            @RequestParam(required = false) String license
     ) {
         BaseDto baseDto = deleteVehicleService.execute(idVehicle, license);
         return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
     }
+
+    @GetMapping
+    public ResponseEntity<Object> searchVehicle(
+            @RequestParam(required = false) UUID id,
+            @RequestParam(required = false) String license
+    ) {
+        try {
+            if (id != null) {
+                VehicleModel vehicleModel = searchVehicleService.searchVehicleById(id);
+                return ResponseEntity.ok(vehicleModel);
+            } else if (license != null) {
+                VehicleModel vehicleModel = searchVehicleService.searchVehicleByLicense(license);
+                return ResponseEntity.ok(vehicleModel);
+            } else {
+                return ResponseEntity.badRequest().body("Informe um ID ou placa válidos para buscar o veículo.");
+            }
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("Informe um ID ou placa válidos para buscar o veículo.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao processar a requisição.");
+        }
+    }
+
 }
