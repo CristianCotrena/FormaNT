@@ -27,7 +27,6 @@ public class UpdateVehicleValidate {
 
     public List<BaseErrorDto> validate(VehicleInputDto updatedDto, VehicleModel existingVehicle) {
         List<BaseErrorDto> errors = validateRequiredFields(updatedDto);
-        validateLicenseUniqueness(updatedDto, existingVehicle, errors);
         validateDoorNumber(updatedDto, errors);
         validateLicense(updatedDto.getLicense(), errors);
         return errors;
@@ -69,14 +68,6 @@ public class UpdateVehicleValidate {
         }
 
         return errors;
-    }
-
-    private void validateLicenseUniqueness(VehicleInputDto updatedDto, VehicleModel existingVehicle, List<BaseErrorDto> errors) {
-        Optional<VehicleModel> vehicleWithSameLicense = vehicleRepository.findByLicense(updatedDto.getLicense());
-
-        if (vehicleWithSameLicense.isPresent() && !vehicleWithSameLicense.get().getIdVehicle().equals(existingVehicle.getIdVehicle())) {
-            errors.add(new BaseErrorDto("license", ErrorMessage.UNIQUE_FIELD));
-        }
     }
 
     private void validateDoorNumber(VehicleInputDto updatedDto, List<BaseErrorDto> errors) {
