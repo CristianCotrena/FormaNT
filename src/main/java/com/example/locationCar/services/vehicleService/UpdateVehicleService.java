@@ -40,24 +40,38 @@ public class UpdateVehicleService {
         VehicleModel existingVehicle = existingVehicleOptional.get();
         List<BaseErrorDto> errors = updateVehicleValidate.validate(updateDto,existingVehicle);
 
+        validateLicenseUniqueness(updateDto, existingVehicle, errors);
+
         if (!errors.isEmpty()){
             return new ResponseErrorBuilder(HttpStatus.BAD_REQUEST,errors).get();
         }
 
-        existingVehicle.setColor(updateDto.getColor());
-        existingVehicle.setLicense(updateDto.getLicense());
-        existingVehicle.setBrand(updateDto.getBrand());
-        existingVehicle.setFuel(updateDto.getFuel());
-        existingVehicle.setDailyValue(updateDto.getDailyValue());
-        existingVehicle.setMileage(updateDto.getMileage());
-        existingVehicle.setModel(updateDto.getModel());
-        existingVehicle.setRating(updateDto.getRating());
+        if (vehicleId != null) {
+            String vehicleIdString = vehicleId.toString();
+            existingVehicle.setColor(updateDto.getColor());
+            existingVehicle.setLicense(updateDto.getLicense());
+            existingVehicle.setBrand(updateDto.getBrand());
+            existingVehicle.setFuel(updateDto.getFuel());
+            existingVehicle.setDailyValue(updateDto.getDailyValue());
+            existingVehicle.setMileage(updateDto.getMileage());
+            existingVehicle.setModel(updateDto.getModel());
+            existingVehicle.setRating(updateDto.getRating());
 
-        vehicleRepository.save(existingVehicle);
+            vehicleRepository.save(existingVehicle);
 
-        return new ResponseSuccessBuilder<CreateVehicleDto>(HttpStatus.OK, new CreateVehicleDto(existingVehicle.getIdVehicle().toString()), SuccessMessage.UPDATE_VEHICLE).get();
+            return new ResponseSuccessBuilder<CreateVehicleDto>(HttpStatus.OK, new CreateVehicleDto(vehicleIdString), SuccessMessage.UPDATE_VEHICLE).get();
+        } else {
+            List<BaseErrorDto> idNullErrors = List.of(new BaseErrorDto("ID", ErrorMessage.NOT_FOUND));
+            return new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, idNullErrors).get();
+        }
+    }
 
+    private void validateLicenseUniqueness(VehicleInputDto updatedDto, VehicleModel existingVehicle, List<BaseErrorDto> errors) {
+        Optional<VehicleModel> vehicleWithSameLicense = vehicleRepository.findByLicense(updatedDto.getLicense());
 
+        if (vehicleWithSameLicense.isPresent() && !vehicleWithSameLicense.get().getIdVehicle().equals(existingVehicle.getIdVehicle())) {
+            errors.add(new BaseErrorDto("license", ErrorMessage.UNIQUE_FIELD));
+        }
     }
 
 }
