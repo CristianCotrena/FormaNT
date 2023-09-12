@@ -2,6 +2,7 @@ package com.example.locationCar.models;
 
 
 import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -12,17 +13,37 @@ public class AddressModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-
     private UUID idAddress;
     private String publicPlace;
-    private int number;
+    private Integer number;
     private String complement;
     private String city;
     private String state;
     private String country;
     private String cep;
-    private int status;
+    private Integer status;
 
+    @OneToOne
+    private ClientModel idClient;
+
+    @OneToOne
+    private EmployeeModel idEmployee;
+
+    public ClientModel getClient() {
+        return idClient;
+    }
+
+    public void setClient(ClientModel idClient) {
+        this.idClient = idClient;
+    }
+
+    public EmployeeModel getEmployee() {
+        return idEmployee;
+    }
+
+    public void setEmployee(EmployeeModel idEmployee) {
+        this.idEmployee = idEmployee;
+    }
 
     public UUID getIdAddress() {
         return idAddress;
@@ -40,11 +61,11 @@ public class AddressModel implements Serializable {
         this.publicPlace = publicPlace;
     }
 
-    public int getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 
@@ -88,11 +109,11 @@ public class AddressModel implements Serializable {
         this.cep = cep;
     }
 
-    public int getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 }
