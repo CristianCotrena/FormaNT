@@ -47,7 +47,7 @@ public class UpdateVehicleTests {
     }
 
     @Test
-    public void updateVehicle_updateColor_success() {
+    public void updateVehicle_success_updateColor() {
         UUID vehicleId = UUID.randomUUID();
         VehicleModel existingVehicle = new VehicleModel();
         existingVehicle.setColor("Black");
@@ -62,7 +62,7 @@ public class UpdateVehicleTests {
     }
 
     @Test
-    public void updateVehicle_updateFuel_success() {
+    public void updateVehicle_success_updateFuel() {
         UUID vehicleId = UUID.randomUUID();
         VehicleModel existingVehicle = new VehicleModel();
         existingVehicle.setFuel("Gasolina");
@@ -78,7 +78,7 @@ public class UpdateVehicleTests {
     }
 
     @Test
-    public void updateVehicle_updateMileage_success() {
+    public void updateVehicle_success_updateMileage() {
         UUID vehicleId = UUID.randomUUID();
         VehicleModel existingVehicle = new VehicleModel();
         existingVehicle.setMileage(BigDecimal.valueOf(50));
@@ -94,7 +94,7 @@ public class UpdateVehicleTests {
     }
 
     @Test
-    public void updateVehicle_updateModel_success() {
+    public void updateVehicle_success_updateModel() {
         UUID vehicleId = UUID.randomUUID();
         VehicleModel existingVehicle = new VehicleModel();
         existingVehicle.setModel("UNO");
@@ -110,7 +110,7 @@ public class UpdateVehicleTests {
     }
 
     @Test
-    public void updateVehicle_updateLicence_success() {
+    public void updateVehicle_success_updateLicence() {
         UUID vehicleId = UUID.randomUUID();
         VehicleModel existingVehicle = new VehicleModel();
         existingVehicle.setLicense("DRI1A20");
@@ -126,7 +126,7 @@ public class UpdateVehicleTests {
     }
 
     @Test
-    public void updateVehicle_updateRating_success() {
+    public void updateVehicle_success_updateRating() {
         UUID vehicleId = UUID.randomUUID();
         VehicleModel existingVehicle = new VehicleModel();
         existingVehicle.setRating(BigDecimal.valueOf(50));
@@ -142,7 +142,7 @@ public class UpdateVehicleTests {
     }
 
     @Test
-    public void updateVehicle_updateBrand_success() {
+    public void updateVehicle_success_updateBrand() {
         UUID vehicleId = UUID.randomUUID();
         VehicleModel existingVehicle = new VehicleModel();
         existingVehicle.setBrand("Fiat");
@@ -158,7 +158,7 @@ public class UpdateVehicleTests {
     }
 
     @Test
-    public void updateVehicle_updateDoor_success() {
+    public void updateVehicle_success_updateDoor() {
         UUID vehicleId = UUID.randomUUID();
         VehicleModel existingVehicle = new VehicleModel();
         existingVehicle.setDoorNumber(4);
@@ -174,7 +174,7 @@ public class UpdateVehicleTests {
     }
 
     @Test
-    public void updateVehicle_updateDailyValue_success() {
+    public void updateVehicle_success_updateDailyValuegit () {
         UUID vehicleId = UUID.randomUUID();
         VehicleModel existingVehicle = new VehicleModel();
         existingVehicle.setDailyValue(BigDecimal.valueOf(100));

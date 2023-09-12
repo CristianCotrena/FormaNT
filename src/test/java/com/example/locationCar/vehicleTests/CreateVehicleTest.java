@@ -131,22 +131,22 @@ public class CreateVehicleTest {
         assertEquals(1, responseEntity.getErrors().size());
     }
 
-//    @Test
-//    public void testCreateVehicle_InvalidDoorNumber() {
-//        UUID validUUID = UUID.randomUUID();
-//        VehicleModel vehicle = new VehicleModel();
-//        vehicle.setIdVehicle(validUUID);
-//
-//        dto.setDoorNumber(3);
-//
-//        when(vehicleRepository.findByLicense(any(String.class))).thenReturn(Optional.empty());
-//        when(vehicleRepository.save(any(VehicleModel.class))).thenReturn(vehicle);
-//
-//        BaseDto responseEntity = createVehicleService.inserir(dto);
-//
-//        assertEquals(HttpStatus.BAD_REQUEST.value(), responseEntity.getResult().getStatusCode());
-//        assertEquals("Bad Request", responseEntity.getResult().getDescription());
-//        assertEquals(1, responseEntity.getErrors().size());
-//    }
+    @Test
+    public void testCreateVehicle_InvalidDoorNumber() {
+        UUID validUUID = UUID.randomUUID();
+        VehicleModel vehicle = new VehicleModel();
+        vehicle.setIdVehicle(validUUID);
+
+        dto.setDoorNumber(3);
+
+        when(vehicleRepository.findByLicense(any(String.class))).thenReturn(Optional.empty());
+        when(vehicleRepository.save(any(VehicleModel.class))).thenReturn(vehicle);
+
+        BaseDto responseEntity = createVehicleService.inserir(dto);
+
+        assertEquals(HttpStatus.BAD_REQUEST.value(), responseEntity.getResult().getStatusCode());
+        assertEquals("Bad Request", responseEntity.getResult().getDescription());
+        assertEquals(1, responseEntity.getErrors().size());
+    }
 
 }
