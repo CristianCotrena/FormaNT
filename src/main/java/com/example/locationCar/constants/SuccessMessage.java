@@ -8,4 +8,7 @@ public @interface SuccessMessage {
     String LIST_VEHICLES = "Veículos listados com sucesso";
     String CREATE_EMPLOYEE = "Funcionário criado com sucesso";
     String UPDATE_EMPLOYEE = "Funcionário atualizado com sucesso";
+    String UPDATE_VEHICLE = "Veículo atualizado com sucesso";
+
+
 }

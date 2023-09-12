@@ -2,11 +2,13 @@ package com.example.locationCar.controllers;
 
 import com.example.locationCar.base.dto.BaseDto;
 import com.example.locationCar.builder.ResponseSuccessBuilder;
+import com.example.locationCar.dtos.EmployeeUpdateDto;
 import com.example.locationCar.dtos.input.VehicleInputDto;
 import com.example.locationCar.services.vehicleService.CreateVehicleService;
 import com.example.locationCar.models.VehicleModel;
 import com.example.locationCar.services.vehicleService.ListVehicleParamService;
 import com.example.locationCar.services.vehicleService.ListVehicleService;
+import com.example.locationCar.services.vehicleService.UpdateVehicleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -14,12 +16,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/v1/vehicle")
@@ -27,12 +26,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class VehicleController {
   
     private CreateVehicleService createVehicleService;
-
+    private UpdateVehicleService updateVehicleService;
     private ListVehicleParamService listVehicleParamService;
 
-    public VehicleController(ListVehicleParamService listVehicleParamService, CreateVehicleService createVehicleService) {
+    public VehicleController(ListVehicleParamService listVehicleParamService, CreateVehicleService createVehicleService, UpdateVehicleService updateVehicleService) {
         this.listVehicleParamService = listVehicleParamService;
         this.createVehicleService = createVehicleService;
+        this.updateVehicleService = updateVehicleService;
     }
 
     @Operation(summary = "List vehicles Param", description = "List vehicles Param")
@@ -57,6 +57,12 @@ public class VehicleController {
     public ResponseEntity<BaseDto> createVehicle(@RequestBody VehicleInputDto vehicleInputDto) {
         BaseDto baseDto = createVehicleService.inserir(vehicleInputDto);
         return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<BaseDto> updateVehicle (@PathVariable UUID id, @RequestBody VehicleInputDto vehicleInputDto){
+        BaseDto updateVehicleId = updateVehicleService.updateVehicle(id, vehicleInputDto);
+        return ResponseEntity.ok(updateVehicleId);
     }
 
 
