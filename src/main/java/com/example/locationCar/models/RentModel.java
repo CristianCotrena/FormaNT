@@ -9,65 +9,66 @@ import java.util.UUID;
 @Table(name = "TB_RENT")
 public class RentModel implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID idRent;
-    private Date contractingDate;
-    private Date returnDate;
-    private Integer haveInsurance;
-    private String statusVehicle;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private UUID idRent;
 
-    @ManyToOne
-    @JoinColumn(name = "clientId")
-    private ClientModel idClient;
+  private Date contractingDate;
+  private Date returnDate;
+  private Integer haveInsurance;
+  private String statusVehicle;
 
-    @ManyToOne
-    @JoinColumn(name = "employeeId")
-    private EmployeeModel employeeId;
+  @ManyToOne
+  @JoinColumn(name = "clientId")
+  private ClientModel idClient;
 
-    @ManyToOne
-    @JoinColumn(name = "vehicleId")
-    private VehicleModel idVehicle;
+  @ManyToOne
+  @JoinColumn(name = "employeeId")
+  private EmployeeModel employeeId;
 
-    public UUID getIdRent() {
-        return idRent;
-    }
+  @ManyToOne
+  @JoinColumn(name = "vehicleId")
+  private VehicleModel idVehicle;
 
-    public void setIdRent(UUID idRent) {
-        this.idRent = idRent;
-    }
+  public UUID getIdRent() {
+    return idRent;
+  }
 
-    public Date getContractingDate() {
-        return contractingDate;
-    }
+  public void setIdRent(UUID idRent) {
+    this.idRent = idRent;
+  }
 
-    public void setContractingDate(Date contractingDate) {
-        this.contractingDate = contractingDate;
-    }
+  public Date getContractingDate() {
+    return contractingDate;
+  }
 
-    public Date getReturnDate() {
-        return returnDate;
-    }
+  public void setContractingDate(Date contractingDate) {
+    this.contractingDate = contractingDate;
+  }
 
-    public void setReturnDate(Date returnDate) {
-        this.returnDate = returnDate;
-    }
+  public Date getReturnDate() {
+    return returnDate;
+  }
 
-    public Integer getHaveInsurance() {
-        return haveInsurance;
-    }
+  public void setReturnDate(Date returnDate) {
+    this.returnDate = returnDate;
+  }
 
-    public void setHaveInsurance(Integer haveInsurance) {
-        this.haveInsurance = haveInsurance;
-    }
+  public Integer getHaveInsurance() {
+    return haveInsurance;
+  }
 
-    public String getStatusVehicle() {
-        return statusVehicle;
-    }
+  public void setHaveInsurance(Integer haveInsurance) {
+    this.haveInsurance = haveInsurance;
+  }
 
-    public void setStatusVehicle(String statusVehicle) {
-        this.statusVehicle = statusVehicle;
-    }
+  public String getStatusVehicle() {
+    return statusVehicle;
+  }
+
+  public void setStatusVehicle(String statusVehicle) {
+    this.statusVehicle = statusVehicle;
+  }
 }
