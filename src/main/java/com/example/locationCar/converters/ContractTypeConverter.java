@@ -7,13 +7,13 @@ import jakarta.persistence.Converter;
 @Converter
 public class ContractTypeConverter implements AttributeConverter<ContractType, String> {
 
-    @Override
-    public String convertToDatabaseColumn(ContractType attribute) {
-        return attribute.toString();
-    }
+  @Override
+  public String convertToDatabaseColumn(ContractType attribute) {
+    return attribute.toString();
+  }
 
-    @Override
-    public ContractType convertToEntityAttribute(String dbData) {
-        return ContractType.fromString(dbData);
-    }
+  @Override
+  public ContractType convertToEntityAttribute(String dbData) {
+    return ContractType.fromString(dbData);
+  }
 }
