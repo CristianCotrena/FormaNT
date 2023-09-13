@@ -46,6 +46,25 @@ Abra seu editor de código (Como o IntelliJ), navegue até o diretório do proje
 
 <hr/>
 
+### ✨ Indentação de código
+
+Quando você realiza um commit no Git, o código é automaticamente formatado para seguir um padrão de indentação. 
+
+🚨 NOTE: No entanto, para que a formatação seja aplicada, o Git executa automaticamente o comando "git add .", mesmo que você tenha modificado apenas um arquivo usando "git add 'nome_do_arquivo'", o Git, na verdade, realizará um "git add ." para incluir todas as alterações pendentes no commit, incluindo as mudanças de formatação. Portanto, é importante ter certeza de que você fez apenas as alterações necessárias antes de realizar o commit, pois todas as mudanças, incluindo a formatação, serão incluídas.
+
+Para a indentação automática funcionar é necessário alterar o arquivo pre-commit.sample no diretório FormaNT/.git/hooks.
+
+- Abra o arquivo pre-commit.sample em algum editor de texto.
+- Delete tudo o que está nesse arquivo e cole o seguinte código:
+```
+#!/bin/bash
+./pre-commit.sh
+```
+- Renomeie o arquivo removendo o ".sample" e deixe somente "pre-commit".
+- Agora após o "git commit" o arquivo "pre-commit.sh" na raiz do projeto será executado.
+
+<hr/>
+
 # 🚨 Avisos Importantes
 
 - 🚨 O Tomcat está configurado para rodar na porta 8080, então, além do PostgreSQL na porta 5432, certifique-se de que não tenha nenhum outro aplicativo rodando nesta porta (8080). Caso haja, faça as alterações necessárias (application.properties).
