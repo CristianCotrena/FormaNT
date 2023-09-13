@@ -59,6 +59,13 @@ public class VehicleController {
         return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
     }
 
+    @Operation(summary = "Update vehicle", description = "Update vehicle")
+    @ApiResponse(responseCode = "200", description = "Updated", content = {
+            @Content(mediaType = "text/plain", schema = @Schema(type = "string", format = "uuid"))
+    })
+    @ApiResponse(responseCode = "404", description = "Not found", content = {
+            @Content(mediaType = "text/plain", schema = @Schema(type = "string", example = "vehicle não encontrado"))
+    })
     @PutMapping("/{id}")
     public ResponseEntity<BaseDto> updateVehicle (@PathVariable UUID id, @RequestBody VehicleInputDto vehicleInputDto){
         BaseDto updateVehicleId = updateVehicleService.updateVehicle(id, vehicleInputDto);
