@@ -1,0 +1,461 @@
+{
+	"info": {
+		"_postman_id": "60dea205-9f7f-47d1-bcc9-dad165824caa",
+		"name": "LocationCar",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Address",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"idClient\":\"53664c52-b12c-47c9-bafa-99855e6de61a\",\n    \"cep\":\"74840305\",\n    \"number\":5,\n    \"complement\": \"perto do cristo rei\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url-local}}/v1/address",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"address"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Client",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"sah\",\r\n    \"cpfCnpj\": \"76587687676\",\r\n    \"cnh\": \"111111111111\",\r\n    \"age\": 37,\r\n    \"telephone\": \"51981220944\",\r\n    \"emergencyContact\": \"51984873664\",\r\n    \"email\": \"sfsflkji@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url-local}}/v1/client",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"client"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url-local}}/v1/client/8dfa0850-5e31-401f-aa80-3d41a48b6169",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"client",
+								"8dfa0850-5e31-401f-aa80-3d41a48b6169"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url-local}}/v1/client/list?page=1",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"client",
+								"list"
+							],
+							"query": [
+								{
+									"key": "age",
+									"value": "17",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"anna\",\r\n    \"cpfCnpj\": \"01630265055\",\r\n    \"cnh\": \"111111111111\",\r\n    \"age\": 37,\r\n    \"telephone\": \"51 98122-0948\",\r\n    \"emergencyContact\": \"51 98487-3664\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url-local}}/v1/client/0f15fc3e-51b7-439d-a788-eb7c368c1d2e",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"client",
+								"0f15fc3e-51b7-439d-a788-eb7c368c1d2e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url-local}}/v1/client?id=0f15fc3e-51b7-439d-a788-eb7c368c1d2e",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"client"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "0f15fc3e-51b7-439d-a788-eb7c368c1d2e"
+								},
+								{
+									"key": "email",
+									"value": "sah@gmail.com",
+									"disabled": true
+								},
+								{
+									"key": "cpfCnpj",
+									"value": "546.667.550-35",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Employee",
+			"item": [
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url-local}}/v1/employee/ea70202e-b48b-4bb8-85ec-cb3594daf3af",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"employee",
+								"ea70202e-b48b-4bb8-85ec-cb3594daf3af"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Anna Carolina\",\r\n    \"position\": \"ESTOQUISTA\",\r\n    \"cpfCnpj\": \"01630265055\",\r\n    \"registry\": \"1313\",\r\n    \"phone\": \"(51) 99992-1234\",\r\n    \"contractType\": \"CLT\",\r\n    \"role\": \"ADMINISTRADOR\",\r\n    \"email\": \"anna@teste.com\"\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url-local}}/v1/employee/ea70202e-b48b-4bb8-85ec-cb3594daf3af",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"employee",
+								"ea70202e-b48b-4bb8-85ec-cb3594daf3af"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Vicente\",\r\n    \"position\": \"ESTOQUISTA\",\r\n    \"cpfCnpj\": \"01867170086\",\r\n    \"registry\": \"1212\",\r\n    \"phone\": \"5599999998\",\r\n    \"contractType\": \"CLT\",\r\n    \"role\": \"ADMINISTRADOR\",\r\n    \"email\": \"vico@teste.com\"\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url-local}}/v1/employee",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"employee"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url-local}}/v1/employee?cpfCnpj=01630265055",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"employee"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "162f704c-4bbf-444a-b36c-a76fc28a48b2",
+									"disabled": true
+								},
+								{
+									"key": "cpfCnpj",
+									"value": "01630265055"
+								},
+								{
+									"key": "email",
+									"value": "mario@teste.com",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url-local}}/v1/employee/list?page=0",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"employee",
+								"list"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "role",
+									"value": "VENDEDOR",
+									"disabled": true
+								},
+								{
+									"key": "position",
+									"value": "ESTOQUISTA",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Vehicle",
+			"item": [
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url-local}}/v1/vehicle/?idVehicle=fce3f69c-61d7-495a-b794-d147db30cef9",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"vehicle",
+								""
+							],
+							"query": [
+								{
+									"key": "idVehicle",
+									"value": "fce3f69c-61d7-495a-b794-d147db30cef9"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"license\":\"NEJ9138\",\n    \"brand\":\"Toyota\",\n    \"model\":\"X5\",\n    \"doorNumber\": 2,\n    \"color\":\"red\",\n    \"fuel\":\"diesel\",\n    \"dailyValue\": 150,\n    \"mileage\": 40.5,\n    \"rating\": 5",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url-local}}/v1/vehicle",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"vehicle"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url-local}}/v1/vehicle/list?color=blue&max=60&min=10&rating=4.5&page=0&size=3",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"vehicle",
+								"list"
+							],
+							"query": [
+								{
+									"key": "color",
+									"value": "blue"
+								},
+								{
+									"key": "max",
+									"value": "60"
+								},
+								{
+									"key": "min",
+									"value": "10"
+								},
+								{
+									"key": "rating",
+									"value": "4.5"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url-local",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}
