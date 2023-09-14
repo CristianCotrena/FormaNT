@@ -24,13 +24,13 @@ public class DeleteVehicleService {
 
     VehicleRepository vehicleRepository;
 
-    public DeleteVehicleService (VehicleRepository vehicleRepository) {
+    public DeleteVehicleService(VehicleRepository vehicleRepository) {
 
         this.vehicleRepository = vehicleRepository;
     }
 
     @Transactional
-    public BaseDto execute (UUID idVehicle, String license) {
+    public BaseDto execute(UUID idVehicle, String license) {
 
         List<BaseErrorDto> errors = new DeleteVehicleValidate().execute(idVehicle, license);
 
@@ -45,17 +45,18 @@ public class DeleteVehicleService {
             if (!(vehicleModelOptional.isPresent() && vehicleModelOptional.get().getLicense().equals(license))) {
                 return generateError(Arrays.asList(idVehicle.toString(), license));
             }
-            vehicleRepository.deleteById(idVehicle);
-        } else if (idVehicle != null) {
-            if (!vehicleRepository.existsById(idVehicle)) {
-                return generateError(Arrays.asList(idVehicle.toString()));
-            }
-            vehicleRepository.deleteById(idVehicle);
+            VehicleModel vehicleModel = vehicleRepository.findById(idVehicle).get();
+            vehicleModel.setStatus(0);
+            vehicleRepository.save(vehicleModel);
+
         } else if (license != null) {
             if (!vehicleRepository.existsByLicense(license).get()) {
                 return generateError(Arrays.asList(license));
             }
-            vehicleRepository.deleteByLicense(license);
+
+            VehicleModel vehicleModel = vehicleRepository.findByLicense(license).get();
+            vehicleModel.setStatus(0);
+            vehicleRepository.save(vehicleModel);
         }
 
         DeleteVehicleDto deleteVehicleDto = new DeleteVehicleDto(true);
@@ -63,7 +64,7 @@ public class DeleteVehicleService {
         return responseSuccessBuilder.get();
     }
 
-    private BaseDto generateError (List<String> fields) {
+    private BaseDto generateError(List<String> fields) {
         ResponseErrorBuilder errorBuilder = new ResponseErrorBuilder(
                 HttpStatus.BAD_REQUEST,
                 ErrorMessage.NOT_FOUND_BY_PARAMS + fields
