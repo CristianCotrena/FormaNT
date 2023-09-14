@@ -19,4 +19,6 @@ public interface VehicleRepository extends JpaRepository<VehicleModel, UUID>, Jp
     Optional<Boolean> existsByLicense (String license);
 
     void deleteByLicense (String license);
+
+    Optional<VehicleModel> findByIdVehicleOrLicense(UUID idVehicle, String license);
 }
