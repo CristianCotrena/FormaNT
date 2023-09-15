@@ -80,25 +80,12 @@ public class VehicleController {
     }
 
     @GetMapping
-    public ResponseEntity<Object> searchVehicle(
-            @RequestParam(required = false) UUID id,
+    public ResponseEntity<BaseDto> searchVehicle(
+            @RequestParam(required = false) UUID idVehicle,
             @RequestParam(required = false) String license
     ) {
-        try {
-            if (id != null) {
-                VehicleModel vehicleModel = searchVehicleService.searchVehicleById(id);
-                return ResponseEntity.ok(vehicleModel);
-            } else if (license != null) {
-                VehicleModel vehicleModel = searchVehicleService.searchVehicleByLicense(license);
-                return ResponseEntity.ok(vehicleModel);
-            } else {
-                return ResponseEntity.badRequest().body("Informe um ID ou placa válidos para buscar o veículo.");
-            }
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body("Informe um ID ou placa válidos para buscar o veículo.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao processar a requisição.");
-        }
+        BaseDto baseDto = searchVehicleService.searchVehicle(idVehicle, license);
+        return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
     }
 
 }
