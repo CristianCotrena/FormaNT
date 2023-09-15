@@ -45,6 +45,12 @@ public class DeleteVehicleService {
             if (!(vehicleModelOptional.isPresent() && vehicleModelOptional.get().getLicense().equals(license))) {
                 return generateError(Arrays.asList(idVehicle.toString(), license));
             }
+
+        } else if (idVehicle != null) {
+            if (!vehicleRepository.existsById(idVehicle)) {
+                return generateError(Arrays.asList(idVehicle.toString()));
+            }
+
             VehicleModel vehicleModel = vehicleRepository.findById(idVehicle).get();
             vehicleModel.setStatus(0);
             vehicleRepository.save(vehicleModel);
