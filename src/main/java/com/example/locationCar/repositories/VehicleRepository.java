@@ -1,6 +1,5 @@
 package com.example.locationCar.repositories;
 
-import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.models.VehicleModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -19,4 +18,5 @@ public interface VehicleRepository extends JpaRepository<VehicleModel, UUID>, Jp
     Optional<Boolean> existsByLicense (String license);
 
     void deleteByLicense (String license);
+
 }

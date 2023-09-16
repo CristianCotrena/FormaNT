@@ -1,21 +1,16 @@
 package com.example.locationCar.controllers;
 
 import com.example.locationCar.base.dto.BaseDto;
-import com.example.locationCar.base.dto.BaseErrorDto;
-import com.example.locationCar.dtos.DeleteVehicleDto;
 import com.example.locationCar.dtos.input.VehicleInputDto;
 import com.example.locationCar.services.vehicleService.CreateVehicleService;
-import com.example.locationCar.models.VehicleModel;
 import com.example.locationCar.services.vehicleService.DeleteVehicleService;
 import com.example.locationCar.services.vehicleService.ListVehicleParamService;
-import com.example.locationCar.services.vehicleService.ListVehicleService;
-import com.fasterxml.jackson.databind.ser.Serializers;
+import com.example.locationCar.services.vehicleService.UpdateVehicleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.HttpStatus;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,14 +23,14 @@ import java.util.UUID;
 public class VehicleController {
   
     private CreateVehicleService createVehicleService;
-
+    private UpdateVehicleService updateVehicleService;
     private ListVehicleParamService listVehicleParamService;
-
     private DeleteVehicleService deleteVehicleService;
 
-    public VehicleController(ListVehicleParamService listVehicleParamService, CreateVehicleService createVehicleService, DeleteVehicleService deleteVehicleService) {
+    public VehicleController(ListVehicleParamService listVehicleParamService, CreateVehicleService createVehicleService, UpdateVehicleService updateVehicleService, DeleteVehicleService deleteVehicleService) {
         this.listVehicleParamService = listVehicleParamService;
         this.createVehicleService = createVehicleService;
+        this.updateVehicleService = updateVehicleService;
         this.deleteVehicleService = deleteVehicleService;
     }
 
@@ -78,4 +73,18 @@ public class VehicleController {
         BaseDto baseDto = deleteVehicleService.execute(idVehicle, license);
         return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
     }
+
+    @Operation(summary = "Update vehicle", description = "Update vehicle")
+    @ApiResponse(responseCode = "200", description = "Updated", content = {
+            @Content(mediaType = "text/plain", schema = @Schema(type = "string", format = "uuid"))
+    })
+    @ApiResponse(responseCode = "404", description = "Not found", content = {
+            @Content(mediaType = "text/plain", schema = @Schema(type = "string", example = "vehicle não encontrado"))
+    })
+    @PutMapping("/{id}")
+    public ResponseEntity<BaseDto> updateVehicle (@PathVariable UUID id, @RequestBody VehicleInputDto vehicleInputDto){
+        BaseDto updateVehicleId = updateVehicleService.updateVehicle(id, vehicleInputDto);
+        return ResponseEntity.ok(updateVehicleId);
+    }
+
 }
