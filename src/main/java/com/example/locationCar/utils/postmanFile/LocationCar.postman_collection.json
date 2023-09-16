@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "a68c9edb-c3d7-4ff8-aac5-eb9e8f459ca7",
+
+		"_postman_id": "a19de6d3-1d8f-4d07-bb74-a5b55fdb3553",
 		"name": "LocationCar",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "28699719"
+		"_exporter_id": "2668240"
 	},
 	"item": [
 		{
