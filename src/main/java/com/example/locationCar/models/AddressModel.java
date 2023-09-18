@@ -1,96 +1,118 @@
 package com.example.locationCar.models;
 
 import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.util.UUID;
 
 @Entity
 @Table(name = "TB_ADDRESS")
 public class AddressModel implements Serializable {
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private UUID idAddress;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID idAddress;
+    private String publicPlace;
+    private Integer number;
+    private String complement;
+    private String city;
+    private String state;
+    private String country;
+    private String cep;
+    private Integer status;
 
-  private String publicPlace;
-  private int number;
-  private String complement;
-  private String city;
-  private String state;
-  private String country;
-  private String cep;
-  private int status;
+    @OneToOne
+    private ClientModel idClient;
 
-  public UUID getIdAddress() {
-    return idAddress;
-  }
+    @OneToOne
+    private EmployeeModel idEmployee;
 
-  public void setIdAddress(UUID idAddress) {
-    this.idAddress = idAddress;
-  }
+    public ClientModel getClient() {
+        return idClient;
+    }
 
-  public String getPublicPlace() {
-    return publicPlace;
-  }
+    public void setClient(ClientModel idClient) {
+        this.idClient = idClient;
+    }
 
-  public void setPublicPlace(String publicPlace) {
-    this.publicPlace = publicPlace;
-  }
+    public EmployeeModel getEmployee() {
+        return idEmployee;
+    }
 
-  public int getNumber() {
-    return number;
-  }
+    public void setEmployee(EmployeeModel idEmployee) {
+        this.idEmployee = idEmployee;
+    }
 
-  public void setNumber(int number) {
-    this.number = number;
-  }
+    public UUID getIdAddress() {
+        return idAddress;
+    }
 
-  public String getComplement() {
-    return complement;
-  }
+    public void setIdAddress(UUID idAddress) {
+        this.idAddress = idAddress;
+    }
 
-  public void setComplement(String complement) {
-    this.complement = complement;
-  }
+    public String getPublicPlace() {
+        return publicPlace;
+    }
 
-  public String getCity() {
-    return city;
-  }
+    public void setPublicPlace(String publicPlace) {
+        this.publicPlace = publicPlace;
+    }
 
-  public void setCity(String city) {
-    this.city = city;
-  }
+    public Integer getNumber() {
+        return number;
+    }
 
-  public String getState() {
-    return state;
-  }
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
 
-  public void setState(String state) {
-    this.state = state;
-  }
+    public String getComplement() {
+        return complement;
+    }
 
-  public String getCountry() {
-    return country;
-  }
+    public void setComplement(String complement) {
+        this.complement = complement;
+    }
 
-  public void setCountry(String country) {
-    this.country = country;
-  }
+    public String getCity() {
+        return city;
+    }
 
-  public String getCep() {
-    return cep;
-  }
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-  public void setCep(String cep) {
-    this.cep = cep;
-  }
+    public String getState() {
+        return state;
+    }
 
-  public int getStatus() {
-    return status;
-  }
+    public void setState(String state) {
+        this.state = state;
+    }
 
-  public void setStatus(int status) {
-    this.status = status;
-  }
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 }
