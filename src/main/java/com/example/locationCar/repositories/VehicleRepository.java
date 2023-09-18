@@ -14,5 +14,6 @@ public interface VehicleRepository
 
   Optional<Boolean> existsByLicense(String license);
 
-  void deleteByLicense(String license);
+    void deleteByLicense (String license);
+
 }

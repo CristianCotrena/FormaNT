@@ -60,10 +60,38 @@ public class CreateEmployeeValidate {
       errors.add(new BaseErrorDto("email", ErrorMessage.INVALID_FIELD));
     }
 
-    //        if (!caelumStringValidator.validarCPF(employeeDto.getCpfCnpj()) &&
-    // !caelumStringValidator.validarCNPJ(employeeDto.getCpfCnpj())) {
-    //            errors.add(new BaseErrorDto("cpfCnpj", ErrorMessage.INVALID_FIELD));
-    //        }
+    private List<BaseErrorDto> validateInvalidFiles(EmployeeDto employeeDto, List<BaseErrorDto> errors) {
+        if (!Pattern.compile(RegexValues.EMAIL).matcher(employeeDto.getEmail()).matches()) {
+            errors.add(new BaseErrorDto("email", ErrorMessage.INVALID_FIELD));
+        }
+
+        if (!Pattern.compile(RegexValues.PHONE).matcher(employeeDto.getPhone()).matches()) {
+            errors.add(new BaseErrorDto("phone", ErrorMessage.INVALID_FIELD));
+        }
+
+        if (!"VENDEDOR".equals(employeeDto.getPosition()) && !"ESTOQUISTA".equals(employeeDto.getPosition())) {
+            errors.add(new BaseErrorDto("position", ErrorMessage.INVALID_FIELD));
+        }
+
+        if (!"VENDEDOR".equals(employeeDto.getRole()) && !"ADMINISTRADOR".equals(employeeDto.getRole())) {
+            errors.add(new BaseErrorDto("role", ErrorMessage.INVALID_FIELD));
+        }
+
+        if (employeeDto.getContractType() == null || (!"CLT".equals(employeeDto.getContractType()) && !"CNPJ".equals(employeeDto.getContractType()))) {
+            errors.add(new BaseErrorDto("contractType", ErrorMessage.INVALID_FIELD));
+        }
+
+        if ("CLT".equals(employeeDto.getContractType())) {
+            if (!caelumStringValidator.validarCPF(employeeDto.getCpfCnpj())) {
+                errors.add(new BaseErrorDto("cpfCnpj", ErrorMessage.INVALID_FIELD));
+            }
+        } else if ("CNPJ".equals(employeeDto.getContractType())) {
+            if (!caelumStringValidator.validarCNPJ(employeeDto.getCpfCnpj())) {
+                errors.add(new BaseErrorDto("cpfCnpj", ErrorMessage.INVALID_FIELD));
+            }
+        }
+
+        return errors;
 
     if (!Pattern.compile(RegexValues.PHONE).matcher(employeeDto.getPhone()).matches()) {
       errors.add(new BaseErrorDto("phone", ErrorMessage.INVALID_FIELD));
