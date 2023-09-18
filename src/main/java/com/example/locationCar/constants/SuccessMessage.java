@@ -10,4 +10,5 @@ public @interface SuccessMessage {
     String CREATE_EMPLOYEE = "Funcionário criado com sucesso";
     String UPDATE_EMPLOYEE = "Funcionário atualizado com sucesso";
     String CREATE_ADDRESS = "Endereço criado com sucesso";
+    String UPDATE_VEHICLE = "Veículo atualizado com sucesso";
 }

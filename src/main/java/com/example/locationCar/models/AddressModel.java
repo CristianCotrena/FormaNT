@@ -1,6 +1,5 @@
 package com.example.locationCar.models;
 
-
 import jakarta.persistence.*;
 
 import java.io.Serializable;

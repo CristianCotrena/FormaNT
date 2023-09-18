@@ -1,6 +1,5 @@
 package com.example.locationCar.repositories;
 
-
 import com.example.locationCar.models.AddressModel;
 import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.models.EmployeeModel;
@@ -17,3 +16,4 @@ public interface AddressRepository extends JpaRepository<AddressModel, UUID> {
     Optional<AddressModel> findByIdEmployee(EmployeeModel employeeModel);
 
 }
+

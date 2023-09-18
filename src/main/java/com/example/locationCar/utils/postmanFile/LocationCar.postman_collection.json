@@ -427,6 +427,34 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"license\":\"AAA1E19\",\r\n    \"brand\":\"Toyota\",\r\n    \"model\":\"X5\",\r\n    \"doorNumber\": 4,\r\n    \"color\":\"pink\",\r\n    \"fuel\":\"GNV\",\r\n    \"dailyValue\":500,\r\n    \"mileage\": 40.5,\r\n    \"rating\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url-local}}/v1/vehicle/236187b3-f446-410a-b9df-cd0e279a434c",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"vehicle",
+								"236187b3-f446-410a-b9df-cd0e279a434c"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
