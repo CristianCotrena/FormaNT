@@ -28,12 +28,12 @@ public class SearchVehicleService {
         this.vehicleRepository = vehicleRepository;
     }
 
-    public BaseDto searchVehicle(UUID idVehicle, String licence) {
+    public BaseDto searchVehicle(UUID idVehicle, String license) {
 
         SearchVehicleValidate validate = new SearchVehicleValidate();
 
-        if (licence != null) {
-            List<BaseErrorDto> errors = validate.validate(null, licence);
+        if (license != null) {
+            List<BaseErrorDto> errors = validate.validate(null, license);
 
             if (errors.size() > 0) {
                 ResponseErrorBuilder errorBuilder = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, errors);
@@ -41,14 +41,14 @@ public class SearchVehicleService {
             }
         }
 
-        if (idVehicle != null && licence != null) {
+        if (idVehicle != null && license != null) {
             Optional<VehicleModel> vehicleModelOptional = vehicleRepository.findById(idVehicle);
 
-            if (vehicleModelOptional.isPresent() && vehicleModelOptional.get().getLicense().equals(licence)) {
+            if (vehicleModelOptional.isPresent() && vehicleModelOptional.get().getLicense().equals(license)) {
                 VehicleRecordDto vehicleRecordDto = new VehicleRecordDto(vehicleModelOptional.get());
                 return new ResponseSuccessBuilder<>(HttpStatus.OK, vehicleRecordDto, SuccessMessage.SEARCH_VEHICLE).get();
             } else {
-                return generateError(Arrays.asList(idVehicle.toString(), licence));
+                return generateError(Arrays.asList(idVehicle.toString(), license));
             }
         } else if (idVehicle != null) {
             Optional<VehicleModel> vehicleModelOptional = vehicleRepository.findById(idVehicle);
@@ -58,8 +58,8 @@ public class SearchVehicleService {
             } else {
                 return new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, ErrorMessage.NOT_FOUND).get();
             }
-        } else if (licence != null) {
-            Optional<VehicleModel> vehicle = vehicleRepository.findByLicense(licence);
+        } else if (license != null) {
+            Optional<VehicleModel> vehicle = vehicleRepository.findByLicense(license);
             if (vehicle.isPresent()) {
                 VehicleRecordDto vehicleRecordDto = new VehicleRecordDto(vehicle.get());
                 return new ResponseSuccessBuilder<>(HttpStatus.OK, vehicleRecordDto, SuccessMessage.SEARCH_VEHICLE).get();
@@ -71,7 +71,7 @@ public class SearchVehicleService {
         }
     }
 
-    private BaseDto generateError (List<String> fields) {
+    public BaseDto generateError(List<String> fields) {
         ResponseErrorBuilder errorBuilder = new ResponseErrorBuilder(
                 HttpStatus.BAD_REQUEST,
                 ErrorMessage.NOT_FOUND_BY_PARAMS + fields
