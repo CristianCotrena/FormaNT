@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.Mock;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 
@@ -21,7 +21,7 @@ public class CreateClientTest {
 
   @MockBean private ClientRepository clientRepository;
 
-  @Autowired private CreateClientService createClientService;
+  @Mock private CreateClientService createClientService;
 
   private ClientModel clientModel;
 
