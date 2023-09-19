@@ -80,6 +80,13 @@ public class VehicleController {
     }
 
     @GetMapping
+    @Operation(summary = "Search Vehicle", description = "Search vehicle from database")
+    @ApiResponse(responseCode = "200", description = "OK", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = VehicleModel.class))
+    })
+    @ApiResponse(responseCode = "400", description = "Vehicle not found", content = {
+            @Content(mediaType = "application/json", schema = @Schema(type = "String", example = "Não encontrado"))
+    })
     public ResponseEntity<BaseDto> searchVehicle(
             @RequestParam(required = false) UUID idVehicle,
             @RequestParam(required = false) String license
