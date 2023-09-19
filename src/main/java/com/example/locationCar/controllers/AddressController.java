@@ -5,7 +5,10 @@ import com.example.locationCar.base.dto.BaseErrorDto;
 import com.example.locationCar.builder.ResponseErrorBuilder;
 import com.example.locationCar.constants.ErrorMessage;
 import com.example.locationCar.services.addressService.SearchAddressService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +30,31 @@ public class AddressController {
         this.searchAddressService = searchAddressService;
     }
 
+    @Operation(summary = "Search Address", description = "Search an address from database")
+    @ApiResponse(
+            responseCode = "400",
+            description = "Bad Request ",
+            content = {
+        @Content(
+                mediaType = "text/plain",
+                schema =
+                @Schema(type = "string", example = "Estes dados não são permitidos serem passados juntos"))
+    })
+    @ApiResponse(
+            responseCode = "404",
+            description = "Address not found",
+            content = {
+                    @Content(
+                            mediaType = "text/plain",
+                            schema =
+                            @Schema(type = "string", example = "Não encontrado"))
+            })
+    @ApiResponse(
+            responseCode = "200",
+            description = "OK",
+            content = {
+                    @Content(mediaType = "text/plain", schema = @Schema(type = "string", format = "uuid")),
+            })
     @GetMapping
     public BaseDto<Void> searchAddress(
             @Schema(description = "Address ID you created in POST.")
