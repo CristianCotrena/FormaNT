@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "a19de6d3-1d8f-4d07-bb74-a5b55fdb3553",
+		"_postman_id": "11b4ccf8-0c28-4383-ac6a-4ee3667d7ccf",
 		"name": "LocationCar",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "2668240"
+		"_exporter_id": "28894337"
 	},
 	"item": [
 		{
@@ -391,6 +391,45 @@
 									"key": "cpfCnpj",
 									"value": "546.667.550-35",
 									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Address",
+			"item": [
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url-local}}/v1/address?idEmployee=2671a580-b991-4f72-8c85-f8cdcfd14148",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"address"
+							],
+							"query": [
+								{
+									"key": "idAddress",
+									"value": "2f40efbf-4cee-45f4-8808-94abd5510984",
+									"disabled": true
+								},
+								{
+									"key": "idClient",
+									"value": "31bfb198-af9c-4996-b6f7-d1aac700e94a",
+									"disabled": true
+								},
+								{
+									"key": "idEmployee",
+									"value": "2671a580-b991-4f72-8c85-f8cdcfd14148"
 								}
 							]
 						}
