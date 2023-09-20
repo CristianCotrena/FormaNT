@@ -10,5 +10,4 @@ public record ClientRecordDto(
     @NotNull int age,
     @NotBlank String telephone,
     @NotBlank String emergencyContact,
-    @NotBlank String email)
-{}
+    @NotBlank String email) {}

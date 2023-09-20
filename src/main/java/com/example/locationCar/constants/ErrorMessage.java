@@ -18,5 +18,4 @@ public @interface ErrorMessage {
     String CLIENT_ALREADY_HAS_AN_ADDRESS = "O cliente já possui um endereço cadastrado";
     String EMPLOYEE_DOESNT_EXIST = "O funcionário não existe";
     String EMPLOYEE_ALREADY_HAS_AN_ADDRESS = "O funcionário já possui um endereço cadastrado";
-
 }
