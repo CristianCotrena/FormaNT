@@ -1,7 +1,6 @@
 package com.example.locationCar.models;
 
 import jakarta.persistence.*;
-
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -22,27 +21,13 @@ public class AddressModel implements Serializable {
     private String cep;
     private Integer status;
 
-    @OneToOne
-    private ClientModel idClient;
+    @ManyToOne
+    @JoinColumn(name = "clientId")
+    public ClientModel client;
 
     @OneToOne
-    private EmployeeModel idEmployee;
-
-    public ClientModel getClient() {
-        return idClient;
-    }
-
-    public void setClient(ClientModel idClient) {
-        this.idClient = idClient;
-    }
-
-    public EmployeeModel getEmployee() {
-        return idEmployee;
-    }
-
-    public void setEmployee(EmployeeModel idEmployee) {
-        this.idEmployee = idEmployee;
-    }
+    @JoinColumn(name = "employeeId")
+    public EmployeeModel employee;
 
     public UUID getIdAddress() {
         return idAddress;
@@ -115,4 +100,21 @@ public class AddressModel implements Serializable {
     public void setStatus(Integer status) {
         this.status = status;
     }
+
+    public ClientModel getClient() {
+        return client;
+    }
+    public void setClient(ClientModel client) {
+        this.client = client;
+    }
+    public EmployeeModel getEmployee() {
+        return employee;
+    }
+    public void setEmployee(EmployeeModel employee) {
+        this.employee = employee;
+    }
 }
+
+//    @OneToOne
+//    @JoinColumn(name = "employeeId")
+//    public EmployeeModel employee;

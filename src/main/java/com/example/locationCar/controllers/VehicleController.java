@@ -26,6 +26,10 @@ public class VehicleController {
     private ListVehicleParamService listVehicleParamService;
     private DeleteVehicleService deleteVehicleService;
 
+    public VehicleController() {
+
+    }
+
     public VehicleController(ListVehicleParamService listVehicleParamService, CreateVehicleService createVehicleService, UpdateVehicleService updateVehicleService, DeleteVehicleService deleteVehicleService) {
         this.listVehicleParamService = listVehicleParamService;
         this.createVehicleService = createVehicleService;
@@ -94,33 +98,4 @@ public class VehicleController {
         BaseDto updateVehicleId = updateVehicleService.updateVehicle(id, vehicleInputDto);
         return ResponseEntity.ok(updateVehicleId);
     }
-
-  @Operation(summary = "Delete Vehicle", description = "Delete an vehicle to database")
-  @ApiResponse(
-      responseCode = "200",
-      description = "OK",
-      content = {
-        @Content(
-            mediaType = "application/json",
-            schema = @Schema(type = "string", example = "Deletado com sucesso."))
-      })
-  @ApiResponse(
-      responseCode = "404",
-      description = "Vehicle not found",
-      content = {
-        @Content(
-            mediaType = "application/json",
-            schema =
-                @Schema(
-                    type = "string",
-                    example =
-                        "Não foi possível localizar na base de dados com os seguinte parâmetros:")),
-      })
-  @DeleteMapping("/")
-  public ResponseEntity<BaseDto> deleteVehicle(
-      @RequestParam(required = false) UUID idVehicle,
-      @RequestParam(required = false) String license) {
-    BaseDto baseDto = deleteVehicleService.execute(idVehicle, license);
-    return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
-  }
 }
