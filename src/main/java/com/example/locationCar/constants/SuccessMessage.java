@@ -9,4 +9,7 @@ public @interface SuccessMessage {
     String DELETE_SUCCESS = "Deletado com sucesso.";
     String CREATE_EMPLOYEE = "Funcionário criado com sucesso";
     String UPDATE_EMPLOYEE = "Funcionário atualizado com sucesso";
+    String UPDATE_VEHICLE = "Veículo atualizado com sucesso";
+
+
 }

@@ -1,8 +1,8 @@
 package com.example.locationCar.controllers;
 
 import com.example.locationCar.base.dto.BaseDto;
-import com.example.locationCar.base.dto.BaseErrorDto;
 import com.example.locationCar.dtos.DeleteVehicleDto;
+import com.example.locationCar.builder.ResponseSuccessBuilder;
 import com.example.locationCar.dtos.input.VehicleInputDto;
 import com.example.locationCar.services.vehicleService.CreateVehicleService;
 import com.example.locationCar.models.VehicleModel;
@@ -10,6 +10,7 @@ import com.example.locationCar.services.vehicleService.DeleteVehicleService;
 import com.example.locationCar.services.vehicleService.ListVehicleParamService;
 import com.example.locationCar.services.vehicleService.ListVehicleService;
 import com.fasterxml.jackson.databind.ser.Serializers;
+import com.example.locationCar.services.vehicleService.UpdateVehicleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -28,15 +29,16 @@ import java.util.UUID;
 public class VehicleController {
   
     private CreateVehicleService createVehicleService;
-
+    private UpdateVehicleService updateVehicleService;
     private ListVehicleParamService listVehicleParamService;
-
     private DeleteVehicleService deleteVehicleService;
 
-    public VehicleController(ListVehicleParamService listVehicleParamService, CreateVehicleService createVehicleService, DeleteVehicleService deleteVehicleService) {
+    public VehicleController(ListVehicleParamService listVehicleParamService, CreateVehicleService createVehicleService, DeleteVehicleService deleteVehicleService, UpdateVehicleService updateVehicleService) {
         this.listVehicleParamService = listVehicleParamService;
         this.createVehicleService = createVehicleService;
         this.deleteVehicleService = deleteVehicleService;
+        this.updateVehicleService = updateVehicleService;
+
     }
 
     @Operation(summary = "List vehicles Param", description = "List vehicles Param")
@@ -52,8 +54,7 @@ public class VehicleController {
         BaseDto baseDto = listVehicleParamService.listVehicles(pageable, color, rating, max, min);
         return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
     }
-  
-  
+
     @Operation(summary = "Create vehicle", description = "Add a vehicle to the database")
     @ApiResponse(responseCode = "201", description = "Created")
     @ApiResponse(responseCode = "400", description = "Invalid data")
@@ -62,6 +63,7 @@ public class VehicleController {
         BaseDto baseDto = createVehicleService.inserir(vehicleInputDto);
         return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
     }
+
 
     @Operation(summary = "Delete Vehicle", description = "Delete an vehicle to database")
     @ApiResponse(responseCode = "200", description = "OK", content = {
@@ -78,4 +80,18 @@ public class VehicleController {
         BaseDto baseDto = deleteVehicleService.execute(idVehicle, license);
         return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
     }
+
+    @Operation(summary = "Update vehicle", description = "Update vehicle")
+    @ApiResponse(responseCode = "200", description = "Updated", content = {
+            @Content(mediaType = "text/plain", schema = @Schema(type = "string", format = "uuid"))
+    })
+    @ApiResponse(responseCode = "404", description = "Not found", content = {
+            @Content(mediaType = "text/plain", schema = @Schema(type = "string", example = "vehicle não encontrado"))
+    })
+    @PutMapping("/{id}")
+    public ResponseEntity<BaseDto> updateVehicle (@PathVariable UUID id, @RequestBody VehicleInputDto vehicleInputDto){
+        BaseDto updateVehicleId = updateVehicleService.updateVehicle(id, vehicleInputDto);
+        return ResponseEntity.ok(updateVehicleId);
+    }
+
 }
