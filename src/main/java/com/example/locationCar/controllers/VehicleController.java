@@ -5,10 +5,8 @@ import com.example.locationCar.dtos.DeleteVehicleDto;
 import com.example.locationCar.builder.ResponseSuccessBuilder;
 import com.example.locationCar.dtos.input.VehicleInputDto;
 import com.example.locationCar.services.vehicleService.CreateVehicleService;
-import com.example.locationCar.models.VehicleModel;
 import com.example.locationCar.services.vehicleService.DeleteVehicleService;
 import com.example.locationCar.services.vehicleService.ListVehicleParamService;
-import com.example.locationCar.services.vehicleService.ListVehicleService;
 import com.fasterxml.jackson.databind.ser.Serializers;
 import com.example.locationCar.services.vehicleService.UpdateVehicleService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,18 +14,16 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.HttpStatus;
+import java.util.UUID;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/v1/vehicle")
 @Tag(name = "Vehicle", description = "Operations about vehicle")
 public class VehicleController {
-  
+
     private CreateVehicleService createVehicleService;
     private UpdateVehicleService updateVehicleService;
     private ListVehicleParamService listVehicleParamService;
