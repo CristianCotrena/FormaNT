@@ -7,13 +7,13 @@ import jakarta.persistence.Converter;
 @Converter
 public class PositionConverter implements AttributeConverter<Position, String> {
 
-    @Override
-    public String convertToDatabaseColumn(Position attribute) {
-        return attribute.toString();
-    }
+  @Override
+  public String convertToDatabaseColumn(Position attribute) {
+    return attribute.toString();
+  }
 
-    @Override
-    public Position convertToEntityAttribute(String dbData) {
-        return Position.fromString(dbData);
-    }
+  @Override
+  public Position convertToEntityAttribute(String dbData) {
+    return Position.fromString(dbData);
+  }
 }
