@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "60dea205-9f7f-47d1-bcc9-dad165824caa",
+		"_postman_id": "3b1ef7d3-2df5-4e98-bee8-429d8005f86f",
 		"name": "LocationCar",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28894337"
 	},
 	"item": [
 		{
@@ -30,6 +31,40 @@
 							"path": [
 								"v1",
 								"address"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url-local}}/v1/address?idEmployee=2671a580-b991-4f72-8c85-f8cdcfd14148",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"address"
+							],
+							"query": [
+								{
+									"key": "idAddress",
+									"value": "2f40efbf-4cee-45f4-8808-94abd5510984",
+									"disabled": true
+								},
+								{
+									"key": "idClient",
+									"value": "31bfb198-af9c-4996-b6f7-d1aac700e94a",
+									"disabled": true
+								},
+								{
+									"key": "idEmployee",
+									"value": "2671a580-b991-4f72-8c85-f8cdcfd14148"
+								}
 							]
 						}
 					},
