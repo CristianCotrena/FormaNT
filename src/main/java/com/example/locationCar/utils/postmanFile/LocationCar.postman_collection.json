@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "dede7346-1b51-4fe7-9852-1c4d5d5d25e4",
+		"_postman_id": "98bd217e-b8e6-4a0b-9aaf-caffe916f555",
 		"name": "LocationCar",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "28894337"
+		"_exporter_id": "28525027"
 	},
 	"item": [
 		{
@@ -486,6 +486,34 @@
 								"v1",
 								"vehicle",
 								"236187b3-f446-410a-b9df-cd0e279a434c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url-local}}/v1/vehicle?idVehicle=0f1dc4b4-bf7c-4d84-baf4-af8839628fe3&license=KAE6601",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"vehicle"
+							],
+							"query": [
+								{
+									"key": "idVehicle",
+									"value": "0f1dc4b4-bf7c-4d84-baf4-af8839628fe3"
+								},
+								{
+									"key": "license",
+									"value": "KAE6601"
+								}
 							]
 						}
 					},
