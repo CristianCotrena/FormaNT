@@ -114,7 +114,3 @@ public class AddressModel implements Serializable {
         this.employee = employee;
     }
 }
-
-//    @OneToOne
-//    @JoinColumn(name = "employeeId")
-//    public EmployeeModel employee;
