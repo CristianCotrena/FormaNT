@@ -16,4 +16,6 @@ public interface VehicleRepository
 
     void deleteByLicense (String license);
 
+    Optional<VehicleModel> findByIdVehicleOrLicense(UUID idVehicle, String license);
+
 }
