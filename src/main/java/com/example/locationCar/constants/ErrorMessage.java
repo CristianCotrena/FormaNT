@@ -18,4 +18,10 @@ public @interface ErrorMessage {
     String CLIENT_ALREADY_HAS_AN_ADDRESS = "O cliente já possui um endereço cadastrado";
     String EMPLOYEE_DOESNT_EXIST = "O funcionário não existe";
     String EMPLOYEE_ALREADY_HAS_AN_ADDRESS = "O funcionário já possui um endereço cadastrado";
+    String VEHICLE_DOESNT_EXIST = "O veículo não existe";
+    String VEHICLE_IS_UNAVAILABLE = "O veículo não está disponível";
+    String MUST_BE_LESS_THAN_RETURN_DATE = "Precisa ser menor que a data de devolução";
+    String MUST_BE_GREATER_THAN_CONTRACTING_DATE = "Precisa ser maior que a data de retirada";
+    String MUSTNT_BE_IN_THE_PAST = "A data não pode ser no passado";
+
 }
