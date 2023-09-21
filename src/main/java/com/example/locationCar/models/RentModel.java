@@ -2,6 +2,7 @@ package com.example.locationCar.models;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -15,22 +16,22 @@ public class RentModel implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID idRent;
 
-  private Date contractingDate;
-  private Date returnDate;
+  private ZonedDateTime contractingDate;
+  private ZonedDateTime returnDate;
   private Integer haveInsurance;
-  private String statusVehicle;
+  private Integer status;
 
   @ManyToOne
   @JoinColumn(name = "clientId")
-  private ClientModel idClient;
+  private ClientModel client;
 
   @ManyToOne
   @JoinColumn(name = "employeeId")
-  private EmployeeModel employeeId;
+  private EmployeeModel employee;
 
   @ManyToOne
   @JoinColumn(name = "vehicleId")
-  private VehicleModel idVehicle;
+  private VehicleModel vehicle;
 
   public UUID getIdRent() {
     return idRent;
@@ -40,19 +41,19 @@ public class RentModel implements Serializable {
     this.idRent = idRent;
   }
 
-  public Date getContractingDate() {
+  public ZonedDateTime getContractingDate() {
     return contractingDate;
   }
 
-  public void setContractingDate(Date contractingDate) {
+  public void setContractingDate(ZonedDateTime contractingDate) {
     this.contractingDate = contractingDate;
   }
 
-  public Date getReturnDate() {
+  public ZonedDateTime getReturnDate() {
     return returnDate;
   }
 
-  public void setReturnDate(Date returnDate) {
+  public void setReturnDate(ZonedDateTime returnDate) {
     this.returnDate = returnDate;
   }
 
@@ -64,11 +65,35 @@ public class RentModel implements Serializable {
     this.haveInsurance = haveInsurance;
   }
 
-  public String getStatusVehicle() {
-    return statusVehicle;
+  public Integer getStatus() {
+    return status;
   }
 
-  public void setStatusVehicle(String statusVehicle) {
-    this.statusVehicle = statusVehicle;
+  public void setStatus(Integer status) {
+    this.status = status;
+  }
+
+  public ClientModel getClient() {
+    return client;
+  }
+
+  public void setClient(ClientModel client) {
+    this.client = client;
+  }
+
+  public EmployeeModel getEmployee() {
+    return employee;
+  }
+
+  public void setEmployee(EmployeeModel employee) {
+    this.employee = employee;
+  }
+
+  public VehicleModel getVehicle() {
+    return vehicle;
+  }
+
+  public void setVehicle(VehicleModel vehicle) {
+    this.vehicle = vehicle;
   }
 }
