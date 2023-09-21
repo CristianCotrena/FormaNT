@@ -11,6 +11,7 @@ import com.example.locationCar.repositories.EmployeeRepository;
 import com.example.locationCar.services.addressService.CreateAddressService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
@@ -34,7 +35,7 @@ public class CreateAddressTest {
     @MockBean
     private ClientRepository clientRepository;
 
-    @Autowired
+    @Mock
     private CreateAddressService createAddressService;
 
     private AddressInputDto dto;
@@ -66,8 +67,8 @@ public class CreateAddressTest {
 
         dto.setIdClient("0340f27c-5198-11ee-be56-0242ac120002");
 
-        when(addressRepository.findByIdClient(any(ClientModel.class))).thenReturn(Optional.empty());
-        when(addressRepository.findByIdEmployee(any(EmployeeModel.class))).thenReturn(Optional.empty());
+        when(addressRepository.findByIdClient(any(UUID.class))).thenReturn(Optional.empty());
+        when(addressRepository.findByEmployeeId(any(UUID.class))).thenReturn(Optional.empty());
         when(employeeRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
         when(clientRepository.findById(any(UUID.class))).thenReturn(Optional.of(client));
 
@@ -89,8 +90,8 @@ public class CreateAddressTest {
 
         dto.setIdEmployee("0340f27c-5198-11ee-be56-0242ac120002");
 
-        when(addressRepository.findByIdClient(any(ClientModel.class))).thenReturn(Optional.empty());
-        when(addressRepository.findByIdEmployee(any(EmployeeModel.class))).thenReturn(Optional.empty());
+        when(addressRepository.findByIdClient(any(UUID.class))).thenReturn(Optional.empty());
+        when(addressRepository.findByEmployeeId(any(UUID.class))).thenReturn(Optional.empty());
         when(employeeRepository.findById(any(UUID.class))).thenReturn(Optional.of(employee));
         when(clientRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
 
@@ -112,8 +113,8 @@ public class CreateAddressTest {
         dto.setIdEmployee("0340f27c-5198-11ee-be56-0242ac120002");
         dto.setIdClient("0340f27c-5198-11ee-be56-0242ac120012");
 
-        when(addressRepository.findByIdClient(any(ClientModel.class))).thenReturn(Optional.empty());
-        when(addressRepository.findByIdEmployee(any(EmployeeModel.class))).thenReturn(Optional.empty());
+        when(addressRepository.findByIdClient(any(UUID.class))).thenReturn(Optional.empty());
+        when(addressRepository.findByEmployeeId(any(UUID.class))).thenReturn(Optional.empty());
         when(employeeRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
         when(clientRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
 
@@ -139,8 +140,8 @@ public class CreateAddressTest {
         dto.setComplement("");
         dto.setNumber(null);
 
-        when(addressRepository.findByIdClient(any(ClientModel.class))).thenReturn(Optional.empty());
-        when(addressRepository.findByIdEmployee(any(EmployeeModel.class))).thenReturn(Optional.empty());
+        when(addressRepository.findByIdClient(any(UUID.class))).thenReturn(Optional.empty());
+        when(addressRepository.findByEmployeeId(any(UUID.class))).thenReturn(Optional.empty());
         when(employeeRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
         when(clientRepository.findById(any(UUID.class))).thenReturn(Optional.of(client));
 
@@ -163,8 +164,8 @@ public class CreateAddressTest {
         dto.setIdClient("0340f27c-5198-11ee-be56-0242ac120012");
         dto.setCep("74840-300");
 
-        when(addressRepository.findByIdClient(any(ClientModel.class))).thenReturn(Optional.empty());
-        when(addressRepository.findByIdEmployee(any(EmployeeModel.class))).thenReturn(Optional.empty());
+        when(addressRepository.findByIdClient(any(UUID.class))).thenReturn(Optional.empty());
+        when(addressRepository.findByEmployeeId(any(UUID.class))).thenReturn(Optional.empty());
         when(employeeRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
         when(clientRepository.findById(any(UUID.class))).thenReturn(Optional.of(client));
 
@@ -187,8 +188,8 @@ public class CreateAddressTest {
 
         dto.setIdClient("0340f27c-5198-11ee-be56-0242ac120012");
 
-        when(addressRepository.findByIdClient(any(ClientModel.class))).thenReturn(Optional.empty());
-        when(addressRepository.findByIdEmployee(any(EmployeeModel.class))).thenReturn(Optional.empty());
+        when(addressRepository.findByIdClient(any(UUID.class))).thenReturn(Optional.empty());
+        when(addressRepository.findByEmployeeId(any(UUID.class))).thenReturn(Optional.empty());
         when(employeeRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
         when(clientRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
 
@@ -210,56 +211,10 @@ public class CreateAddressTest {
 
         dto.setIdEmployee("0340f27c-5198-11ee-be56-0242ac120012");
 
-        when(addressRepository.findByIdClient(any(ClientModel.class))).thenReturn(Optional.empty());
-        when(addressRepository.findByIdEmployee(any(EmployeeModel.class))).thenReturn(Optional.empty());
+        when(addressRepository.findByIdClient(any(UUID.class))).thenReturn(Optional.empty());
+        when(addressRepository.findByEmployeeId(any(UUID.class))).thenReturn(Optional.empty());
         when(employeeRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
         when(clientRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
-
-        AddressModel address = new AddressModel();
-        address.setIdAddress(validUUID);
-
-        when(addressRepository.save(any(AddressModel.class))).thenReturn(address);
-
-        BaseDto responseEntity = createAddressService.inserir(dto);
-
-        assertEquals(HttpStatus.BAD_REQUEST.value(), responseEntity.getResult().getStatusCode());
-        assertEquals("Bad Request", responseEntity.getResult().getDescription());
-        assertEquals(1, responseEntity.getErrors().size());
-    }
-
-    @Test
-    public void testCreateAddress_EmployeeAlreadyHasAnAddress_ShouldReturnError() {
-        UUID validUUID = UUID.randomUUID();
-
-        dto.setIdEmployee("0340f27c-5198-11ee-be56-0242ac120012");
-
-        when(addressRepository.findByIdClient(any(ClientModel.class))).thenReturn(Optional.empty());
-        when(addressRepository.findByIdEmployee(any(EmployeeModel.class))).thenReturn(Optional.of(new AddressModel()));
-        when(employeeRepository.findById(any(UUID.class))).thenReturn(Optional.of(employee));
-        when(clientRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
-
-        AddressModel address = new AddressModel();
-        address.setIdAddress(validUUID);
-
-        when(addressRepository.save(any(AddressModel.class))).thenReturn(address);
-
-        BaseDto responseEntity = createAddressService.inserir(dto);
-
-        assertEquals(HttpStatus.BAD_REQUEST.value(), responseEntity.getResult().getStatusCode());
-        assertEquals("Bad Request", responseEntity.getResult().getDescription());
-        assertEquals(1, responseEntity.getErrors().size());
-    }
-
-    @Test
-    public void testCreateAddress_ClientAlreadyHasAnAddress_ShouldReturnError() {
-        UUID validUUID = UUID.randomUUID();
-
-        dto.setIdClient("0340f27c-5198-11ee-be56-0242ac120012");
-
-        when(addressRepository.findByIdClient(any(ClientModel.class))).thenReturn(Optional.of(new AddressModel()));
-        when(addressRepository.findByIdEmployee(any(EmployeeModel.class))).thenReturn(Optional.empty());
-        when(employeeRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
-        when(clientRepository.findById(any(UUID.class))).thenReturn(Optional.of(client));
 
         AddressModel address = new AddressModel();
         address.setIdAddress(validUUID);

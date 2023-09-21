@@ -57,7 +57,7 @@ public class CreateAddressService {
                 return result.get();
             }
 
-            Optional<AddressModel> entity = addressRepository.findByIdClient(client.get());
+            Optional<AddressModel> entity = addressRepository.findByIdClient(client.get().getIdClient());
 
             if(!entity.isEmpty()){
                 errors.add(new BaseErrorDto("idClient", ErrorMessage.CLIENT_ALREADY_HAS_AN_ADDRESS));
@@ -77,7 +77,7 @@ public class CreateAddressService {
                 return result.get();
             }
 
-            Optional<AddressModel> entity = addressRepository.findByIdEmployee(employee.get());
+            Optional<AddressModel> entity = addressRepository.findByEmployeeId(employee.get().getEmployeeId());
 
             if(!entity.isEmpty()){
                 errors.add(new BaseErrorDto("idEmployee", ErrorMessage.EMPLOYEE_ALREADY_HAS_AN_ADDRESS));
