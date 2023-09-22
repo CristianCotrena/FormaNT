@@ -16,17 +16,15 @@ import com.example.locationCar.repositories.EmployeeRepository;
 import com.example.locationCar.validate.employee.CreateEmployeeValidate;
 import java.util.List;
 import java.util.UUID;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class CreateEmployeeService {
 
   public static EmployeeRepository employeeRepository;
-
-  public CreateEmployeeService(EmployeeRepository employeeRepository) {
-    this.employeeRepository = employeeRepository;
-  }
 
   public BaseDto createEmployee(EmployeeDto employeeDto) {
 

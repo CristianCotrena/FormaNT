@@ -5,17 +5,15 @@ import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.repositories.ClientRepository;
 import java.util.Optional;
 import java.util.UUID;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class UpdateClientService {
   private final ClientRepository clientRepository;
-
-  public UpdateClientService(ClientRepository clientRepository) {
-    this.clientRepository = clientRepository;
-  }
 
   public ResponseEntity<String> updateClient(UUID id, ClientUpdateDto clientUpdateDto) {
     validateUpdateClient(clientUpdateDto);
