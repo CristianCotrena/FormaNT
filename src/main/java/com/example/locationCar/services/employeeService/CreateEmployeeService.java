@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class CreateEmployeeService {
 
-  public static EmployeeRepository employeeRepository;
+  private EmployeeRepository employeeRepository;
 
   public BaseDto createEmployee(EmployeeDto employeeDto) {
 
