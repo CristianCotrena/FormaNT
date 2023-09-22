@@ -1,10 +1,8 @@
 {
 	"info": {
-		"_postman_id": "732dec99-0bb1-4b2b-b203-97606b3cd5a7",
+		"_postman_id": "60dea205-9f7f-47d1-bcc9-dad165824caa",
 		"name": "LocationCar",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "18793992",
-		"_collection_link": "https://martian-astronaut-744258.postman.co/workspace/NTConsult~7475cf8a-732e-4b57-894e-cdb19065b26d/collection/18793992-732dec99-0bb1-4b2b-b203-97606b3cd5a7?action=share&source=collection_link&creator=18793992"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
