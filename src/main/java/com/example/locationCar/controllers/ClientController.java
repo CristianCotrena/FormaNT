@@ -16,6 +16,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.Optional;
 import java.util.UUID;
+
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,25 +25,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("v1/client")
 @Tag(name = "Client", description = "Operations about client")
+@AllArgsConstructor
 public class ClientController {
   private final ListClientService listClientService;
   private final CreateClientService createClientService;
   private final UpdateClientService updateClientService;
   private final SearchClientService searchClientService;
   private final DeleteClientService deleteClientService;
-
-  public ClientController(
-      DeleteClientService deleteClientService,
-      CreateClientService createClientService,
-      SearchClientService searchClientService,
-      ListClientService listClientService,
-      UpdateClientService updateClientService) {
-    this.deleteClientService = deleteClientService;
-    this.createClientService = createClientService;
-    this.searchClientService = searchClientService;
-    this.listClientService = listClientService;
-    this.updateClientService = updateClientService;
-  }
 
   @Operation(summary = "Search for a client", description = "Search a client into database")
   @ApiResponse(

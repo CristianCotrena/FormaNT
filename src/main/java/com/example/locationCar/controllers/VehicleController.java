@@ -15,6 +15,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.UUID;
+
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,20 +24,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/v1/vehicle")
 @Tag(name = "Vehicle", description = "Operations about vehicle")
+@AllArgsConstructor
 public class VehicleController {
 
     private CreateVehicleService createVehicleService;
     private UpdateVehicleService updateVehicleService;
     private ListVehicleParamService listVehicleParamService;
     private DeleteVehicleService deleteVehicleService;
-
-    public VehicleController(ListVehicleParamService listVehicleParamService, CreateVehicleService createVehicleService, DeleteVehicleService deleteVehicleService, UpdateVehicleService updateVehicleService) {
-        this.listVehicleParamService = listVehicleParamService;
-        this.createVehicleService = createVehicleService;
-        this.deleteVehicleService = deleteVehicleService;
-        this.updateVehicleService = updateVehicleService;
-
-    }
 
     @Operation(summary = "List vehicles Param", description = "List vehicles Param")
     @ApiResponse(responseCode = "200", description = "Found")
