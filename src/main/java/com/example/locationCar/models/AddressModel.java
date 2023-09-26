@@ -14,6 +14,7 @@ public class AddressModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID idAddress;
     private String publicPlace;
+    private String road;
     private Integer number;
     private String complement;
     private String city;
@@ -60,6 +61,12 @@ public class AddressModel implements Serializable {
         this.publicPlace = publicPlace;
     }
 
+    public String getRoad() {
+        return road;
+    }
+    public void setRoad(String road) {
+        this.road = road;
+    }
     public Integer getNumber() {
         return number;
     }
