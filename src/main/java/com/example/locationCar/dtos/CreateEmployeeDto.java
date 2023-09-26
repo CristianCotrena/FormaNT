@@ -1,18 +1,13 @@
 package com.example.locationCar.dtos;
 
+import lombok.*;
+
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class CreateEmployeeDto {
 
-  private String employeeId;
-
-  public CreateEmployeeDto(String employeeId) {
-    this.employeeId = employeeId;
-  }
-
-  public String getEmployeeId() {
-    return employeeId;
-  }
-
-  public void setEmployeeId(String employeeId) {
-    this.employeeId = employeeId;
-  }
+    private String employeeId;
 }
