@@ -17,6 +17,7 @@ import com.example.locationCar.repositories.AddressRepository;
 import com.example.locationCar.repositories.ClientRepository;
 import com.example.locationCar.repositories.EmployeeRepository;
 import com.example.locationCar.validate.address.CreateAddressValidate;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@AllArgsConstructor
 public class CreateAddressService {
 
     private AddressRepository addressRepository;
@@ -32,12 +34,6 @@ public class CreateAddressService {
     private EmployeeRepository employeeRepository;
 
     private ClientRepository clientRepository;
-
-    public CreateAddressService(AddressRepository addressRepository, EmployeeRepository employeeRepository, ClientRepository clientRepository) {
-        this.addressRepository = addressRepository;
-        this.employeeRepository = employeeRepository;
-        this.clientRepository = clientRepository;
-    }
 
     public BaseDto inserir(AddressInputDto dto) {
         List<BaseErrorDto> errors = new CreateAddressValidate().validate(dto);

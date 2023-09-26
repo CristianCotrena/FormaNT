@@ -4,16 +4,14 @@ import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.repositories.ClientRepository;
 import java.util.Optional;
 import java.util.UUID;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class SearchClientService {
 
   private static ClientRepository clientRepository;
-
-  public SearchClientService(ClientRepository clientRepository) {
-    this.clientRepository = clientRepository;
-  }
 
   public ClientModel findUserByEmail(String Email) {
     ClientModel client = clientRepository.findByEmail(Email).get();

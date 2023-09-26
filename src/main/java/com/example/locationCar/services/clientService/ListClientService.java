@@ -10,20 +10,16 @@ import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.repositories.ClientRepository;
 import com.example.locationCar.validate.client.ListClientValidate;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class ListClientService {
   private final ClientRepository clientRepository;
-
-  @Autowired
-  public ListClientService(ClientRepository clientRepository) {
-    this.clientRepository = clientRepository;
-  }
 
   public BaseDto listClients(String age, String page) {
     List<BaseErrorDto> errors = new ListClientValidate().validateParamsToSearch(age, page);

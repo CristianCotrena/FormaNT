@@ -11,6 +11,7 @@ import com.example.locationCar.dtos.input.VehicleInputDto;
 import com.example.locationCar.models.VehicleModel;
 import com.example.locationCar.repositories.VehicleRepository;
 import com.example.locationCar.validate.vehicle.UpdateVehicleValidate;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -19,15 +20,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@AllArgsConstructor
 public class UpdateVehicleService {
 
     private final VehicleRepository vehicleRepository;
     private final UpdateVehicleValidate updateVehicleValidate;
-
-    public UpdateVehicleService(VehicleRepository vehicleRepository, UpdateVehicleValidate updateVehicleValidate) {
-        this.vehicleRepository = vehicleRepository;
-        this.updateVehicleValidate = updateVehicleValidate;
-    }
 
     public BaseDto updateVehicle(UUID vehicleId, VehicleInputDto updateDto){
         Optional<VehicleModel> existingVehicleOptional = vehicleRepository.findById(vehicleId);
