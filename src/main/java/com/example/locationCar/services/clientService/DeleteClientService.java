@@ -4,15 +4,13 @@ import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.repositories.ClientRepository;
 import java.util.Optional;
 import java.util.UUID;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class DeleteClientService {
   ClientRepository clientRepository;
-
-  public DeleteClientService(ClientRepository clientRepository) {
-    this.clientRepository = clientRepository;
-  }
 
   public Optional<ClientModel> getClient(UUID id) {
     return clientRepository.findById(id);

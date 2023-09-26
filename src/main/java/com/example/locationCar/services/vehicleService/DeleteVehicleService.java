@@ -11,6 +11,7 @@ import com.example.locationCar.models.VehicleModel;
 import com.example.locationCar.repositories.VehicleRepository;
 import com.example.locationCar.validate.vehicle.DeleteVehicleValidate;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -20,14 +21,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@AllArgsConstructor
 public class DeleteVehicleService {
 
     VehicleRepository vehicleRepository;
-
-    public DeleteVehicleService(VehicleRepository vehicleRepository) {
-
-        this.vehicleRepository = vehicleRepository;
-    }
 
     @Transactional
     public BaseDto execute(UUID idVehicle, String license) {
