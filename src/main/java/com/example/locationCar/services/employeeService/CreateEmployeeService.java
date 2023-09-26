@@ -61,7 +61,7 @@ public class CreateEmployeeService {
     employeeModel.setRegistry(employeeDto.getRegistry());
     employeeModel.setStatus(1);
 
-    UUID createdId = employeeRepository.save(employeeModel).getIdClient();
+    UUID createdId = employeeRepository.save(employeeModel).getEmployeeId();
 
     return new ResponseSuccessBuilder<CreateEmployeeDto>(
             HttpStatus.CREATED,
