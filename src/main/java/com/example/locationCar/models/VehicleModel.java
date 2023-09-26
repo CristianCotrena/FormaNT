@@ -13,7 +13,7 @@ public class VehicleModel implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @Schema (hidden = false)
+  @Schema(hidden = false)
   private UUID idVehicle;
 
   @Schema(example = "NEJ9138")
