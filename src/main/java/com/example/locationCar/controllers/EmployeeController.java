@@ -15,6 +15,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.UUID;
+
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/v1/employee")
 @Tag(name = "Employee", description = "Operations about Employee")
+@AllArgsConstructor
 public class EmployeeController {
 
   private final ListEmployeeService listEmployeeService;
@@ -29,19 +32,6 @@ public class EmployeeController {
   private final CreateEmployeeService createEmployeeService;
   private final UpdateEmployeeService updateEmployeeService;
   private final DeleteEmployeeService deleteEmployeeService;
-
-  public EmployeeController(
-      CreateEmployeeService createEmployeeService,
-      UpdateEmployeeService updateEmployeeService,
-      SearchEmployeeService searchEmployeeService,
-      ListEmployeeService listEmployeeService,
-      DeleteEmployeeService deleteEmployeeService) {
-    this.createEmployeeService = createEmployeeService;
-    this.updateEmployeeService = updateEmployeeService;
-    this.searchEmployeeService = searchEmployeeService;
-    this.listEmployeeService = listEmployeeService;
-    this.deleteEmployeeService = deleteEmployeeService;
-  }
 
   @Operation(summary = "Create employee", description = "Add an employee to database")
   @ApiResponse(

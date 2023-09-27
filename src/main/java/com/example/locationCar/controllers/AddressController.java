@@ -18,26 +18,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.http.HttpStatus;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/v1/address")
 @Tag(name = "Address", description = "Operations about address")
+@AllArgsConstructor
 public class AddressController {
 
   private final SearchAddressService searchAddressService;
   private final CreateAddressService createAddressService;
   private final DeleteAddressService deleteAddressService;
-
-  public AddressController(
-      CreateAddressService createAddressService,
-      SearchAddressService searchAddressService,
-      DeleteAddressService deleteAddressService) {
-    this.searchAddressService = searchAddressService;
-    this.createAddressService = createAddressService;
-    this.deleteAddressService = deleteAddressService;
-  }
 
   @Operation(summary = "Search Address", description = "Search an address from database")
   @ApiResponse(
