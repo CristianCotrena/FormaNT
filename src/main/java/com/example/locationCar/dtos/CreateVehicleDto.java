@@ -8,5 +8,5 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateVehicleDto {
-    private String vehicleId;
+  private String vehicleId;
 }
