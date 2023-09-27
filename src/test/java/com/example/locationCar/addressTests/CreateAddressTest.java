@@ -1,5 +1,10 @@
 package com.example.locationCar.addressTests;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import com.example.locationCar.base.dto.BaseDto;
 import com.example.locationCar.dtos.input.AddressInputDto;
 import com.example.locationCar.models.AddressModel;
@@ -9,222 +14,256 @@ import com.example.locationCar.repositories.AddressRepository;
 import com.example.locationCar.repositories.ClientRepository;
 import com.example.locationCar.repositories.EmployeeRepository;
 import com.example.locationCar.services.addressService.CreateAddressService;
+import java.util.Optional;
+import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 
-import java.util.Optional;
-import java.util.UUID;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 public class CreateAddressTest {
 
-    @MockBean
-    private AddressRepository addressRepository;
+  @MockBean private AddressRepository addressRepository;
 
-    @MockBean
-    private EmployeeRepository employeeRepository;
+  @MockBean private EmployeeRepository employeeRepository;
 
-    @MockBean
-    private ClientRepository clientRepository;
+  @MockBean private ClientRepository clientRepository;
 
-    @Mock
-    private CreateAddressService createAddressService;
+  @Autowired private CreateAddressService createAddressService;
 
-    private AddressInputDto dto;
+  private AddressInputDto dto;
 
-    private ClientModel client;
+  private ClientModel client;
 
-    private EmployeeModel employee;
+  private EmployeeModel employee;
 
-    @BeforeEach
-    public void setup() {
-        addressRepository = mock(AddressRepository.class);
-        employeeRepository = mock(EmployeeRepository.class);
-        clientRepository = mock(ClientRepository.class);
-        createAddressService = new CreateAddressService(addressRepository, employeeRepository, clientRepository);
+  @BeforeEach
+  public void setup() {
+    addressRepository = mock(AddressRepository.class);
+    employeeRepository = mock(EmployeeRepository.class);
+    clientRepository = mock(ClientRepository.class);
+    createAddressService =
+        new CreateAddressService(addressRepository, employeeRepository, clientRepository);
 
-        dto = new AddressInputDto();
-        dto.setCep("74840300");
-        dto.setComplement("Casa de Esquina");
-        dto.setNumber(12);
+    dto = new AddressInputDto();
+    dto.setCep("74840300");
+    dto.setComplement("Casa de Esquina");
+    dto.setNumber(12);
 
-        client = new ClientModel();
-        employee = new EmployeeModel();
+    client = new ClientModel();
+    employee = new EmployeeModel();
+  }
 
-    }
+  @Test
+  public void testCreateAddress_Success_with_client() {
+    UUID validUUID = UUID.randomUUID();
 
-    @Test
-    public void testCreateAddress_Success_with_client() {
-        UUID validUUID = UUID.randomUUID();
+    dto.setIdClient("0340f27c-5198-11ee-be56-0242ac120002");
 
-        dto.setIdClient("0340f27c-5198-11ee-be56-0242ac120002");
+    when(addressRepository.findByClient(any(ClientModel.class))).thenReturn(Optional.empty());
+    when(addressRepository.findByEmployee(any(EmployeeModel.class))).thenReturn(Optional.empty());
+    when(employeeRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
+    when(clientRepository.findById(any(UUID.class))).thenReturn(Optional.of(client));
 
-        when(addressRepository.findByIdClient(any(UUID.class))).thenReturn(Optional.empty());
-        when(addressRepository.findByEmployeeId(any(UUID.class))).thenReturn(Optional.empty());
-        when(employeeRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
-        when(clientRepository.findById(any(UUID.class))).thenReturn(Optional.of(client));
+    AddressModel address = new AddressModel();
+    address.setIdAddress(validUUID);
 
-        AddressModel address = new AddressModel();
-        address.setIdAddress(validUUID);
+    when(addressRepository.save(any(AddressModel.class))).thenReturn(address);
 
-        when(addressRepository.save(any(AddressModel.class))).thenReturn(address);
+    BaseDto responseEntity = createAddressService.inserir(dto);
 
-        BaseDto responseEntity = createAddressService.inserir(dto);
+    assertEquals(HttpStatus.CREATED.value(), responseEntity.getResult().getStatusCode());
+    assertEquals("Endereço criado com sucesso", responseEntity.getResult().getDescription());
+  }
 
-        assertEquals(HttpStatus.CREATED.value(), responseEntity.getResult().getStatusCode());
-        assertEquals("Endereço criado com sucesso", responseEntity.getResult().getDescription());
-    }
+  @Test
+  public void testCreateAddress_Success_with_employee() {
+    UUID validUUID = UUID.randomUUID();
 
+    dto.setIdEmployee("0340f27c-5198-11ee-be56-0242ac120002");
 
-    @Test
-    public void testCreateAddress_Success_with_employee() {
-        UUID validUUID = UUID.randomUUID();
+    when(addressRepository.findByClient(any(ClientModel.class))).thenReturn(Optional.empty());
+    when(addressRepository.findByEmployee(any(EmployeeModel.class))).thenReturn(Optional.empty());
+    when(employeeRepository.findById(any(UUID.class))).thenReturn(Optional.of(employee));
+    when(clientRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
 
-        dto.setIdEmployee("0340f27c-5198-11ee-be56-0242ac120002");
+    AddressModel address = new AddressModel();
+    address.setIdAddress(validUUID);
 
-        when(addressRepository.findByIdClient(any(UUID.class))).thenReturn(Optional.empty());
-        when(addressRepository.findByEmployeeId(any(UUID.class))).thenReturn(Optional.empty());
-        when(employeeRepository.findById(any(UUID.class))).thenReturn(Optional.of(employee));
-        when(clientRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
+    when(addressRepository.save(any(AddressModel.class))).thenReturn(address);
 
-        AddressModel address = new AddressModel();
-        address.setIdAddress(validUUID);
+    BaseDto responseEntity = createAddressService.inserir(dto);
 
-        when(addressRepository.save(any(AddressModel.class))).thenReturn(address);
+    assertEquals(HttpStatus.CREATED.value(), responseEntity.getResult().getStatusCode());
+    assertEquals("Endereço criado com sucesso", responseEntity.getResult().getDescription());
+  }
 
-        BaseDto responseEntity = createAddressService.inserir(dto);
+  @Test
+  public void testCreateAddress_given_idClient_And_IdEmployee_ShouldReturnError() {
+    UUID validUUID = UUID.randomUUID();
 
-        assertEquals(HttpStatus.CREATED.value(), responseEntity.getResult().getStatusCode());
-        assertEquals("Endereço criado com sucesso", responseEntity.getResult().getDescription());
-    }
+    dto.setIdEmployee("0340f27c-5198-11ee-be56-0242ac120002");
+    dto.setIdClient("0340f27c-5198-11ee-be56-0242ac120012");
 
-    @Test
-    public void testCreateAddress_given_idClient_And_IdEmployee_ShouldReturnError() {
-        UUID validUUID = UUID.randomUUID();
+    when(addressRepository.findByClient(any(ClientModel.class))).thenReturn(Optional.empty());
+    when(addressRepository.findByEmployee(any(EmployeeModel.class))).thenReturn(Optional.empty());
+    when(employeeRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
+    when(clientRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
 
-        dto.setIdEmployee("0340f27c-5198-11ee-be56-0242ac120002");
-        dto.setIdClient("0340f27c-5198-11ee-be56-0242ac120012");
+    AddressModel address = new AddressModel();
+    address.setIdAddress(validUUID);
 
-        when(addressRepository.findByIdClient(any(UUID.class))).thenReturn(Optional.empty());
-        when(addressRepository.findByEmployeeId(any(UUID.class))).thenReturn(Optional.empty());
-        when(employeeRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
-        when(clientRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
+    when(addressRepository.save(any(AddressModel.class))).thenReturn(address);
 
-        AddressModel address = new AddressModel();
-        address.setIdAddress(validUUID);
+    BaseDto responseEntity = createAddressService.inserir(dto);
 
-        when(addressRepository.save(any(AddressModel.class))).thenReturn(address);
+    assertEquals(HttpStatus.BAD_REQUEST.value(), responseEntity.getResult().getStatusCode());
+    assertEquals("Bad Request", responseEntity.getResult().getDescription());
+    assertEquals(2, responseEntity.getErrors().size());
+  }
 
-        BaseDto responseEntity = createAddressService.inserir(dto);
+  @Test
+  public void testCreateAddress_given_emptyFields_ShouldReturnError() {
+    UUID validUUID = UUID.randomUUID();
 
-        assertEquals(HttpStatus.BAD_REQUEST.value(), responseEntity.getResult().getStatusCode());
-        assertEquals("Bad Request", responseEntity.getResult().getDescription());
-        assertEquals(2, responseEntity.getErrors().size());
-    }
+    dto.setIdClient("");
+    dto.setCep("");
+    dto.setComplement("");
+    dto.setNumber(null);
 
+    when(addressRepository.findByClient(any(ClientModel.class))).thenReturn(Optional.empty());
+    when(addressRepository.findByEmployee(any(EmployeeModel.class))).thenReturn(Optional.empty());
+    when(employeeRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
+    when(clientRepository.findById(any(UUID.class))).thenReturn(Optional.of(client));
 
-    @Test
-    public void testCreateAddress_given_emptyFields_ShouldReturnError() {
-        UUID validUUID = UUID.randomUUID();
+    AddressModel address = new AddressModel();
+    address.setIdAddress(validUUID);
 
-        dto.setIdClient("");
-        dto.setCep("");
-        dto.setComplement("");
-        dto.setNumber(null);
+    when(addressRepository.save(any(AddressModel.class))).thenReturn(address);
 
-        when(addressRepository.findByIdClient(any(UUID.class))).thenReturn(Optional.empty());
-        when(addressRepository.findByEmployeeId(any(UUID.class))).thenReturn(Optional.empty());
-        when(employeeRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
-        when(clientRepository.findById(any(UUID.class))).thenReturn(Optional.of(client));
+    BaseDto responseEntity = createAddressService.inserir(dto);
 
-        AddressModel address = new AddressModel();
-        address.setIdAddress(validUUID);
+    assertEquals(HttpStatus.BAD_REQUEST.value(), responseEntity.getResult().getStatusCode());
+    assertEquals("Bad Request", responseEntity.getResult().getDescription());
+    assertEquals(4, responseEntity.getErrors().size());
+  }
 
-        when(addressRepository.save(any(AddressModel.class))).thenReturn(address);
+  @Test
+  public void testCreateAddress_given_InvalidCep_ShouldReturnError() {
+    UUID validUUID = UUID.randomUUID();
 
-        BaseDto responseEntity = createAddressService.inserir(dto);
+    dto.setIdClient("0340f27c-5198-11ee-be56-0242ac120012");
+    dto.setCep("74840-300");
 
-        assertEquals(HttpStatus.BAD_REQUEST.value(), responseEntity.getResult().getStatusCode());
-        assertEquals("Bad Request", responseEntity.getResult().getDescription());
-        assertEquals(4, responseEntity.getErrors().size());
-    }
+    when(addressRepository.findByClient(any(ClientModel.class))).thenReturn(Optional.empty());
+    when(addressRepository.findByEmployee(any(EmployeeModel.class))).thenReturn(Optional.empty());
+    when(employeeRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
+    when(clientRepository.findById(any(UUID.class))).thenReturn(Optional.of(client));
 
-    @Test
-    public void testCreateAddress_given_InvalidCep_ShouldReturnError() {
-        UUID validUUID = UUID.randomUUID();
+    AddressModel address = new AddressModel();
+    address.setIdAddress(validUUID);
 
-        dto.setIdClient("0340f27c-5198-11ee-be56-0242ac120012");
-        dto.setCep("74840-300");
+    when(addressRepository.save(any(AddressModel.class))).thenReturn(address);
 
-        when(addressRepository.findByIdClient(any(UUID.class))).thenReturn(Optional.empty());
-        when(addressRepository.findByEmployeeId(any(UUID.class))).thenReturn(Optional.empty());
-        when(employeeRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
-        when(clientRepository.findById(any(UUID.class))).thenReturn(Optional.of(client));
+    BaseDto responseEntity = createAddressService.inserir(dto);
 
-        AddressModel address = new AddressModel();
-        address.setIdAddress(validUUID);
+    assertEquals(HttpStatus.BAD_REQUEST.value(), responseEntity.getResult().getStatusCode());
+    assertEquals("Bad Request", responseEntity.getResult().getDescription());
+    assertEquals(1, responseEntity.getErrors().size());
+  }
 
-        when(addressRepository.save(any(AddressModel.class))).thenReturn(address);
+  @Test
+  public void testCreateAddress_withClientNotFound_ShouldReturnError() {
+    UUID validUUID = UUID.randomUUID();
 
-        BaseDto responseEntity = createAddressService.inserir(dto);
+    dto.setIdClient("0340f27c-5198-11ee-be56-0242ac120012");
 
-        assertEquals(HttpStatus.BAD_REQUEST.value(), responseEntity.getResult().getStatusCode());
-        assertEquals("Bad Request", responseEntity.getResult().getDescription());
-        assertEquals(1, responseEntity.getErrors().size());
-    }
+    when(addressRepository.findByClient(any(ClientModel.class))).thenReturn(Optional.empty());
+    when(addressRepository.findByEmployee(any(EmployeeModel.class))).thenReturn(Optional.empty());
+    when(employeeRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
+    when(clientRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
 
+    AddressModel address = new AddressModel();
+    address.setIdAddress(validUUID);
 
-    @Test
-    public void testCreateAddress_withClientNotFound_ShouldReturnError() {
-        UUID validUUID = UUID.randomUUID();
+    when(addressRepository.save(any(AddressModel.class))).thenReturn(address);
 
-        dto.setIdClient("0340f27c-5198-11ee-be56-0242ac120012");
+    BaseDto responseEntity = createAddressService.inserir(dto);
 
-        when(addressRepository.findByIdClient(any(UUID.class))).thenReturn(Optional.empty());
-        when(addressRepository.findByEmployeeId(any(UUID.class))).thenReturn(Optional.empty());
-        when(employeeRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
-        when(clientRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
+    assertEquals(HttpStatus.BAD_REQUEST.value(), responseEntity.getResult().getStatusCode());
+    assertEquals("Bad Request", responseEntity.getResult().getDescription());
+    assertEquals(1, responseEntity.getErrors().size());
+  }
 
-        AddressModel address = new AddressModel();
-        address.setIdAddress(validUUID);
+  @Test
+  public void testCreateAddress_withEmployeeNotFound_ShouldReturnError() {
+    UUID validUUID = UUID.randomUUID();
 
-        when(addressRepository.save(any(AddressModel.class))).thenReturn(address);
+    dto.setIdEmployee("0340f27c-5198-11ee-be56-0242ac120012");
 
-        BaseDto responseEntity = createAddressService.inserir(dto);
+    when(addressRepository.findByClient(any(ClientModel.class))).thenReturn(Optional.empty());
+    when(addressRepository.findByEmployee(any(EmployeeModel.class))).thenReturn(Optional.empty());
+    when(employeeRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
+    when(clientRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
 
-        assertEquals(HttpStatus.BAD_REQUEST.value(), responseEntity.getResult().getStatusCode());
-        assertEquals("Bad Request", responseEntity.getResult().getDescription());
-        assertEquals(1, responseEntity.getErrors().size());
-    }
+    AddressModel address = new AddressModel();
+    address.setIdAddress(validUUID);
 
-    @Test
-    public void testCreateAddress_withEmployeeNotFound_ShouldReturnError() {
-        UUID validUUID = UUID.randomUUID();
+    when(addressRepository.save(any(AddressModel.class))).thenReturn(address);
 
-        dto.setIdEmployee("0340f27c-5198-11ee-be56-0242ac120012");
+    BaseDto responseEntity = createAddressService.inserir(dto);
 
-        when(addressRepository.findByIdClient(any(UUID.class))).thenReturn(Optional.empty());
-        when(addressRepository.findByEmployeeId(any(UUID.class))).thenReturn(Optional.empty());
-        when(employeeRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
-        when(clientRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
+    assertEquals(HttpStatus.BAD_REQUEST.value(), responseEntity.getResult().getStatusCode());
+    assertEquals("Bad Request", responseEntity.getResult().getDescription());
+    assertEquals(1, responseEntity.getErrors().size());
+  }
 
-        AddressModel address = new AddressModel();
-        address.setIdAddress(validUUID);
+  @Test
+  public void testCreateAddress_EmployeeAlreadyHasAnAddress_ShouldReturnError() {
+    UUID validUUID = UUID.randomUUID();
 
-        when(addressRepository.save(any(AddressModel.class))).thenReturn(address);
+    dto.setIdEmployee("0340f27c-5198-11ee-be56-0242ac120012");
 
-        BaseDto responseEntity = createAddressService.inserir(dto);
+    when(addressRepository.findByClient(any(ClientModel.class))).thenReturn(Optional.empty());
+    when(addressRepository.findByEmployee(any(EmployeeModel.class)))
+        .thenReturn(Optional.of(new AddressModel()));
+    when(employeeRepository.findById(any(UUID.class))).thenReturn(Optional.of(employee));
+    when(clientRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
 
-        assertEquals(HttpStatus.BAD_REQUEST.value(), responseEntity.getResult().getStatusCode());
-        assertEquals("Bad Request", responseEntity.getResult().getDescription());
-        assertEquals(1, responseEntity.getErrors().size());
-    }
+    AddressModel address = new AddressModel();
+    address.setIdAddress(validUUID);
+
+    when(addressRepository.save(any(AddressModel.class))).thenReturn(address);
+
+    BaseDto responseEntity = createAddressService.inserir(dto);
+
+    assertEquals(HttpStatus.BAD_REQUEST.value(), responseEntity.getResult().getStatusCode());
+    assertEquals("Bad Request", responseEntity.getResult().getDescription());
+    assertEquals(1, responseEntity.getErrors().size());
+  }
+
+  @Test
+  public void testCreateAddress_ClientAlreadyHasAnAddress_ShouldReturnError() {
+    UUID validUUID = UUID.randomUUID();
+
+    dto.setIdClient("0340f27c-5198-11ee-be56-0242ac120012");
+
+    when(addressRepository.findByClient(any(ClientModel.class)))
+        .thenReturn(Optional.of(new AddressModel()));
+    when(addressRepository.findByEmployee(any(EmployeeModel.class))).thenReturn(Optional.empty());
+    when(employeeRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
+    when(clientRepository.findById(any(UUID.class))).thenReturn(Optional.of(client));
+
+    AddressModel address = new AddressModel();
+    address.setIdAddress(validUUID);
+
+    when(addressRepository.save(any(AddressModel.class))).thenReturn(address);
+
+    BaseDto responseEntity = createAddressService.inserir(dto);
+
+    assertEquals(HttpStatus.BAD_REQUEST.value(), responseEntity.getResult().getStatusCode());
+    assertEquals("Bad Request", responseEntity.getResult().getDescription());
+    assertEquals(1, responseEntity.getErrors().size());
+  }
 }

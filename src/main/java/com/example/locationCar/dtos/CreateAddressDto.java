@@ -8,5 +8,5 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateAddressDto {
-    private String addressId;
+  private String addressId;
 }

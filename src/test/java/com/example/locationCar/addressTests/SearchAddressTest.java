@@ -1,11 +1,16 @@
 package com.example.locationCar.addressTests;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
+
 import com.example.locationCar.base.dto.BaseDto;
 import com.example.locationCar.models.AddressModel;
 import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.models.EmployeeModel;
 import com.example.locationCar.repositories.AddressRepository;
 import com.example.locationCar.services.addressService.SearchAddressService;
+import java.util.Optional;
+import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,17 +18,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Optional;
-import java.util.UUID;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
-
 @ExtendWith(MockitoExtension.class)
 public class SearchAddressTest {
 
-  @InjectMocks
-  private SearchAddressService searchAddressService;
+  @InjectMocks private SearchAddressService searchAddressService;
 
   @Mock private AddressRepository addressRepository;
 
@@ -69,7 +67,8 @@ public class SearchAddressTest {
   public void testGetAddressByIdClient() {
     ClientModel client = addressModel.getClient();
 
-    when(addressRepository.findByIdClient(client.getIdClient())).thenReturn(Optional.of(addressModel));
+    when(addressRepository.findByClientIdClient(client.getIdClient()))
+        .thenReturn(Optional.of(addressModel));
 
     BaseDto result = searchAddressService.findAddressByIdClient(client.getIdClient());
 
@@ -81,7 +80,8 @@ public class SearchAddressTest {
   public void testGetAddressByEmployeeId() {
     EmployeeModel employee = addressModel.getEmployee();
 
-    when(addressRepository.findByEmployeeId(employee.getEmployeeId())).thenReturn(Optional.of(addressModel));
+    when(addressRepository.findByEmployeeEmployeeId(employee.getEmployeeId()))
+        .thenReturn(Optional.of(addressModel));
 
     BaseDto result = searchAddressService.findAddressByIdEmployee(employee.getEmployeeId());
 

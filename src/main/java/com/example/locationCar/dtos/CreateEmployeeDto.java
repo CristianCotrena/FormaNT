@@ -9,5 +9,5 @@ import lombok.*;
 @AllArgsConstructor
 public class CreateEmployeeDto {
 
-    private String employeeId;
+  private String employeeId;
 }

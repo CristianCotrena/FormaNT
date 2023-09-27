@@ -1,10 +1,9 @@
 package com.example.locationCar.models;
 
 import jakarta.persistence.*;
-import lombok.*;
-
 import java.io.Serializable;
 import java.util.UUID;
+import lombok.*;
 
 @Entity
 @Table(name = "TB_LOGINS")
@@ -14,12 +13,12 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoginModel implements Serializable {
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID idLogin;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private UUID idLogin;
 
-    private String password;
-    private String expiresIn;
+  private String password;
+  private String expiresIn;
 }

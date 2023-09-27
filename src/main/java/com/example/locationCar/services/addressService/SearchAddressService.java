@@ -9,58 +9,67 @@ import com.example.locationCar.constants.SuccessMessage;
 import com.example.locationCar.dtos.SearchAddressRecordDto;
 import com.example.locationCar.models.AddressModel;
 import com.example.locationCar.repositories.AddressRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 
 @Service
 public class SearchAddressService {
 
-    private final AddressRepository addressRepository;
+  private final AddressRepository addressRepository;
 
-    public SearchAddressService(AddressRepository addressRepository) {
-        this.addressRepository = addressRepository;
+  public SearchAddressService(AddressRepository addressRepository) {
+    this.addressRepository = addressRepository;
+  }
+
+  public BaseDto findAddressById(UUID idAddress) {
+    List<BaseErrorDto> errors = new ArrayList<>();
+    Optional<AddressModel> address = addressRepository.findById(idAddress);
+
+    if (address.isEmpty()) {
+      errors.add(new BaseErrorDto("address", ErrorMessage.NOT_FOUND));
+      ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.NOT_FOUND, errors);
+      return result.get();
     }
+    return new ResponseSuccessBuilder<SearchAddressRecordDto>(
+            HttpStatus.OK,
+            new SearchAddressRecordDto(address.get()),
+            SuccessMessage.ADDRESS_SUCCESS)
+        .get();
+  }
 
-    public BaseDto findAddressById(UUID idAddress) {
-        List<BaseErrorDto> errors = new ArrayList<>();
-        Optional<AddressModel> address = addressRepository.findById(idAddress);
+  public BaseDto findAddressByIdClient(UUID idClient) {
+    List<BaseErrorDto> errors = new ArrayList<>();
+    Optional<AddressModel> address = addressRepository.findByClientIdClient(idClient);
 
-        if(address.isEmpty()){
-            errors.add(new BaseErrorDto("address", ErrorMessage.NOT_FOUND));
-            ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.NOT_FOUND, errors);
-            return result.get();
-        }
-        return new ResponseSuccessBuilder<SearchAddressRecordDto>(HttpStatus.OK, new SearchAddressRecordDto(address.get()), SuccessMessage.ADDRESS_SUCCESS).get();
+    if (address.isEmpty()) {
+      errors.add(new BaseErrorDto("address", ErrorMessage.NOT_FOUND));
+      ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.NOT_FOUND, errors);
+      return result.get();
     }
+    return new ResponseSuccessBuilder<SearchAddressRecordDto>(
+            HttpStatus.OK,
+            new SearchAddressRecordDto(address.get()),
+            SuccessMessage.ADDRESS_SUCCESS)
+        .get();
+  }
 
-    public BaseDto findAddressByIdClient(UUID idClient) {
-        List<BaseErrorDto> errors = new ArrayList<>();
-        Optional<AddressModel> address = addressRepository.findByIdClient(idClient);
+  public BaseDto findAddressByIdEmployee(UUID idEmployee) {
+    List<BaseErrorDto> errors = new ArrayList<>();
+    Optional<AddressModel> address = addressRepository.findByEmployeeEmployeeId(idEmployee);
 
-        if (address.isEmpty()) {
-            errors.add(new BaseErrorDto("address", ErrorMessage.NOT_FOUND));
-            ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.NOT_FOUND, errors);
-            return result.get();
-        }
-        return new ResponseSuccessBuilder<SearchAddressRecordDto>(HttpStatus.OK, new SearchAddressRecordDto(address.get()), SuccessMessage.ADDRESS_SUCCESS).get();
+    if (address.isEmpty()) {
+      errors.add(new BaseErrorDto("address", ErrorMessage.NOT_FOUND));
+      ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.NOT_FOUND, errors);
+      return result.get();
     }
-
-    public BaseDto findAddressByIdEmployee(UUID idEmployee) {
-        List<BaseErrorDto> errors = new ArrayList<>();
-        Optional<AddressModel> address = addressRepository.findByEmployeeId(idEmployee);
-
-        if (address.isEmpty()) {
-            errors.add(new BaseErrorDto("address", ErrorMessage.NOT_FOUND));
-            ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.NOT_FOUND, errors);
-            return result.get();
-        }
-        return new ResponseSuccessBuilder<SearchAddressRecordDto>(HttpStatus.OK, new SearchAddressRecordDto(address.get()), SuccessMessage.ADDRESS_SUCCESS).get();
-    }
+    return new ResponseSuccessBuilder<SearchAddressRecordDto>(
+            HttpStatus.OK,
+            new SearchAddressRecordDto(address.get()),
+            SuccessMessage.ADDRESS_SUCCESS)
+        .get();
+  }
 }

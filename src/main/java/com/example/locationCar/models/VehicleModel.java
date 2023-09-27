@@ -2,10 +2,10 @@ package com.example.locationCar.models;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-import lombok.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.UUID;
+import lombok.*;
 
 @Entity
 @Table(name = "TB_VEHICLE")
@@ -19,7 +19,7 @@ public class VehicleModel implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @Schema (hidden = false)
+  @Schema(hidden = false)
   private UUID idVehicle;
 
   @Schema(example = "NEJ9138")

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "2a0d6edf-cb99-4367-b145-9d7227d89f15",
+		"_postman_id": "98bd217e-b8e6-4a0b-9aaf-caffe916f555",
 		"name": "LocationCar",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "28525027"
@@ -64,6 +64,44 @@
 								{
 									"key": "idEmployee",
 									"value": "2671a580-b991-4f72-8c85-f8cdcfd14148"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url-local}}/v1/address?idAddress=62363cc6-9046-4fce-984f-d4012bdd5565",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"address"
+							],
+							"query": [
+								{
+									"key": "idEmployee",
+									"value": "3022118b-b991-440f-91d0-e4b22f3db2ef",
+									"disabled": true
+								},
+								{
+									"key": "idClient",
+									"value": "95a6e8d8-9adc-414b-ba28-6ad1ee105842",
+									"disabled": true
+								},
+								{
+									"key": "idAddress",
+									"value": "62363cc6-9046-4fce-984f-d4012bdd5565"
 								}
 							]
 						}
@@ -514,6 +552,34 @@
 									"key": "license",
 									"value": "KAE6601"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"license\":\"AAA1E19\",\r\n    \"brand\":\"Toyota\",\r\n    \"model\":\"X5\",\r\n    \"doorNumber\": 4,\r\n    \"color\":\"pink\",\r\n    \"fuel\":\"GNV\",\r\n    \"dailyValue\":500,\r\n    \"mileage\": 40.5,\r\n    \"rating\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url-local}}/v1/vehicle/236187b3-f446-410a-b9df-cd0e279a434c",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"vehicle",
+								"236187b3-f446-410a-b9df-cd0e279a434c"
 							]
 						}
 					},

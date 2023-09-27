@@ -41,8 +41,8 @@ public class ListVehicleParamService {
 
     List<VehicleRecordDto> vehicleDtoList =
         vehicles.getContent().stream()
-                .map(VehicleRecordDto::fromVehicleModel)
-                .collect(Collectors.toList());
+            .map(VehicleRecordDto::fromVehicleModel)
+            .collect(Collectors.toList());
     Page<VehicleRecordDto> vehicleDtoPage =
         new PageImpl<>(vehicleDtoList, pageable, vehicles.getTotalElements());
 
