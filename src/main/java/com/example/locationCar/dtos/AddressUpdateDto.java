@@ -3,16 +3,18 @@ package com.example.locationCar.dtos;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import java.util.UUID;
+
 public class AddressUpdateDto {
 
-  @Schema(example = " 99edbcb8-f974-479a-a3bf-f3ab8da7b9af")
+  @Schema(example = "99edbcb8-f974-479a-a3bf-f3ab8da7b9af")
   String addressId;
   @JsonInclude(JsonInclude.Include.NON_NULL)
-  @Schema(example = " Sim ou Não")
+  @Schema(example = "Sim ou Não")
   String publicPlace;
 
   @JsonInclude(JsonInclude.Include.NON_NULL)
-  @Schema(example = " Bage")
+  @Schema(example = "Bage")
   String road;
 
   @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -40,6 +42,28 @@ public class AddressUpdateDto {
   String cep;
 
   public AddressUpdateDto() {}
+
+  public AddressUpdateDto(
+          UUID idAddress,
+          String publicPlace,
+          String road,
+          Integer number,
+          String complement,
+          String city,
+          String state,
+          String country,
+          String cep)
+        {
+    this.addressId = addressId;
+    this.publicPlace = publicPlace;
+    this.road = road;
+    this.number = number;
+    this.complement = complement;
+    this.city = city;
+    this.state = state;
+    this.country = country;
+    this.cep = cep;
+  }
 
   public AddressUpdateDto(String addressId) {
     this.addressId = addressId;
