@@ -53,7 +53,7 @@ public class CreateRentService {
 
         Optional<ClientModel> client = clientRepository.findById(dto.getIdClient());
         Optional<EmployeeModel> employee = employeeRepository.findById(dto.getIdEmployee());
-        Optional<VehicleModel> vehicle = vehicleRepository.findById(dto.getIdVehicle());
+        Optional<VehicleModel> vehicle = vehicleRepository.findByIdVehicleAndStatus(dto.getIdVehicle(),1);
 
         if(client.isEmpty()){
             errors.add(new BaseErrorDto("idClient", ErrorMessage.CLIENT_DOESNT_EXIST));
