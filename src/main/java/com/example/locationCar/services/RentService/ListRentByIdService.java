@@ -35,12 +35,12 @@ public class ListRentByIdService {
 
     }
 
-    public BaseDto listRentById(UUID clientId, UUID employeeID, Pageable pageable) {
+    public BaseDto listRentById(UUID idClient, UUID employeeId, Pageable pageable) {
         List<BaseErrorDto> errors = new ArrayList<>();
 
-        if (clientId == null && employeeID == null) {
+        if (idClient == null && employeeId == null) {
             errors.add(new BaseErrorDto("idClient", ErrorMessage.AT_LEAST_ONE));
-            errors.add(new BaseErrorDto("idFuncionario", ErrorMessage.AT_LEAST_ONE));
+            errors.add(new BaseErrorDto("employeeId", ErrorMessage.AT_LEAST_ONE));
             ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, errors);
 
             return result.get();
@@ -48,17 +48,17 @@ public class ListRentByIdService {
 
         Page<RentModel> rents;
 
-        if (clientId != null && employeeID != null) {
-            rents = rentRepository.findByClientIdAndEmployeeId(clientId, employeeID, pageable);
-        } else if (clientId != null) {
-            rents = rentRepository.findByClientId(clientId, pageable);
+        if (idClient != null && employeeId != null) {
+            rents = rentRepository.findByIdClientAndEmployeeId(idClient, employeeId, pageable);
+        } else if (idClient != null) {
+            rents = rentRepository.findByIdClient(idClient, pageable);
         } else {
-            rents = rentRepository.findByEmployeeId(employeeID, pageable);
+            rents = rentRepository.findByEmployeeId(employeeId, pageable);
         }
 
         if (rents.isEmpty()) {
             errors.add(new BaseErrorDto("idClient", ErrorMessage.NOT_FOUND));
-            errors.add(new BaseErrorDto("idEmployee", ErrorMessage.NOT_FOUND));
+            errors.add(new BaseErrorDto("employeeId", ErrorMessage.NOT_FOUND));
             ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.NOT_FOUND, errors);
             return result.get();
         }

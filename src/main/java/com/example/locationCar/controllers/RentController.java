@@ -23,10 +23,10 @@ public class RentController {
 
     @GetMapping("/list")
     public ResponseEntity<BaseDto> listRentById(
-            @RequestParam(required = false) UUID clientId,
+            @RequestParam(required = false) UUID idClient,
             @RequestParam(required = false) UUID EmployeeId,
             Pageable pageable) {
-        BaseDto baseDto = listRentByIdService.listRentById(clientId,EmployeeId,pageable);
+        BaseDto baseDto = listRentByIdService.listRentById(idClient,EmployeeId,pageable);
 
         return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
 

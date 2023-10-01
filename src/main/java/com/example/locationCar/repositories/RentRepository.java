@@ -11,9 +11,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RentRepository extends JpaRepository<RentModel, UUID> {
 
-    Page<RentModel> findByClientIdAndEmployeeId (UUID idClient, UUID idEmployee, Pageable pageable);
+    Page<RentModel> findByIdClientAndEmployeeId(UUID idClient, UUID employeeId, Pageable pageable);
 
-    Page<RentModel> findByClientId(UUID clientId, Pageable pageable);
+    Page<RentModel> findByIdClient(UUID idClient, Pageable pageable);
 
     Page<RentModel> findByEmployeeId(UUID employeeId, Pageable pageable);
 
