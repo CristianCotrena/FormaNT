@@ -12,11 +12,12 @@ public interface VehicleRepository
         extends JpaRepository<VehicleModel, UUID>, JpaSpecificationExecutor<VehicleModel> {
   Optional<VehicleModel> findByLicense(String license);
 
-  Optional<Boolean> existsByLicense (String license);
-
   void deleteByLicense (String license);
 
   Optional<VehicleModel> findByIdVehicleAndStatus(UUID idVehicle, Integer status);
 
+  Optional<Boolean> existsByLicense(String license);
+
+  void deleteByLicense(String license);
 }
 

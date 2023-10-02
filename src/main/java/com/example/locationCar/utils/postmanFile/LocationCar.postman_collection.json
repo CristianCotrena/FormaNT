@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "60dea205-9f7f-47d1-bcc9-dad165824caa",
+		"_postman_id": "98bd217e-b8e6-4a0b-9aaf-caffe916f555",
 		"name": "LocationCar",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28525027"
 	},
 	"item": [
 		{
@@ -30,6 +31,78 @@
 							"path": [
 								"v1",
 								"address"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url-local}}/v1/address?idEmployee=2671a580-b991-4f72-8c85-f8cdcfd14148",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"address"
+							],
+							"query": [
+								{
+									"key": "idAddress",
+									"value": "2f40efbf-4cee-45f4-8808-94abd5510984",
+									"disabled": true
+								},
+								{
+									"key": "idClient",
+									"value": "31bfb198-af9c-4996-b6f7-d1aac700e94a",
+									"disabled": true
+								},
+								{
+									"key": "idEmployee",
+									"value": "2671a580-b991-4f72-8c85-f8cdcfd14148"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url-local}}/v1/address?idAddress=62363cc6-9046-4fce-984f-d4012bdd5565",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"address"
+							],
+							"query": [
+								{
+									"key": "idEmployee",
+									"value": "3022118b-b991-440f-91d0-e4b22f3db2ef",
+									"disabled": true
+								},
+								{
+									"key": "idClient",
+									"value": "95a6e8d8-9adc-414b-ba28-6ad1ee105842",
+									"disabled": true
+								},
+								{
+									"key": "idAddress",
+									"value": "62363cc6-9046-4fce-984f-d4012bdd5565"
+								}
 							]
 						}
 					},
@@ -454,6 +527,62 @@
 								{
 									"key": "size",
 									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"license\":\"AAA1E19\",\r\n    \"brand\":\"Toyota\",\r\n    \"model\":\"X5\",\r\n    \"doorNumber\": 4,\r\n    \"color\":\"pink\",\r\n    \"fuel\":\"GNV\",\r\n    \"dailyValue\":500,\r\n    \"mileage\": 40.5,\r\n    \"rating\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url-local}}/v1/vehicle/236187b3-f446-410a-b9df-cd0e279a434c",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"vehicle",
+								"236187b3-f446-410a-b9df-cd0e279a434c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url-local}}/v1/vehicle?idVehicle=0f1dc4b4-bf7c-4d84-baf4-af8839628fe3&license=KAE6601",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"vehicle"
+							],
+							"query": [
+								{
+									"key": "idVehicle",
+									"value": "0f1dc4b4-bf7c-4d84-baf4-af8839628fe3"
+								},
+								{
+									"key": "license",
+									"value": "KAE6601"
 								}
 							]
 						}
