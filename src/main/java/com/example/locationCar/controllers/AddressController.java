@@ -15,19 +15,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1/address")
 public class AddressController {
 
-    private CreateAddressService createAddressService;
+  private CreateAddressService createAddressService;
 
-    public AddressController(CreateAddressService createAddressService) {
-        this.createAddressService = createAddressService;
-    }
-    @Operation(summary = "Create address", description = "Add an address to the database")
-    @ApiResponse(responseCode = "201", description = "Created")
-    @ApiResponse(responseCode = "400", description = "Invalid data")
-    @PostMapping
-    public ResponseEntity<BaseDto> createAddress(@RequestBody AddressInputDto addressInputDto){
-        BaseDto baseDto = createAddressService.inserir(addressInputDto);
-        return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
-    }
+  public AddressController(CreateAddressService createAddressService) {
+    this.createAddressService = createAddressService;
+  }
 
+  @Operation(summary = "Create address", description = "Add an address to the database")
+  @ApiResponse(responseCode = "201", description = "Created")
+  @ApiResponse(responseCode = "400", description = "Invalid data")
+  @PostMapping
+  public ResponseEntity<BaseDto> createAddress(@RequestBody AddressInputDto addressInputDto) {
+    BaseDto baseDto = createAddressService.inserir(addressInputDto);
+    return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
+  }
 }
-

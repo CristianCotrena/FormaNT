@@ -3,65 +3,69 @@ package com.example.locationCar.dtos.input;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 public class AddressInputDto {
-    @Schema(example = "cd065886-1640-4190-9c5d-a5432cf93767")
-    private String idClient;
-    @Schema(example = "cd065886-1640-4190-9c5d-a5432cf93767")
-    private String idEmployee;
-    @Schema(example = "74840300")
-    private String cep;
-    @Schema(example = "2")
-    private Integer number;
-    @Schema(example = "Casa de Esquina, perto do mercado Moreira;")
-    private String complement;
+  @Schema(example = "cd065886-1640-4190-9c5d-a5432cf93767")
+  private String idClient;
 
-    public AddressInputDto() {
-    }
+  @Schema(example = "cd065886-1640-4190-9c5d-a5432cf93767")
+  private String idEmployee;
 
-    public AddressInputDto(String idClient, String idEmployee, String cep, Integer number, String complement) {
-        this.idClient = idClient;
-        this.idEmployee = idEmployee;
-        this.cep = cep;
-        this.number = number;
-        this.complement = complement;
-    }
+  @Schema(example = "74840300")
+  private String cep;
 
-    public String getIdClient() {
-        return idClient;
-    }
+  @Schema(example = "2")
+  private Integer number;
 
-    public void setIdClient(String idClient) {
-        this.idClient = idClient;
-    }
+  @Schema(example = "Casa de Esquina, perto do mercado Moreira;")
+  private String complement;
 
-    public String getIdEmployee() {
-        return idEmployee;
-    }
+  public AddressInputDto() {}
 
-    public void setIdEmployee(String idEmployee) {
-        this.idEmployee = idEmployee;
-    }
+  public AddressInputDto(
+      String idClient, String idEmployee, String cep, Integer number, String complement) {
+    this.idClient = idClient;
+    this.idEmployee = idEmployee;
+    this.cep = cep;
+    this.number = number;
+    this.complement = complement;
+  }
 
-    public String getCep() {
-        return cep;
-    }
+  public String getIdClient() {
+    return idClient;
+  }
 
-    public void setCep(String cep) {
-        this.cep = cep;
-    }
+  public void setIdClient(String idClient) {
+    this.idClient = idClient;
+  }
 
-    public Integer getNumber() {
-        return number;
-    }
+  public String getIdEmployee() {
+    return idEmployee;
+  }
 
-    public void setNumber(Integer number) {
-        this.number = number;
-    }
+  public void setIdEmployee(String idEmployee) {
+    this.idEmployee = idEmployee;
+  }
 
-    public String getComplement() {
-        return complement;
-    }
+  public String getCep() {
+    return cep;
+  }
 
-    public void setComplement(String complement) {
-        this.complement = complement;
-    }
+  public void setCep(String cep) {
+    this.cep = cep;
+  }
+
+  public Integer getNumber() {
+    return number;
+  }
+
+  public void setNumber(Integer number) {
+    this.number = number;
+  }
+
+  public String getComplement() {
+    return complement;
+  }
+
+  public void setComplement(String complement) {
+    this.complement = complement;
+  }
 }
