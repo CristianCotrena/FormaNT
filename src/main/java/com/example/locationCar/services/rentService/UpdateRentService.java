@@ -49,7 +49,7 @@ public class UpdateRentService {
 
     if (rentToUpdate == null) {
       ResponseErrorBuilder result =
-          new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, ErrorMessage.NOT_FOUND);
+          new ResponseErrorBuilder(HttpStatus.NOT_FOUND, ErrorMessage.NOT_FOUND);
 
       return result.get();
     }
