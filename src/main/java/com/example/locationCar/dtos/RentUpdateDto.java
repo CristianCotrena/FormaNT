@@ -13,9 +13,6 @@ public class RentUpdateDto {
   @Schema(example = "1")
   Integer haveInsurance;
 
-  @Schema(example = "1")
-  String statusVehicle;
-
   public Date getContractingDate() {
     return contractingDate;
   }
@@ -38,14 +35,6 @@ public class RentUpdateDto {
 
   public void setHaveInsurance(Integer haveInsurance) {
     this.haveInsurance = haveInsurance;
-  }
-
-  public String getStatusVehicle() {
-    return statusVehicle;
-  }
-
-  public void setStatusVehicle(String statusVehicle) {
-    this.statusVehicle = statusVehicle;
   }
 
   @Override

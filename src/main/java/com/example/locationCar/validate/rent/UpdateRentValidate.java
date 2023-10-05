@@ -28,10 +28,6 @@ public class UpdateRentValidate {
       errors.add(new BaseErrorDto("haveInsurance", ErrorMessage.NEGATIVE_UPDATE));
     }
 
-    if (!rentToUpdate.getStatusVehicle().equals(rentBase.getStatusVehicle())) {
-      errors.add(new BaseErrorDto("statusVehicle", ErrorMessage.NEGATIVE_UPDATE));
-    }
-
     return errors;
   }
 
@@ -52,10 +48,6 @@ public class UpdateRentValidate {
 
     if (rentToUpdate.getHaveInsurance() == null) {
       errors.add(new BaseErrorDto("haveInsurance", ErrorMessage.EMPTY_FIELD));
-    }
-
-    if (rentToUpdate.getStatusVehicle() == null) {
-      errors.add(new BaseErrorDto("statusVehicle", ErrorMessage.EMPTY_FIELD));
     }
 
     return errors;
