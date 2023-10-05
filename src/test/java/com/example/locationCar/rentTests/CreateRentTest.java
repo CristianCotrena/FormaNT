@@ -60,13 +60,12 @@ public class CreateRentTest {
         createRentService = new CreateRentService(clientRepository,employeeRepository,vehicleRepository,rentRepository);
 
         dto = new RentInputDto();
-        dto.setIdClient(UUID.fromString("f330b8fb-4e38-44f5-a096-11fbc43d07d3"));
-        dto.setIdEmployee(UUID.fromString("0ca1f321-06ad-4845-845d-4c09a7a1b48e"));
-        dto.setIdVehicle(UUID.fromString("cf28f96b-0fb0-4af9-9102-de2aa9e6cda7"));
+        dto.setIdClient("f330b8fb-4e38-44f5-a096-11fbc43d07d3");
+        dto.setIdEmployee("0ca1f321-06ad-4845-845d-4c09a7a1b48e");
+        dto.setIdVehicle("cf28f96b-0fb0-4af9-9102-de2aa9e6cda7");
         dto.setContractingDate(ZonedDateTime.now());
         dto.setReturnDate(ZonedDateTime.now().plusDays(30));
         dto.setHaveInsurance(0);
-        dto.setStatus(1);
 
         client = new ClientModel();
         employee = new EmployeeModel();

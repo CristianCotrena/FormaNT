@@ -8,15 +8,13 @@ import java.util.UUID;
 
 public class RentInputDto {
     @Schema(example = "f330b8fb-4e38-44f5-a096-11fbc43d07d3")
-    private UUID idClient;
+    private String idClient;
     @Schema(example = "f330b8fb-4e38-44f5-a096-11fbc43d07d3")
-    private UUID idEmployee;
+    private String idEmployee;
     @Schema(example = "f330b8fb-4e38-44f5-a096-11fbc43d07d3")
-    private UUID idVehicle;
+    private String idVehicle;
     @Schema(example = "1")
     private Integer haveInsurance;
-    @Schema(example = "1")
-    private Integer status;
     @Schema(example = "2045-03-11T00:00:00+02:00")
     private ZonedDateTime contractingDate;
     @Schema(example = "2045-05-09T00:00:00+02:00")
@@ -25,37 +23,36 @@ public class RentInputDto {
     public RentInputDto() {
     }
 
-    public RentInputDto(UUID idClient, UUID idEmployee, UUID idVehicle, Integer haveInsurance, Integer status, ZonedDateTime contractingDate, ZonedDateTime returnDate) {
+    public RentInputDto(String idClient, String idEmployee, String idVehicle, Integer haveInsurance, ZonedDateTime contractingDate, ZonedDateTime returnDate) {
         this.idClient = idClient;
         this.idEmployee = idEmployee;
         this.idVehicle = idVehicle;
         this.haveInsurance = haveInsurance;
-        this.status = status;
         this.contractingDate = contractingDate;
         this.returnDate = returnDate;
     }
 
-    public UUID getIdClient() {
+    public String getIdClient() {
         return idClient;
     }
 
-    public void setIdClient(UUID idClient) {
+    public void setIdClient(String idClient) {
         this.idClient = idClient;
     }
 
-    public UUID getIdEmployee() {
+    public String getIdEmployee() {
         return idEmployee;
     }
 
-    public void setIdEmployee(UUID idEmployee) {
+    public void setIdEmployee(String idEmployee) {
         this.idEmployee = idEmployee;
     }
 
-    public UUID getIdVehicle() {
+    public String getIdVehicle() {
         return idVehicle;
     }
 
-    public void setIdVehicle(UUID idVehicle) {
+    public void setIdVehicle(String idVehicle) {
         this.idVehicle = idVehicle;
     }
 
@@ -65,14 +62,6 @@ public class RentInputDto {
 
     public void setHaveInsurance(Integer haveInsurance) {
         this.haveInsurance = haveInsurance;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
     }
 
     public ZonedDateTime getContractingDate() {
