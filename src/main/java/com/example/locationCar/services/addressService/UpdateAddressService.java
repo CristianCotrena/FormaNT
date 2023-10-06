@@ -13,6 +13,7 @@ import com.example.locationCar.models.AddressModel;
 import com.example.locationCar.repositories.AddressRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,14 +36,18 @@ public class UpdateAddressService {
     }
 
     AddressModel addressModel = addressBase.get();
-
-    if (addressUpdateDto.getRoad() == null){
+    try {
       ResponseViaCep responseViaCep = CorreiosBuscaCepClient.getAddressInformation(addressUpdateDto.getCep());
-      if(!responseViaCep.getLogradouro().equals("")){
-        addressModel.setRoad(responseViaCep.getLogradouro());
+      if (addressUpdateDto.getRoad() == null){
+        if(!responseViaCep.getLogradouro().equals("")){
+          addressModel.setRoad(responseViaCep.getLogradouro());
+        }
+      } else {
+        addressModel.setRoad(addressUpdateDto.getRoad());
       }
-    } else {
-      addressModel.setRoad(addressUpdateDto.getRoad());
+    } catch (HttpClientErrorException e) {
+      List<BaseErrorDto> notFoundErrors = List.of(new BaseErrorDto("cep", ErrorMessage.NOT_FOUND));
+      return new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, notFoundErrors).get();
     }
 
     if(addressUpdateDto.getPublicPlace() != null){
