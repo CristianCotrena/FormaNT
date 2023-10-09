@@ -11,13 +11,12 @@ import com.example.locationCar.constants.SuccessMessage;
 import com.example.locationCar.dtos.AddressUpdateDto;
 import com.example.locationCar.models.AddressModel;
 import com.example.locationCar.repositories.AddressRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 
 @Service
 public class UpdateAddressService {
@@ -31,15 +30,17 @@ public class UpdateAddressService {
     Optional<AddressModel> addressBase = addressRepository.findById(idAddress);
 
     if (addressBase.isEmpty()) {
-      List<BaseErrorDto> notFoundErrors = List.of(new BaseErrorDto("Address", ErrorMessage.NOT_FOUND));
+      List<BaseErrorDto> notFoundErrors =
+          List.of(new BaseErrorDto("Address", ErrorMessage.NOT_FOUND));
       return new ResponseErrorBuilder(HttpStatus.NOT_FOUND, notFoundErrors).get();
     }
 
     AddressModel addressModel = addressBase.get();
     try {
-      ResponseViaCep responseViaCep = CorreiosBuscaCepClient.getAddressInformation(addressUpdateDto.getCep());
-      if (addressUpdateDto.getRoad() == null){
-        if(!responseViaCep.getLogradouro().equals("")){
+      ResponseViaCep responseViaCep =
+          CorreiosBuscaCepClient.getAddressInformation(addressUpdateDto.getCep());
+      if (addressUpdateDto.getRoad() == null) {
+        if (!responseViaCep.getLogradouro().equals("")) {
           addressModel.setRoad(responseViaCep.getLogradouro());
         }
       } else {
@@ -50,10 +51,10 @@ public class UpdateAddressService {
       return new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, notFoundErrors).get();
     }
 
-    if(addressUpdateDto.getPublicPlace() != null){
+    if (addressUpdateDto.getPublicPlace() != null) {
       addressModel.setPublicPlace(addressUpdateDto.getPublicPlace());
     }
-    if(addressUpdateDto.getNumber() != null) {
+    if (addressUpdateDto.getNumber() != null) {
       addressModel.setNumber(addressUpdateDto.getNumber());
     }
     if (addressUpdateDto.getComplement() != null) {
@@ -74,7 +75,10 @@ public class UpdateAddressService {
 
     addressRepository.save(addressModel);
 
-    return new ResponseSuccessBuilder<AddressUpdateDto>(HttpStatus.OK, new AddressUpdateDto(idAddress.toString()),
-            SuccessMessage.UPDATE_ADDRESS).get();
+    return new ResponseSuccessBuilder<AddressUpdateDto>(
+            HttpStatus.OK,
+            new AddressUpdateDto(idAddress.toString()),
+            SuccessMessage.UPDATE_ADDRESS)
+        .get();
   }
 }

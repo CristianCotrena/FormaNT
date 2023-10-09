@@ -614,6 +614,39 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Rent",
+			"item": [
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"contractingDate\": \"2023-12-25T03:00:00\",\r\n    \"returnDate\": \"2024-01-29T03:00:00\",\r\n    \"haveInsurance\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url-local}}/v1/rent/899b4e8a-03b6-4473-a544-8371f8f3d5c7",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"rent",
+								"899b4e8a-03b6-4473-a544-8371f8f3d5c7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"event": [

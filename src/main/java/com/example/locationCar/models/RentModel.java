@@ -3,7 +3,6 @@ package com.example.locationCar.models;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-import java.util.Date;
 import java.util.UUID;
 
 @Entity
