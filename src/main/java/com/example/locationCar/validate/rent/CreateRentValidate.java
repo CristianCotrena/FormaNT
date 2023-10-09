@@ -7,6 +7,7 @@ import com.example.locationCar.dtos.input.RentInputDto;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class CreateRentValidate {
 
@@ -33,10 +34,6 @@ public class CreateRentValidate {
             errors.add(new BaseErrorDto("haveInsurance", ErrorMessage.EMPTY_FIELD));
         }
 
-        if (rentInputDto.getStatus() == null) {
-            errors.add(new BaseErrorDto("status", ErrorMessage.EMPTY_FIELD));
-        }
-
         if (rentInputDto.getContractingDate() == null) {
             errors.add(new BaseErrorDto("contractingDate", ErrorMessage.EMPTY_FIELD));
         }
@@ -57,6 +54,33 @@ public class CreateRentValidate {
         if(rentInputDto.getContractingDate().isBefore(ZonedDateTime.now())){
             errors.add(new BaseErrorDto("contractingDate", ErrorMessage.MUSTNT_BE_IN_THE_PAST));
         }
+
+        if(rentInputDto.getHaveInsurance() != 0 && rentInputDto.getHaveInsurance() != 1){
+            errors.add(new BaseErrorDto("haveInsurance", ErrorMessage.MUST_BE_ZERO_OR_ONE));
+        }
+
+        try{
+            UUID.fromString(rentInputDto.getIdVehicle());
+        }
+        catch (IllegalArgumentException e){
+            errors.add(new BaseErrorDto("idVehicle", ErrorMessage.INVALID_FIELD));
+        }
+
+        try{
+            UUID.fromString(rentInputDto.getIdClient());
+        }
+        catch (IllegalArgumentException e){
+            errors.add(new BaseErrorDto("idClient", ErrorMessage.INVALID_FIELD));
+        }
+
+        try{
+            UUID.fromString(rentInputDto.getIdEmployee());
+        }
+        catch (IllegalArgumentException e){
+            errors.add(new BaseErrorDto("idEmployee", ErrorMessage.INVALID_FIELD));
+        }
+
+
         return errors;
     }
 }

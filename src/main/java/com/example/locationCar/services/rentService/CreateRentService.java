@@ -51,9 +51,9 @@ public class CreateRentService {
             return result.get();
         }
 
-        Optional<ClientModel> client = clientRepository.findById(dto.getIdClient());
-        Optional<EmployeeModel> employee = employeeRepository.findById(dto.getIdEmployee());
-        Optional<VehicleModel> vehicle = vehicleRepository.findByIdVehicleAndStatus(dto.getIdVehicle(),1);
+        Optional<ClientModel> client = clientRepository.findById(UUID.fromString(dto.getIdClient()));
+        Optional<EmployeeModel> employee = employeeRepository.findById(UUID.fromString(dto.getIdEmployee()));
+        Optional<VehicleModel> vehicle = vehicleRepository.findByIdVehicleAndStatus(UUID.fromString(dto.getIdVehicle()),1);
 
         if(client.isEmpty()){
             errors.add(new BaseErrorDto("idClient", ErrorMessage.CLIENT_DOESNT_EXIST));
@@ -91,7 +91,7 @@ public class CreateRentService {
         rentModel.setContractingDate(dto.getContractingDate());
         rentModel.setReturnDate(dto.getReturnDate());
         rentModel.setHaveInsurance(dto.getHaveInsurance());
-        rentModel.setStatus(dto.getStatus());
+        rentModel.setStatus(1);
 
         UUID createdId = rentRepository.save(rentModel).getIdRent();
 
