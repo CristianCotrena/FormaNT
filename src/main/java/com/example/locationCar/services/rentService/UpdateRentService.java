@@ -86,7 +86,7 @@ public class UpdateRentService {
     return new ResponseSuccessBuilder<>(
             HttpStatus.OK,
             new RentUpdateReturnDto(rentUpdated.getIdRent()),
-            SuccessMessage.DELETE_SUCCESS)
+            SuccessMessage.UPDATE_RENT)
         .get();
   }
 }
