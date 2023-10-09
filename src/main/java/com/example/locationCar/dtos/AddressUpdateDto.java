@@ -2,13 +2,13 @@ package com.example.locationCar.dtos;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.UUID;
 
 public class AddressUpdateDto {
 
   @Schema(example = "99edbcb8-f974-479a-a3bf-f3ab8da7b9af")
   String addressId;
+
   @JsonInclude(JsonInclude.Include.NON_NULL)
   @Schema(example = "Sim ou Não")
   String publicPlace;
@@ -44,16 +44,15 @@ public class AddressUpdateDto {
   public AddressUpdateDto() {}
 
   public AddressUpdateDto(
-          UUID idAddress,
-          String publicPlace,
-          String road,
-          Integer number,
-          String complement,
-          String city,
-          String state,
-          String country,
-          String cep)
-        {
+      UUID idAddress,
+      String publicPlace,
+      String road,
+      Integer number,
+      String complement,
+      String city,
+      String state,
+      String country,
+      String cep) {
     this.addressId = addressId;
     this.publicPlace = publicPlace;
     this.road = road;
@@ -72,56 +71,72 @@ public class AddressUpdateDto {
   public String getAddressId() {
     return addressId;
   }
+
   public void setAddressId(String addressId) {
     this.addressId = addressId;
   }
+
   public String getPublicPlace() {
     return publicPlace;
-}
+  }
+
   public void setPublicPlace(String publicPlace) {
     this.publicPlace = publicPlace;
   }
+
   public String getRoad() {
     return road;
   }
+
   public void setRoad(String road) {
     this.road = road;
   }
+
   public Integer getNumber() {
-    return  number;
+    return number;
   }
-  public void setNumber(Integer number){
+
+  public void setNumber(Integer number) {
     this.number = number;
   }
+
   public String getComplement() {
     return complement;
   }
+
   public void setComplement(String complement) {
     this.complement = complement;
   }
+
   public String getCity() {
     return city;
   }
+
   public void setCity(String city) {
     this.city = city;
   }
+
   public String getState() {
     return state;
   }
+
   public void setState(String state) {
     this.state = state;
   }
+
   public String getCountry() {
     return country;
   }
+
   public void setCountry(String country) {
     this.country = country;
   }
+
   public String getCep() {
     return cep;
   }
+
   public void setCep(String cep) {
     this.cep = cep;
   }
 }
-
