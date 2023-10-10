@@ -1,10 +1,10 @@
 package com.example.locationCar.models;
 
 import jakarta.persistence.*;
-import lombok.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.UUID;
+import lombok.*;
 
 @Entity
 @Table(name = "TB_RENT")

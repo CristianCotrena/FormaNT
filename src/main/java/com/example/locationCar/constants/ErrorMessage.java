@@ -29,4 +29,5 @@ public @interface ErrorMessage {
   String MUST_BE_GREATER_THAN_CONTRACTING_DATE = "Precisa ser maior que a data de retirada";
   String MUSTNT_BE_IN_THE_PAST = "A data não pode ser no passado";
   String MUST_BE_ZERO_OR_ONE = "Precisa ser 0 ou 1";
+  String RETURN_DATE_SHORTER_THAN_CURRENT = "Data de devolução precisa ser maior que o valor atual";
 }

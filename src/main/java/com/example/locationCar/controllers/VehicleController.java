@@ -14,7 +14,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.UUID;
-
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -32,19 +31,19 @@ public class VehicleController {
   private DeleteVehicleService deleteVehicleService;
   private SearchVehicleService searchVehicleService;
 
-    @Operation(summary = "List vehicles Param", description = "List vehicles Param")
-    @ApiResponse(responseCode = "200", description = "Found")
-    @ApiResponse(responseCode = "400", description = "Invalid data")
-    @GetMapping("/list")
-    public ResponseEntity<BaseDto> searchCars(
-            @RequestParam(required = false) String color,
-            @RequestParam(required = false) Double rating,
-            @RequestParam(required = false) Double max,
-            @RequestParam(required = false) Double min,
-            Pageable pageable) {
-        BaseDto baseDto = listVehicleParamService.listVehicles(pageable, color, rating, max, min);
-        return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
-    }
+  @Operation(summary = "List vehicles Param", description = "List vehicles Param")
+  @ApiResponse(responseCode = "200", description = "Found")
+  @ApiResponse(responseCode = "400", description = "Invalid data")
+  @GetMapping("/list")
+  public ResponseEntity<BaseDto> searchCars(
+      @RequestParam(required = false) String color,
+      @RequestParam(required = false) Double rating,
+      @RequestParam(required = false) Double max,
+      @RequestParam(required = false) Double min,
+      Pageable pageable) {
+    BaseDto baseDto = listVehicleParamService.listVehicles(pageable, color, rating, max, min);
+    return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
+  }
 
   @Operation(summary = "Delete Vehicle", description = "Delete an vehicle to database")
   @ApiResponse(
