@@ -16,17 +16,15 @@ import com.example.locationCar.repositories.EmployeeRepository;
 import com.example.locationCar.validate.employee.CreateEmployeeValidate;
 import java.util.List;
 import java.util.UUID;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class CreateEmployeeService {
 
-  public static EmployeeRepository employeeRepository;
-
-  public CreateEmployeeService(EmployeeRepository employeeRepository) {
-    this.employeeRepository = employeeRepository;
-  }
+  private EmployeeRepository employeeRepository;
 
   public BaseDto createEmployee(EmployeeDto employeeDto) {
 
@@ -61,7 +59,7 @@ public class CreateEmployeeService {
     employeeModel.setRegistry(employeeDto.getRegistry());
     employeeModel.setStatus(1);
 
-    UUID createdId = employeeRepository.save(employeeModel).getIdClient();
+    UUID createdId = employeeRepository.save(employeeModel).getEmployeeId();
 
     return new ResponseSuccessBuilder<CreateEmployeeDto>(
             HttpStatus.CREATED,
