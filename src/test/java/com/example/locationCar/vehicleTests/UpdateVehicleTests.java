@@ -13,7 +13,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import java.math.BigDecimal;
 import java.util.Optional;
-import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -48,7 +47,7 @@ public class UpdateVehicleTests {
 
     @Test
     public void updateVehicle_success_updateColor() {
-        UUID vehicleId = UUID.randomUUID();
+        Long vehicleId = 3000L;
         VehicleModel existingVehicle = new VehicleModel();
         existingVehicle.setColor("Black");
 
@@ -63,7 +62,7 @@ public class UpdateVehicleTests {
 
     @Test
     public void updateVehicle_success_updateFuel() {
-        UUID vehicleId = UUID.randomUUID();
+        Long vehicleId = 3000L;
         VehicleModel existingVehicle = new VehicleModel();
         existingVehicle.setFuel("Gasolina");
 
@@ -79,7 +78,7 @@ public class UpdateVehicleTests {
 
     @Test
     public void updateVehicle_success_updateMileage() {
-        UUID vehicleId = UUID.randomUUID();
+        Long vehicleId = 3000L;
         VehicleModel existingVehicle = new VehicleModel();
         existingVehicle.setMileage(BigDecimal.valueOf(50));
 
@@ -95,7 +94,7 @@ public class UpdateVehicleTests {
 
     @Test
     public void updateVehicle_success_updateModel() {
-        UUID vehicleId = UUID.randomUUID();
+        Long vehicleId = 3000L;
         VehicleModel existingVehicle = new VehicleModel();
         existingVehicle.setModel("UNO");
 
@@ -111,7 +110,7 @@ public class UpdateVehicleTests {
 
     @Test
     public void updateVehicle_success_updateLicence() {
-        UUID vehicleId = UUID.randomUUID();
+        Long vehicleId = 3000L;
         VehicleModel existingVehicle = new VehicleModel();
         existingVehicle.setLicense("DRI1A20");
 
@@ -127,7 +126,7 @@ public class UpdateVehicleTests {
 
     @Test
     public void updateVehicle_success_updateRating() {
-        UUID vehicleId = UUID.randomUUID();
+        Long vehicleId = 3000L;
         VehicleModel existingVehicle = new VehicleModel();
         existingVehicle.setRating(BigDecimal.valueOf(50));
 
@@ -143,7 +142,7 @@ public class UpdateVehicleTests {
 
     @Test
     public void updateVehicle_success_updateBrand() {
-        UUID vehicleId = UUID.randomUUID();
+        Long vehicleId = 3000L;
         VehicleModel existingVehicle = new VehicleModel();
         existingVehicle.setBrand("Fiat");
 
@@ -159,7 +158,7 @@ public class UpdateVehicleTests {
 
     @Test
     public void updateVehicle_success_updateDoor() {
-        UUID vehicleId = UUID.randomUUID();
+        Long vehicleId = 3000L;
         VehicleModel existingVehicle = new VehicleModel();
         existingVehicle.setDoorNumber(4);
 
@@ -175,7 +174,7 @@ public class UpdateVehicleTests {
 
     @Test
     public void updateVehicle_success_updateDailyValuegit () {
-        UUID vehicleId = UUID.randomUUID();
+        Long vehicleId = 3000L;
         VehicleModel existingVehicle = new VehicleModel();
         existingVehicle.setDailyValue(BigDecimal.valueOf(100));
 

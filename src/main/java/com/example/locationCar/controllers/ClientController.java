@@ -15,7 +15,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.Optional;
-import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -64,7 +63,7 @@ public class ClientController {
   public ResponseEntity<Object> searchClient(
       @Schema(description = "First create a client in POST, then put his ID here.")
           @RequestParam(value = "id", required = false)
-          UUID idClient,
+          Long idClient,
       @Schema(description = "CPF or CNPJ that you created in POST")
           @RequestParam(value = "cpfCnpj", required = false)
           String cpfCnpj,
@@ -99,7 +98,7 @@ public class ClientController {
       responseCode = "201",
       description = "Created",
       content = {
-        @Content(mediaType = "text/plain", schema = @Schema(type = "string", format = "uuid"))
+        @Content(mediaType = "text/plain", schema = @Schema(type = "string", format = "Long"))
       })
   @ApiResponse(
       responseCode = "400",
@@ -126,7 +125,7 @@ public class ClientController {
       responseCode = "200",
       description = "Updated",
       content = {
-        @Content(mediaType = "text/plain", schema = @Schema(type = "string", format = "uuid"))
+        @Content(mediaType = "text/plain", schema = @Schema(type = "string", format = "Long"))
       })
   @ApiResponse(
       responseCode = "400",
@@ -146,7 +145,7 @@ public class ClientController {
       })
   @PutMapping("/{id}")
   public ResponseEntity<String> updateClient(
-      @PathVariable(value = "id") UUID id, @RequestBody @Valid ClientUpdateDto clientUpdateDto) {
+      @PathVariable(value = "id") Long id, @RequestBody @Valid ClientUpdateDto clientUpdateDto) {
     try {
       return updateClientService.updateClient(id, clientUpdateDto);
     } catch (IllegalArgumentException e) {
@@ -208,9 +207,9 @@ public class ClientController {
             schema = @Schema(type = "string", example = "Client deleted successfully"))
       })
   @DeleteMapping("/{id}")
-  public ResponseEntity<Object> deleteClient(@PathVariable(value = "id") String id) {
+  public ResponseEntity<Object> deleteClient(@PathVariable(value = "id") Long id) {
     try {
-      UUID idClient = UUID.fromString(id);
+      Long idClient = id;
       Optional<ClientModel> client = deleteClientService.getClient(idClient);
       if (client.isEmpty()) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Client not found.");

@@ -14,7 +14,6 @@ import com.example.locationCar.repositories.ClientRepository;
 import com.example.locationCar.services.clientService.utils.ClientRules;
 import com.example.locationCar.validate.client.CreateClientValidate;
 import java.util.List;
-import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -49,7 +48,7 @@ public class CreateClientService {
       return result.get();
     }
 
-    UUID createdId = clientRepository.save(clientModel).getIdClient();
+    Long createdId = clientRepository.save(clientModel).getIdClient();
     return new ResponseSuccessBuilder<CreateClientDto>(
             HttpStatus.CREATED,
             new CreateClientDto(createdId.toString()),

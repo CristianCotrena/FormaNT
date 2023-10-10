@@ -12,7 +12,6 @@ import com.example.locationCar.models.VehicleModel;
 import com.example.locationCar.repositories.VehicleRepository;
 import com.example.locationCar.validate.vehicle.CreateVehicleValidate;
 import java.util.List;
-import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,7 +55,7 @@ public class CreateVehicleService {
     vehicle.setRating(dto.getRating());
     vehicle.setStatus(1);
 
-    UUID createdId = vehicleRepository.save(vehicle).getIdVehicle();
+    Long createdId = vehicleRepository.save(vehicle).getIdVehicle();
 
     return new ResponseSuccessBuilder<CreateVehicleDto>(
             HttpStatus.CREATED,

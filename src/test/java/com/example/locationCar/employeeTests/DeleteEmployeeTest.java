@@ -1,4 +1,4 @@
-package com.example.locationCar.EmployeeTests;
+package com.example.locationCar.employeeTests;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -8,7 +8,6 @@ import com.example.locationCar.models.EmployeeModel;
 import com.example.locationCar.repositories.EmployeeRepository;
 import com.example.locationCar.services.employeeService.DeleteEmployeeService;
 import java.util.Optional;
-import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -37,7 +36,7 @@ public class DeleteEmployeeTest {
 
   @Test
   public void deleteEmployee_Success() {
-    UUID employeeId = UUID.randomUUID();
+    Long employeeId = 3000L;
     EmployeeModel employee = new EmployeeModel();
     employee.setEmployeeId(employeeId);
     employee.setStatus(1);
@@ -53,7 +52,7 @@ public class DeleteEmployeeTest {
 
   @Test
   public void deleteEmployee_NotFound() {
-    UUID employeeId = UUID.randomUUID();
+    Long employeeId = 3000L;
     when(employeeRepository.findById(employeeId)).thenReturn(Optional.empty());
 
     EmployeeModel result = deleteEmployeeService.deleteEmployee(employeeId);

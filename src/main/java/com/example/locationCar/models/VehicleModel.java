@@ -3,7 +3,6 @@ package com.example.locationCar.models;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.UUID;
 
 @Entity
 @Table(name = "TB_VEHICLE")
@@ -12,7 +11,7 @@ public class VehicleModel implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private UUID idVehicle;
+  private Long idVehicle;
 
   private String license;
 
@@ -37,7 +36,7 @@ public class VehicleModel implements Serializable {
   public VehicleModel() {}
 
   public VehicleModel(
-      UUID idVehicle,
+      Long idVehicle,
       String license,
       String brand,
       String model,
@@ -61,11 +60,11 @@ public class VehicleModel implements Serializable {
     this.rating = rating;
   }
 
-  public UUID getIdVehicle() {
+  public Long getIdVehicle() {
     return idVehicle;
   }
 
-  public void setIdVehicle(UUID idVehicle) {
+  public void setIdVehicle(Long idVehicle) {
     this.idVehicle = idVehicle;
   }
 

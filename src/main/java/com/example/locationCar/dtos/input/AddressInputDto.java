@@ -4,9 +4,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 public class AddressInputDto {
     @Schema(example = "cd065886-1640-4190-9c5d-a5432cf93767")
-    private String idClient;
+    private Long idClient;
     @Schema(example = "cd065886-1640-4190-9c5d-a5432cf93767")
-    private String idEmployee;
+    private Long idEmployee;
     @Schema(example = "74840300")
     private String cep;
     @Schema(example = "2")
@@ -17,7 +17,7 @@ public class AddressInputDto {
     public AddressInputDto() {
     }
 
-    public AddressInputDto(String idClient, String idEmployee, String cep, Integer number, String complement) {
+    public AddressInputDto(Long idClient, Long idEmployee, String cep, Integer number, String complement) {
         this.idClient = idClient;
         this.idEmployee = idEmployee;
         this.cep = cep;
@@ -25,19 +25,19 @@ public class AddressInputDto {
         this.complement = complement;
     }
 
-    public String getIdClient() {
+    public Long getIdClient() {
         return idClient;
     }
 
-    public void setIdClient(String idClient) {
+    public void setIdClient(Long idClient) {
         this.idClient = idClient;
     }
 
-    public String getIdEmployee() {
+    public Long getIdEmployee() {
         return idEmployee;
     }
 
-    public void setIdEmployee(String idEmployee) {
+    public void setIdEmployee(Long idEmployee) {
         this.idEmployee = idEmployee;
     }
 

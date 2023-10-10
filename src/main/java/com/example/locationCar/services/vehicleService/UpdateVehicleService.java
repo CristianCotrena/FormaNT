@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class UpdateVehicleService {
@@ -29,7 +28,7 @@ public class UpdateVehicleService {
         this.updateVehicleValidate = updateVehicleValidate;
     }
 
-    public BaseDto updateVehicle(UUID vehicleId, VehicleInputDto updateDto){
+    public BaseDto updateVehicle(Long vehicleId, VehicleInputDto updateDto){
         Optional<VehicleModel> existingVehicleOptional = vehicleRepository.findById(vehicleId);
 
         if (existingVehicleOptional.isEmpty()){

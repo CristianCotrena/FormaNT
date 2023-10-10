@@ -7,7 +7,6 @@ import com.example.locationCar.dtos.input.AddressInputDto;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.regex.Pattern;
 
 public class CreateAddressValidate {
@@ -20,8 +19,8 @@ public class CreateAddressValidate {
     private List<BaseErrorDto> validateRequiredFiles(AddressInputDto addressInputDto) {
         List<BaseErrorDto> errors = new ArrayList<>();
         if  (
-                (addressInputDto.getIdClient() == null || addressInputDto.getIdClient().isEmpty()) &&
-                (addressInputDto.getIdEmployee() == null || addressInputDto.getIdEmployee().isEmpty())
+                (addressInputDto.getIdClient() == null) &&
+                (addressInputDto.getIdEmployee() == null)
             )
         {
             errors.add(new BaseErrorDto("idClientOrEmployee", ErrorMessage.EMPTY_FIELD));
@@ -48,22 +47,6 @@ public class CreateAddressValidate {
         if (addressInputDto.getIdEmployee() != null && addressInputDto.getIdClient() != null) {
             errors.add(new BaseErrorDto("idEmployee", ErrorMessage.EMPLOYEE_ID_OR_CLIENT_ID));//colocar mensagem personalizada
             errors.add(new BaseErrorDto("idClient", ErrorMessage.EMPLOYEE_ID_OR_CLIENT_ID));//colocar mensagem personalizada
-        }
-
-        try{
-            if(addressInputDto.getIdClient() != null){
-                UUID.fromString(addressInputDto.getIdClient());
-            }
-            if(addressInputDto.getIdEmployee() != null){
-                UUID.fromString(addressInputDto.getIdEmployee());
-            }
-        }catch (IllegalArgumentException e){
-            if(addressInputDto.getIdClient() != null){
-                errors.add(new BaseErrorDto("idClient", ErrorMessage.INVALID_FIELD));
-            }
-            if(addressInputDto.getIdEmployee() != null){
-                errors.add(new BaseErrorDto("idEmployee", ErrorMessage.INVALID_FIELD));
-            }
         }
 
         return errors;

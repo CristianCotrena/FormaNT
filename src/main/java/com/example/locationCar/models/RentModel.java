@@ -3,7 +3,6 @@ package com.example.locationCar.models;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.UUID;
 
 @Entity
 @Table(name = "TB_RENT")
@@ -13,7 +12,7 @@ public class RentModel implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private UUID idRent;
+  private Long idRent;
 
   private Date contractingDate;
   private Date returnDate;
@@ -32,11 +31,11 @@ public class RentModel implements Serializable {
   @JoinColumn(name = "vehicleId")
   private VehicleModel idVehicle;
 
-  public UUID getIdRent() {
+  public Long getIdRent() {
     return idRent;
   }
 
-  public void setIdRent(UUID idRent) {
+  public void setIdRent(Long idRent) {
     this.idRent = idRent;
   }
 

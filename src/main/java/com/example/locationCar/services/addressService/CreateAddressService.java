@@ -22,8 +22,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
-
 @Service
 public class CreateAddressService {
 
@@ -50,7 +48,7 @@ public class CreateAddressService {
         AddressModel address = new AddressModel();
 
         if(dto.getIdClient() != null){
-            Optional<ClientModel> client = clientRepository.findById(UUID.fromString(dto.getIdClient()));
+            Optional<ClientModel> client = clientRepository.findById(dto.getIdClient());
             if(client.isEmpty()){
                 errors.add(new BaseErrorDto("idClient", ErrorMessage.CLIENT_DOESNT_EXIST));
                 ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, errors);
@@ -70,7 +68,7 @@ public class CreateAddressService {
         }
 
         if(dto.getIdEmployee() != null){
-            Optional<EmployeeModel> employee = employeeRepository.findById(UUID.fromString(dto.getIdEmployee()));
+            Optional<EmployeeModel> employee = employeeRepository.findById(dto.getIdEmployee());
             if(employee.isEmpty()){
                 errors.add(new BaseErrorDto("idEmployee", ErrorMessage.EMPLOYEE_DOESNT_EXIST));
                 ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, errors);
@@ -106,7 +104,7 @@ public class CreateAddressService {
         }
 
 
-        UUID createdId = addressRepository.save(address).getIdAddress();
+        Long createdId = addressRepository.save(address).getIdAddress();
 
         return new ResponseSuccessBuilder<CreateAddressDto>(HttpStatus.CREATED, new CreateAddressDto(createdId.toString()), SuccessMessage.CREATE_ADDRESS).get();
 

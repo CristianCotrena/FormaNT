@@ -3,7 +3,6 @@ package com.example.locationCar.services.clientService;
 import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.repositories.ClientRepository;
 import java.util.Optional;
-import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,11 +13,11 @@ public class DeleteClientService {
     this.clientRepository = clientRepository;
   }
 
-  public Optional<ClientModel> getClient(UUID id) {
+  public Optional<ClientModel> getClient(Long id) {
     return clientRepository.findById(id);
   }
 
-  public void deleteClient(UUID id) {
+  public void deleteClient(Long id) {
     Optional<ClientModel> clientOptional = clientRepository.findById(id);
 
     if (clientOptional.isPresent()) {

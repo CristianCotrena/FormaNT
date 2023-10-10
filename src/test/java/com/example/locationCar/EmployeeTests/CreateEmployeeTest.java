@@ -11,7 +11,6 @@ import com.example.locationCar.dtos.EmployeeDto;
 import com.example.locationCar.models.EmployeeModel;
 import com.example.locationCar.repositories.EmployeeRepository;
 import com.example.locationCar.services.employeeService.CreateEmployeeService;
-import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,9 +46,9 @@ public class CreateEmployeeTest {
     when(employeeRepository.findByEmail(anyString())).thenReturn(null);
     when(employeeRepository.findByCpfCnpj(anyString())).thenReturn(null);
 
-    UUID validUUID = UUID.randomUUID();
+    Long validLong = 3000L;
     EmployeeModel savedEmployee = new EmployeeModel();
-    savedEmployee.setEmployeeId(validUUID);
+    savedEmployee.setEmployeeId(validLong);
     when(employeeRepository.save(any(EmployeeModel.class))).thenReturn(savedEmployee);
 
     BaseDto result = employeeService.createEmployee(employeeDto);

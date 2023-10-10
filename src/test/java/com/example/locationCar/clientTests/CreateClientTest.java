@@ -10,7 +10,6 @@ import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.repositories.ClientRepository;
 import com.example.locationCar.services.clientService.CreateClientService;
 import java.util.Optional;
-import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -31,7 +30,7 @@ public class CreateClientTest {
     createClientService = new CreateClientService(clientRepository);
 
     clientModel = new ClientModel();
-    clientModel.setIdClient(UUID.randomUUID());
+    clientModel.setIdClient(3000L);
     clientModel.setName("Anna");
     clientModel.setCpfCnpj("38709471014");
     clientModel.setCnh("874658935467");

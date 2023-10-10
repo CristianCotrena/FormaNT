@@ -3,7 +3,6 @@ package com.example.locationCar.models;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 @Entity
 @Table(name = "TB_ADDRESS")
@@ -12,7 +11,7 @@ public class AddressModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID idAddress;
+    private Long idAddress;
     private String publicPlace;
     private Integer number;
     private String complement;
@@ -44,11 +43,11 @@ public class AddressModel implements Serializable {
         this.idEmployee = idEmployee;
     }
 
-    public UUID getIdAddress() {
+    public Long getIdAddress() {
         return idAddress;
     }
 
-    public void setIdAddress(UUID idAddress) {
+    public void setIdAddress(Long idAddress) {
         this.idAddress = idAddress;
     }
 

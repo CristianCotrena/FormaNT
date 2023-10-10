@@ -8,7 +8,6 @@ import jakarta.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
-import java.util.UUID;
 
 @Entity
 @Table(name = "TB_EMPLOYEE")
@@ -18,7 +17,7 @@ public class EmployeeModel implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Schema(hidden = true)
-  private UUID employeeId;
+  private Long employeeId;
 
   @Schema(example = "Marineide")
   private String name;
@@ -51,7 +50,7 @@ public class EmployeeModel implements Serializable {
   public EmployeeModel() {}
 
   public EmployeeModel(
-      UUID idEmployee,
+      Long idEmployee,
       String name,
       Position position,
       String cpfCnpj,
@@ -137,11 +136,11 @@ public class EmployeeModel implements Serializable {
     this.email = email;
   }
 
-  public UUID getEmployeeId() {
+  public Long getEmployeeId() {
     return employeeId;
   }
 
-  public void setEmployeeId(UUID employeeId) {
+  public void setEmployeeId(Long employeeId) {
     this.employeeId = employeeId;
   }
 
@@ -210,7 +209,7 @@ public class EmployeeModel implements Serializable {
         + '}';
   }
 
-  public UUID getIdClient() {
+  public Long getIdClient() {
     return employeeId;
   }
 }

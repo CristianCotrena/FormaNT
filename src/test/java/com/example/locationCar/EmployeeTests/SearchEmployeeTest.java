@@ -11,7 +11,6 @@ import com.example.locationCar.models.enums.Role;
 import com.example.locationCar.repositories.EmployeeRepository;
 import com.example.locationCar.services.employeeService.SearchEmployeeService;
 import java.util.Optional;
-import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,7 +30,7 @@ public class SearchEmployeeTest {
   @BeforeEach
   void setup() {
     employeeModel = new EmployeeModel();
-    employeeModel.setEmployeeId(UUID.randomUUID());
+    employeeModel.setEmployeeId(5000L);
     employeeModel.setName("Joana");
     employeeModel.setPosition(Position.VENDEDOR);
     employeeModel.setCpfCnpj("54506305302");
@@ -45,7 +44,7 @@ public class SearchEmployeeTest {
 
   @Test
   public void testGetEmployeeById() {
-    UUID id = employeeModel.getEmployeeId();
+    Long id = employeeModel.getEmployeeId();
 
     when(employeeRepository.findById(id)).thenReturn(Optional.of(employeeModel));
 

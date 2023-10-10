@@ -13,7 +13,6 @@ import com.example.locationCar.models.enums.Role;
 import com.example.locationCar.repositories.EmployeeRepository;
 import com.example.locationCar.services.employeeService.UpdateEmployeeService;
 import java.util.Optional;
-import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -47,7 +46,7 @@ public class UpdateEmployeeTest {
 
   @Test
   public void updateEmployee_UpdateName_Success() {
-    UUID employeeId = UUID.randomUUID();
+    Long employeeId = 3000L;
     EmployeeModel existingEmployee = new EmployeeModel();
     existingEmployee.setEmployeeId(employeeId);
     existingEmployee.setName("Adrielly Pasetto");
@@ -69,7 +68,7 @@ public class UpdateEmployeeTest {
 
   @Test
   public void updateEmployee_AttemptToUpdateContractType_E_CpfCnpj_Failure() {
-    UUID employeeId = UUID.randomUUID();
+    Long employeeId = 3000L;
     EmployeeModel existingEmployee = new EmployeeModel();
     existingEmployee.setEmployeeId(employeeId);
     existingEmployee.setContractType(ContractType.valueOf("CLT"));

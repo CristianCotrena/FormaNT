@@ -15,7 +15,6 @@ import com.example.locationCar.models.enums.Role;
 import com.example.locationCar.repositories.EmployeeRepository;
 import com.example.locationCar.validate.employee.CreateEmployeeValidate;
 import java.util.List;
-import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -61,7 +60,7 @@ public class CreateEmployeeService {
     employeeModel.setRegistry(employeeDto.getRegistry());
     employeeModel.setStatus(1);
 
-    UUID createdId = employeeRepository.save(employeeModel).getIdClient();
+    Long createdId = employeeRepository.save(employeeModel).getIdClient();
 
     return new ResponseSuccessBuilder<CreateEmployeeDto>(
             HttpStatus.CREATED,

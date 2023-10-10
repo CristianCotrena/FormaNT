@@ -4,7 +4,6 @@ import com.example.locationCar.dtos.ClientUpdateDto;
 import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.repositories.ClientRepository;
 import java.util.Optional;
-import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -17,7 +16,7 @@ public class UpdateClientService {
     this.clientRepository = clientRepository;
   }
 
-  public ResponseEntity<String> updateClient(UUID id, ClientUpdateDto clientUpdateDto) {
+  public ResponseEntity<String> updateClient(Long id, ClientUpdateDto clientUpdateDto) {
     validateUpdateClient(clientUpdateDto);
 
     Optional<ClientModel> clientBase = clientRepository.findById(id);

@@ -3,7 +3,6 @@ package com.example.locationCar.services.employeeService;
 import com.example.locationCar.models.EmployeeModel;
 import com.example.locationCar.repositories.EmployeeRepository;
 import java.util.Optional;
-import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,7 +14,7 @@ public class SearchEmployeeService {
     this.employeeRepository = employeeRepository;
   }
 
-  public EmployeeModel employeeSearchById(UUID id) {
+  public EmployeeModel employeeSearchById(Long id) {
     Optional<EmployeeModel> optionalEmployee = employeeRepository.findById(id);
     if (optionalEmployee.isPresent()) {
       return optionalEmployee.get();

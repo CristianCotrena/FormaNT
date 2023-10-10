@@ -3,7 +3,6 @@ package com.example.locationCar.services.clientService;
 import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.repositories.ClientRepository;
 import java.util.Optional;
-import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -33,7 +32,7 @@ public class SearchClientService {
     }
   }
 
-  public ClientModel findUserById(UUID id) {
+  public ClientModel findUserById(Long id) {
     Optional<ClientModel> client = clientRepository.findById(id);
     if (client.isPresent()) {
       return client.get();

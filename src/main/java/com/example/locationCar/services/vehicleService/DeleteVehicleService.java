@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class DeleteVehicleService {
@@ -30,7 +29,7 @@ public class DeleteVehicleService {
     }
 
     @Transactional
-    public BaseDto execute(UUID idVehicle, String license) {
+    public BaseDto execute(Long idVehicle, String license) {
 
         List<BaseErrorDto> errors = new DeleteVehicleValidate().execute(idVehicle, license);
 

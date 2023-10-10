@@ -6,7 +6,6 @@ import static org.mockito.Mockito.when;
 import com.example.locationCar.controllers.ClientController;
 import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.services.clientService.SearchClientService;
-import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -27,7 +26,7 @@ public class SearchClientTest {
   public void setUp() {
     MockitoAnnotations.initMocks(this);
     // Configuração de um client de exemplo
-    UUID idClient = UUID.randomUUID();
+    Long idClient = 3000L;
     String cpfCnpj = "12345678900";
     String email = "client@teste.com";
 

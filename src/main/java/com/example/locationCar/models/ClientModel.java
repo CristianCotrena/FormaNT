@@ -3,7 +3,6 @@ package com.example.locationCar.models;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import java.io.Serializable;
-import java.util.UUID;
 
 @Entity
 @Table(name = "TB_CLIENTS")
@@ -13,7 +12,7 @@ public class ClientModel implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Schema(hidden = true)
-  private UUID idClient;
+  private Long idClient;
 
   @Schema(example = "Carlitos Tevez")
   private String name;
@@ -42,7 +41,7 @@ public class ClientModel implements Serializable {
   public ClientModel() {}
 
   public ClientModel(
-      UUID idClient,
+      Long idClient,
       String name,
       String cpfCnpj,
       String cnh,
@@ -62,11 +61,11 @@ public class ClientModel implements Serializable {
     this.status = status;
   }
 
-  public UUID getIdClient() {
+  public Long getIdClient() {
     return idClient;
   }
 
-  public void setIdClient(UUID idClient) {
+  public void setIdClient(Long idClient) {
     this.idClient = idClient;
   }
 

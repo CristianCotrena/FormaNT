@@ -7,7 +7,6 @@ import com.example.locationCar.controllers.ClientController;
 import com.example.locationCar.dtos.ClientUpdateDto;
 import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.services.clientService.UpdateClientService;
-import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -28,7 +27,7 @@ public class UpdateClientTest {
     MockitoAnnotations.initMocks(this);
     existingClient =
         new ClientModel(
-            UUID.fromString("4c38c805-e0a4-4b19-ae13-582cbcaac807"),
+                3000L,
             "Funcionário 1",
             "12345678999",
             "1234567",
@@ -41,7 +40,7 @@ public class UpdateClientTest {
 
   @Test
   public void testUpdateClient_Success() {
-    UUID clientId = UUID.fromString("4c38c805-e0a4-4b19-ae13-582cbcaac807");
+    Long clientId = 3000L;
 
     ClientUpdateDto clientUpdateDto =
         new ClientUpdateDto(
@@ -65,7 +64,7 @@ public class UpdateClientTest {
 
   @Test
   public void testUpdateClient_InvalidData_Phone() {
-    UUID clientId = UUID.fromString("4c38c805-e0a4-4b19-ae13-582cbcaac807");
+    Long clientId = 3000L;
 
     ClientUpdateDto clientUpdateDto =
         new ClientUpdateDto(
@@ -89,7 +88,7 @@ public class UpdateClientTest {
 
   @Test
   public void testUpdateClient_InvalidData_Age() {
-    UUID clientId = UUID.fromString("4c38c805-e0a4-4b19-ae13-582cbcaac807");
+    Long clientId = 3000L;
 
     ClientUpdateDto clientUpdateDto =
         new ClientUpdateDto(

@@ -14,7 +14,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,7 +47,7 @@ public class EmployeeController {
       responseCode = "201",
       description = "Created",
       content = {
-        @Content(mediaType = "text/plain", schema = @Schema(type = "string", format = "uuid"))
+        @Content(mediaType = "text/plain", schema = @Schema(type = "string", format = "Long"))
       })
   @ApiResponse(
       responseCode = "400",
@@ -78,7 +77,7 @@ public class EmployeeController {
       responseCode = "200",
       description = "OK",
       content = {
-        @Content(mediaType = "text/plain", schema = @Schema(type = "string", format = "uuid"))
+        @Content(mediaType = "text/plain", schema = @Schema(type = "string", format = "Long"))
       })
   @ApiResponse(
       responseCode = "400",
@@ -93,7 +92,7 @@ public class EmployeeController {
       })
   @PutMapping("/{id}")
   public ResponseEntity<?> updateEmployee(
-      @PathVariable UUID id, @RequestBody EmployeeUpdateDto employeeDto) {
+      @PathVariable Long id, @RequestBody EmployeeUpdateDto employeeDto) {
     BaseDto updatedEmployeeId = updateEmployeeService.updateEmployee(id, employeeDto, true);
     return ResponseEntity.ok(updatedEmployeeId);
   }
@@ -148,11 +147,11 @@ public class EmployeeController {
       responseCode = "200",
       description = "OK",
       content = {
-        @Content(mediaType = "text/plain", schema = @Schema(type = "string", format = "uuid")),
+        @Content(mediaType = "text/plain", schema = @Schema(type = "string", format = "Long")),
       })
   @GetMapping
   public ResponseEntity<Object> getEmployee(
-      @RequestParam(required = false) UUID id,
+      @RequestParam(required = false) Long id,
       @RequestParam(required = false) String cpfCnpj,
       @RequestParam(required = false) String email) {
     try {
@@ -196,7 +195,7 @@ public class EmployeeController {
             schema = @Schema(type = "string", example = "Employee not found")),
       })
   @DeleteMapping("/{id}")
-  public ResponseEntity<Object> deleteEmployee(@PathVariable(value = "id") UUID employeeId) {
+  public ResponseEntity<Object> deleteEmployee(@PathVariable(value = "id") Long employeeId) {
     EmployeeModel employee = deleteEmployeeService.deleteEmployee(employeeId);
     return (employee == null || !employee.getEmployeeId().equals(employeeId))
         ? ResponseEntity.status(HttpStatus.NOT_FOUND).body("Employee not found")

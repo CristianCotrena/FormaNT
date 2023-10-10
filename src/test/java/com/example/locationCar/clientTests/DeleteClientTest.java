@@ -9,7 +9,6 @@ import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.repositories.ClientRepository;
 import com.example.locationCar.services.clientService.DeleteClientService;
 import java.util.Optional;
-import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,7 +27,7 @@ public class DeleteClientTest {
   @BeforeEach
   void setUp() {
     clientModel = new ClientModel();
-    clientModel.setIdClient(UUID.randomUUID());
+    clientModel.setIdClient(3000L);
     clientModel.setName("Client");
     clientModel.setCpfCnpj("12345678910");
     clientModel.setCnh("1234567890");
@@ -41,7 +40,7 @@ public class DeleteClientTest {
 
   @Test
   public void testGetClientById() {
-    UUID id = clientModel.getIdClient();
+    Long id = clientModel.getIdClient();
 
     when(clientRepository.findById(id)).thenReturn(Optional.of(clientModel));
 
@@ -54,7 +53,7 @@ public class DeleteClientTest {
   @Test
   public void deleteClient() {
 
-    UUID clientId = clientModel.getIdClient();
+    Long clientId = clientModel.getIdClient();
 
     clientRepository.deleteById(clientId);
 

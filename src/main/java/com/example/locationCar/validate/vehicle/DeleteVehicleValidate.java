@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public class DeleteVehicleValidate {
 
-  public List<BaseErrorDto> execute(UUID idVehicle, String license) {
+  public List<BaseErrorDto> execute(Long idVehicle, String license) {
 
     List<BaseErrorDto> result = new ArrayList<>();
 

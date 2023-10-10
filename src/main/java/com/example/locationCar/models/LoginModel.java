@@ -2,7 +2,6 @@ package com.example.locationCar.models;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
-import java.util.UUID;
 
 @Entity
 @Table(name = "TB_LOGINS")
@@ -11,16 +10,16 @@ public class LoginModel implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private UUID idLogin;
+  private Long idLogin;
 
   private String password;
   private String expiresIn;
 
-  public UUID getIdLogin() {
+  public Long getIdLogin() {
     return idLogin;
   }
 
-  public void setIdLogin(UUID idLogin) {
+  public void setIdLogin(Long idLogin) {
     this.idLogin = idLogin;
   }
 

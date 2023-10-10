@@ -3,7 +3,6 @@ package com.example.locationCar.services.employeeService;
 import com.example.locationCar.models.EmployeeModel;
 import com.example.locationCar.repositories.EmployeeRepository;
 import java.util.Optional;
-import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,7 +14,7 @@ public class DeleteEmployeeService {
     this.employeeRepository = employeeRepository;
   }
 
-  public EmployeeModel deleteEmployee(UUID employeeId) {
+  public EmployeeModel deleteEmployee(Long employeeId) {
     Optional<EmployeeModel> employee = employeeRepository.findById(employeeId);
     if (employee.isEmpty() || employee.get().getStatus() == 0) {
       return null;

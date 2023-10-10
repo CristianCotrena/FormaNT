@@ -12,7 +12,6 @@ import com.example.locationCar.repositories.VehicleRepository;
 import com.example.locationCar.services.vehicleService.CreateVehicleService;
 import java.math.BigDecimal;
 import java.util.Optional;
-import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,11 +45,11 @@ public class CreateVehicleTest {
 
   @Test
   public void testCreateVehicle_Success() {
-    UUID validUUID = UUID.randomUUID();
+    Long validLong = 3000L;
 
     when(vehicleRepository.findByLicense(any(String.class))).thenReturn(Optional.empty());
     VehicleModel vehicle = new VehicleModel();
-    vehicle.setIdVehicle(validUUID);
+    vehicle.setIdVehicle(validLong);
     when(vehicleRepository.save(any(VehicleModel.class))).thenReturn(vehicle);
 
     BaseDto responseEntity = createVehicleService.inserir(dto);
@@ -61,12 +60,12 @@ public class CreateVehicleTest {
 
   @Test
   public void testCreateVehicle_LicensePlateAlreadyExists_Error() {
-    UUID validUUID = UUID.randomUUID();
+    Long validLong = 3000L;
 
     when(vehicleRepository.findByLicense(any(String.class)))
         .thenReturn(Optional.of(new VehicleModel()));
     VehicleModel vehicle = new VehicleModel();
-    vehicle.setIdVehicle(validUUID);
+    vehicle.setIdVehicle(validLong);
     when(vehicleRepository.save(any(VehicleModel.class))).thenReturn(vehicle);
 
     BaseDto responseEntity = createVehicleService.inserir(dto);
@@ -77,9 +76,9 @@ public class CreateVehicleTest {
 
   @Test
   public void testCreateVehicle_EmptyFields() {
-    UUID validUUID = UUID.randomUUID();
+    Long validLong = 3000L;
     VehicleModel vehicle = new VehicleModel();
-    vehicle.setIdVehicle(validUUID);
+    vehicle.setIdVehicle(validLong);
 
     dto.setColor("");
     dto.setFuel("");
@@ -97,9 +96,9 @@ public class CreateVehicleTest {
 
   @Test
   public void testCreateVehicle_DailyValueLessThanZero() {
-    UUID validUUID = UUID.randomUUID();
+    Long validLong = 3000L;
     VehicleModel vehicle = new VehicleModel();
-    vehicle.setIdVehicle(validUUID);
+    vehicle.setIdVehicle(validLong);
 
     dto.setDailyValue(BigDecimal.valueOf(-50));
 
@@ -115,9 +114,9 @@ public class CreateVehicleTest {
 
   @Test
   public void testCreateVehicle_InvalidLicense() {
-    UUID validUUID = UUID.randomUUID();
+    Long validLong = 3000L;
     VehicleModel vehicle = new VehicleModel();
-    vehicle.setIdVehicle(validUUID);
+    vehicle.setIdVehicle(validLong);
     dto.setLicense("ABC12");
 
     when(vehicleRepository.findByLicense(any(String.class))).thenReturn(Optional.empty());
@@ -132,9 +131,9 @@ public class CreateVehicleTest {
 
   @Test
   public void testCreateVehicle_InvalidDoorNumber() {
-    UUID validUUID = UUID.randomUUID();
+    Long validLong = 3000L;
     VehicleModel vehicle = new VehicleModel();
-    vehicle.setIdVehicle(validUUID);
+    vehicle.setIdVehicle(validLong);
 
     dto.setDoorNumber(3);
 

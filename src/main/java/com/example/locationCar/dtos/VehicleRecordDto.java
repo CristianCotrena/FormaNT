@@ -2,11 +2,10 @@ package com.example.locationCar.dtos;
 
 import com.example.locationCar.models.VehicleModel;
 import java.math.BigDecimal;
-import java.util.UUID;
 
 public class VehicleRecordDto {
 
-  private UUID idVehicle;
+  private Long idVehicle;
 
   private String license;
 
@@ -44,11 +43,11 @@ public class VehicleRecordDto {
     this.rating = vehicleModel.getRating();
   }
 
-  public UUID getIdVehicle() {
+  public Long getIdVehicle() {
     return idVehicle;
   }
 
-  public void setIdVehicle(UUID idVehicle) {
+  public void setIdVehicle(Long idVehicle) {
     this.idVehicle = idVehicle;
   }
 
