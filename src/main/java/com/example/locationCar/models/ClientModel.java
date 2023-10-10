@@ -4,9 +4,15 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.UUID;
+import lombok.*;
 
 @Entity
 @Table(name = "TB_CLIENTS")
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ClientModel implements Serializable {
   private static final long serialVersionUID = 1L;
 
@@ -38,99 +44,4 @@ public class ClientModel implements Serializable {
 
   @Schema(hidden = true)
   private Integer status = 1;
-
-  public ClientModel() {}
-
-  public ClientModel(
-      UUID idClient,
-      String name,
-      String cpfCnpj,
-      String cnh,
-      int age,
-      String telephone,
-      String emergencyContact,
-      String email,
-      int status) {
-    this.idClient = idClient;
-    this.name = name;
-    this.cpfCnpj = cpfCnpj;
-    this.cnh = cnh;
-    this.age = age;
-    this.telephone = telephone;
-    this.emergencyContact = emergencyContact;
-    this.email = email;
-    this.status = status;
-  }
-
-  public UUID getIdClient() {
-    return idClient;
-  }
-
-  public void setIdClient(UUID idClient) {
-    this.idClient = idClient;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public String getCpfCnpj() {
-    return cpfCnpj;
-  }
-
-  public void setCpfCnpj(String cpfCnpj) {
-    this.cpfCnpj = cpfCnpj;
-  }
-
-  public String getCnh() {
-    return cnh;
-  }
-
-  public void setCnh(String cnh) {
-    this.cnh = cnh;
-  }
-
-  public Integer getAge() {
-    return age;
-  }
-
-  public void setAge(Integer age) {
-    this.age = age;
-  }
-
-  public String getTelephone() {
-    return telephone;
-  }
-
-  public void setTelephone(String telephone) {
-    this.telephone = telephone;
-  }
-
-  public String getEmergencyContact() {
-    return emergencyContact;
-  }
-
-  public void setEmergencyContact(String emergencyContact) {
-    this.emergencyContact = emergencyContact;
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
-  public Integer getStatus() {
-    return status;
-  }
-
-  public void setStatus(Integer status) {
-    this.status = status;
-  }
 }

@@ -4,16 +4,14 @@ import com.example.locationCar.models.EmployeeModel;
 import com.example.locationCar.repositories.EmployeeRepository;
 import java.util.Optional;
 import java.util.UUID;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class SearchEmployeeService {
 
   EmployeeRepository employeeRepository;
-
-  public SearchEmployeeService(EmployeeRepository employeeRepository) {
-    this.employeeRepository = employeeRepository;
-  }
 
   public EmployeeModel employeeSearchById(UUID id) {
     Optional<EmployeeModel> optionalEmployee = employeeRepository.findById(id);

@@ -13,6 +13,7 @@ import com.example.locationCar.repositories.specifications.vehicle.VehicleSpecif
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -21,13 +22,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class ListVehicleParamService {
 
   private VehicleRepository vehicleRepository;
-
-  public ListVehicleParamService(VehicleRepository vehicleRepository) {
-    this.vehicleRepository = vehicleRepository;
-  }
 
   public BaseDto listVehicles(
       Pageable pageable, String color, Double rating, Double max, Double min) {
@@ -43,7 +41,7 @@ public class ListVehicleParamService {
 
     List<VehicleRecordDto> vehicleDtoList =
         vehicles.getContent().stream()
-            .map(v -> new VehicleRecordDto(v))
+            .map(VehicleRecordDto::fromVehicleModel)
             .collect(Collectors.toList());
     Page<VehicleRecordDto> vehicleDtoPage =
         new PageImpl<>(vehicleDtoList, pageable, vehicles.getTotalElements());
