@@ -14,4 +14,5 @@ public @interface SuccessMessage {
   String ADDRESS_SUCCESS = "Endereço encontrado com sucesso";
   String SEARCH_VEHICLE = "Veículo encontrado com sucesso";
   String CREATE_RENT = "Aluguel criado com sucesso";
+  String UPDATE_RENT = "Aluguel atualizado com sucesso";
 }
