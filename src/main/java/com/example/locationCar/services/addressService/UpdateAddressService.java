@@ -11,74 +11,89 @@ import com.example.locationCar.constants.SuccessMessage;
 import com.example.locationCar.dtos.AddressUpdateDto;
 import com.example.locationCar.models.AddressModel;
 import com.example.locationCar.repositories.AddressRepository;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
 @Service
 public class UpdateAddressService {
-  private final AddressRepository addressRepository;
+    private final AddressRepository addressRepository;
 
-  public UpdateAddressService(AddressRepository addressRepository) {
-    this.addressRepository = addressRepository;
-  }
-
-  public BaseDto updateAddress(UUID idAddress, AddressUpdateDto addressUpdateDto) {
-    Optional<AddressModel> addressBase = addressRepository.findById(idAddress);
-
-    if (addressBase.isEmpty()) {
-      List<BaseErrorDto> notFoundErrors =
-          List.of(new BaseErrorDto("Address", ErrorMessage.NOT_FOUND));
-      return new ResponseErrorBuilder(HttpStatus.NOT_FOUND, notFoundErrors).get();
+    public UpdateAddressService(AddressRepository addressRepository) {
+        this.addressRepository = addressRepository;
     }
 
-    AddressModel addressModel = addressBase.get();
-    try {
-      ResponseViaCep responseViaCep =
-          CorreiosBuscaCepClient.getAddressInformation(addressUpdateDto.getCep());
-      if (addressUpdateDto.getRoad() == null) {
-        if (!responseViaCep.getLogradouro().equals("")) {
-          addressModel.setRoad(responseViaCep.getLogradouro());
+    public BaseDto updateAddress(UUID idAddress, AddressUpdateDto addressUpdateDto) {
+        Optional<AddressModel> addressBase = addressRepository.findById(idAddress);
+
+        if (addressBase.isEmpty()) {
+            List<BaseErrorDto> notFoundErrors = List.of(new BaseErrorDto("Address", ErrorMessage.NOT_FOUND));
+            return new ResponseErrorBuilder(HttpStatus.NOT_FOUND, notFoundErrors).get();
         }
-      } else {
-        addressModel.setRoad(addressUpdateDto.getRoad());
-      }
-    } catch (HttpClientErrorException e) {
-      List<BaseErrorDto> notFoundErrors = List.of(new BaseErrorDto("cep", ErrorMessage.NOT_FOUND));
-      return new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, notFoundErrors).get();
-    }
 
-    if (addressUpdateDto.getPublicPlace() != null) {
-      addressModel.setPublicPlace(addressUpdateDto.getPublicPlace());
-    }
-    if (addressUpdateDto.getNumber() != null) {
-      addressModel.setNumber(addressUpdateDto.getNumber());
-    }
-    if (addressUpdateDto.getComplement() != null) {
-      addressModel.setComplement(addressUpdateDto.getComplement());
-    }
-    if (addressUpdateDto.getCity() != null) {
-      addressModel.setCity(addressUpdateDto.getCity());
-    }
-    if (addressUpdateDto.getState() != null) {
-      addressModel.setState(addressUpdateDto.getState());
-    }
-    if (addressUpdateDto.getCountry() != null) {
-      addressModel.setCountry(addressUpdateDto.getCountry());
-    }
-    if (addressUpdateDto.getCep() != null) {
-      addressModel.setCep(addressUpdateDto.getCep());
-    }
+        AddressModel addressModel = addressBase.get();
+        try {
+            List<BaseErrorDto> badRequestList = new ArrayList<>();
 
-    addressRepository.save(addressModel);
+            if (addressUpdateDto.getCep() == null) {
+                badRequestList.add(new BaseErrorDto("cep", ErrorMessage.EMPTY_FIELD));
+            }
 
-    return new ResponseSuccessBuilder<AddressUpdateDto>(
-            HttpStatus.OK,
-            new AddressUpdateDto(idAddress.toString()),
-            SuccessMessage.UPDATE_ADDRESS)
-        .get();
-  }
+            if (addressUpdateDto.getCity() != null) {
+                badRequestList.add(new BaseErrorDto("city", ErrorMessage.CEP_ERROR));
+            }
+
+            if (addressUpdateDto.getState() != null) {
+                badRequestList.add(new BaseErrorDto("state", ErrorMessage.CEP_ERROR));
+            }
+
+            if (addressUpdateDto.getCountry() != null) {
+                badRequestList.add(new BaseErrorDto("country", ErrorMessage.CEP_ERROR));
+            }
+
+            if (!badRequestList.isEmpty()) {
+                return new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, badRequestList).get();
+            }
+
+            ResponseViaCep responseViaCep = CorreiosBuscaCepClient.getAddressInformation(addressUpdateDto.getCep());
+            if (addressUpdateDto.getRoad() == null) {
+                if (!responseViaCep.getLogradouro().equals("")) {
+                    addressModel.setRoad(responseViaCep.getLogradouro());
+                }
+            } else {
+                addressModel.setRoad(addressUpdateDto.getRoad());
+            }
+
+            addressModel.setCity(responseViaCep.getLocalidade());
+            addressModel.setState(responseViaCep.getUf());
+            addressModel.setCountry("Brasil");
+            addressModel.setCep(addressUpdateDto.getCep());
+
+        } catch (HttpClientErrorException e) {
+            List<BaseErrorDto> notFoundErrors = List.of(new BaseErrorDto("cep", ErrorMessage.NOT_FOUND));
+            return new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, notFoundErrors).get();
+        }
+
+        if (addressUpdateDto.getPublicPlace() != null) {
+            addressModel.setPublicPlace(addressUpdateDto.getPublicPlace());
+        }
+
+        if (addressUpdateDto.getNumber() != null) {
+            addressModel.setNumber(addressUpdateDto.getNumber());
+        }
+
+        if (addressUpdateDto.getComplement() != null) {
+            addressModel.setComplement(addressUpdateDto.getComplement());
+        }
+
+        addressRepository.save(addressModel);
+
+        return new ResponseSuccessBuilder<AddressUpdateDto>(HttpStatus.OK, new AddressUpdateDto(idAddress.toString()),
+                SuccessMessage.UPDATE_ADDRESS).get();
+    }
 }
