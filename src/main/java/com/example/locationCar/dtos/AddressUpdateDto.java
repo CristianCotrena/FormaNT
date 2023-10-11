@@ -38,7 +38,7 @@ public class AddressUpdateDto {
   String country;
 
   @JsonInclude(JsonInclude.Include.NON_NULL)
-  @Schema(example = "94945-000")
+  @Schema(example = "94945010")
   String cep;
 
   public AddressUpdateDto() {}

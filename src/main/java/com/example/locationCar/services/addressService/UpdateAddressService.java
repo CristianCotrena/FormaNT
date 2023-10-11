@@ -11,11 +11,11 @@ import com.example.locationCar.constants.SuccessMessage;
 import com.example.locationCar.dtos.AddressUpdateDto;
 import com.example.locationCar.models.AddressModel;
 import com.example.locationCar.repositories.AddressRepository;
+import com.example.locationCar.validate.address.UpdateAddressValidate;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -36,31 +36,22 @@ public class UpdateAddressService {
             return new ResponseErrorBuilder(HttpStatus.NOT_FOUND, notFoundErrors).get();
         }
 
+        List<BaseErrorDto> errors = new UpdateAddressValidate().validate(addressUpdateDto);
+
+        if (!errors.isEmpty()) {
+            return new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, errors).get();
+        }
+
         AddressModel addressModel = addressBase.get();
         try {
-            List<BaseErrorDto> badRequestList = new ArrayList<>();
-
-            if (addressUpdateDto.getCep() == null) {
-                badRequestList.add(new BaseErrorDto("cep", ErrorMessage.EMPTY_FIELD));
-            }
-
-            if (addressUpdateDto.getCity() != null) {
-                badRequestList.add(new BaseErrorDto("city", ErrorMessage.CEP_ERROR));
-            }
-
-            if (addressUpdateDto.getState() != null) {
-                badRequestList.add(new BaseErrorDto("state", ErrorMessage.CEP_ERROR));
-            }
-
-            if (addressUpdateDto.getCountry() != null) {
-                badRequestList.add(new BaseErrorDto("country", ErrorMessage.CEP_ERROR));
-            }
-
-            if (!badRequestList.isEmpty()) {
-                return new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, badRequestList).get();
-            }
 
             ResponseViaCep responseViaCep = CorreiosBuscaCepClient.getAddressInformation(addressUpdateDto.getCep());
+            if (responseViaCep.getErro() != null) {
+                errors.add(new BaseErrorDto("cep", ErrorMessage.NOT_FOUND));
+                ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, errors);
+                return result.get();
+            }
+
             if (addressUpdateDto.getRoad() == null) {
                 if (!responseViaCep.getLogradouro().equals("")) {
                     addressModel.setRoad(responseViaCep.getLogradouro());
@@ -75,8 +66,9 @@ public class UpdateAddressService {
             addressModel.setCep(addressUpdateDto.getCep());
 
         } catch (HttpClientErrorException e) {
-            List<BaseErrorDto> notFoundErrors = List.of(new BaseErrorDto("cep", ErrorMessage.NOT_FOUND));
-            return new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, notFoundErrors).get();
+            errors.add(new BaseErrorDto("cep", ErrorMessage.NOT_FOUND));
+            ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, errors);
+            return result.get();
         }
 
         if (addressUpdateDto.getPublicPlace() != null) {
