@@ -19,6 +19,7 @@ public class LoginModel implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID idLogin;
 
+  private String email;
   private String password;
   private String expiresIn;
 }
