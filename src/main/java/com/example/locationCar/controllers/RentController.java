@@ -1,35 +1,128 @@
 package com.example.locationCar.controllers;
 
 import com.example.locationCar.base.dto.BaseDto;
+import com.example.locationCar.base.dto.BaseErrorDto;
+import com.example.locationCar.builder.ResponseErrorBuilder;
+import com.example.locationCar.constants.ErrorMessage;
+import com.example.locationCar.dtos.RentUpdateDto;
+import com.example.locationCar.dtos.RentUpdateReturnDto;
+import com.example.locationCar.dtos.input.RentInputDto;
+import com.example.locationCar.models.RentModel;
 import com.example.locationCar.services.RentService.ListRentByIdService;
-import org.springframework.data.domain.Pageable;
+import com.example.locationCar.services.rentService.CreateRentService;
+import com.example.locationCar.services.rentService.UpdateRentService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/v1/rent")
+@Tag(name = "Rent", description = "Operations about rent")
 public class RentController {
 
-    private final ListRentByIdService listRentByIdService;
+    private CreateRentService createRentService;
+    private UpdateRentService updateRentService;
+    private ListRentByIdService listRentByIdService;
 
-    public RentController(ListRentByIdService listRentByIdService) {
+
+    public RentController(CreateRentService createRentService, UpdateRentService updateRentService, ListRentByIdService listRentByIdService) {
+        this.createRentService = createRentService;
+        this.updateRentService = updateRentService;
         this.listRentByIdService = listRentByIdService;
     }
 
-    @GetMapping("/list")
-    public ResponseEntity<BaseDto> listRentById(
-            @RequestParam(required = false) UUID idClient,
-            @RequestParam(required = false) UUID EmployeeId,
-            Pageable pageable) {
-        BaseDto baseDto = listRentByIdService.listRentById(idClient,EmployeeId,pageable);
-
+    @Operation(summary = "Create Rent", description = "Add a rent to the database")
+    @ApiResponse(
+            responseCode = "201",
+            description = "OK",
+            content = {
+                    @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(type = "string", example = "Aluguel criado com sucesso."))
+            })
+    @ApiResponse(
+            responseCode = "404",
+            description = "Rent not found",
+            content = {
+                    @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(type = "string", example = "Bad Request")),
+            })
+    @PostMapping
+    public ResponseEntity<BaseDto> createRent(@RequestBody RentInputDto rentInputDto) {
+        BaseDto baseDto = createRentService.inserir(rentInputDto);
         return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
-
     }
 
+    @Operation(summary = "Update rent", description = "Update rent")
+    @ApiResponse(
+            responseCode = "200",
+            description = "OK",
+            content = {
+                    @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = RentUpdateReturnDto.class))
+            })
+    @ApiResponse(
+            responseCode = "404",
+            description = "Not Found",
+            content = {
+                    @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(type = "string", example = "Não encontrado")),
+            })
+    @ApiResponse(
+            responseCode = "400",
+            description = "Invalid data",
+            content = {
+                    @Content(
+                            mediaType = "application/json",
+                            schema =
+                            @Schema(
+                                    type = "string",
+                                    example = "Data de devolução precisa ser maior que o valor atual")),
+            })
+    @PutMapping("/{id}")
+    public ResponseEntity<BaseDto> updateRent(
+            @PathVariable String id, @RequestBody RentUpdateDto rentUpdateDto) {
+        BaseDto baseDto = updateRentService.updateRent(id, rentUpdateDto);
+
+        return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
+    }
+
+    @GetMapping("/list")
+    @Operation(summary = "List Rent by Client or Employee")
+    public ResponseEntity<?> listRentId(
+            @RequestParam(required = false) UUID clientId,
+            @RequestParam(required = false) UUID employeeId) {
+
+        if (clientId != null) {
+            BaseDto baseDto = listRentByIdService.getRentsByClientId(clientId);
+            return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
+
+        } else if (employeeId != null) {
+            BaseDto baseDto = listRentByIdService.getRentsByEmployeeId(employeeId);
+            return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
+        } else {
+            List<BaseErrorDto> errors = new ArrayList<>();
+            errors.add(new BaseErrorDto("employeeId ou clientId", ErrorMessage.AT_LEAST_ONE));
+            ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, errors);
+            return ResponseEntity.status(result.get().getResult().getStatusCode()).body(errors);
+        }
+
+    }
 }

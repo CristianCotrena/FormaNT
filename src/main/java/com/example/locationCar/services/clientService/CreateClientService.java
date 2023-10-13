@@ -1,7 +1,5 @@
 package com.example.locationCar.services.clientService;
 
-import static com.example.locationCar.services.clientService.utils.ClientRules.*;
-
 import com.example.locationCar.base.dto.BaseDto;
 import com.example.locationCar.base.dto.BaseErrorDto;
 import com.example.locationCar.builder.ResponseErrorBuilder;
@@ -11,23 +9,18 @@ import com.example.locationCar.constants.SuccessMessage;
 import com.example.locationCar.dtos.CreateClientDto;
 import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.repositories.ClientRepository;
-import com.example.locationCar.services.clientService.utils.ClientRules;
 import com.example.locationCar.validate.client.CreateClientValidate;
 import java.util.List;
 import java.util.UUID;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class CreateClientService {
 
   private ClientRepository clientRepository;
-  ClientRules clientRules;
-  ClientModel clientModel;
-
-  public CreateClientService(ClientRepository clientRepository) {
-    this.clientRepository = clientRepository;
-  }
 
   public BaseDto createClient(ClientModel clientModel) {
     List<BaseErrorDto> errors = new CreateClientValidate().validate(clientModel);
