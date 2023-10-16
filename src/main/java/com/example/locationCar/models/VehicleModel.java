@@ -51,4 +51,8 @@ public class VehicleModel implements Serializable {
 
   @Schema(example = "5.00")
   private BigDecimal rating;
+
+  public String getId() {
+    return null;
+  }
 }
