@@ -17,17 +17,15 @@ import com.example.locationCar.validate.employee.UpdateEmployeeValidate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class UpdateEmployeeService {
 
   private final EmployeeRepository employeeRepository;
-
-  public UpdateEmployeeService(EmployeeRepository employeeRepository) {
-    this.employeeRepository = employeeRepository;
-  }
 
   public BaseDto updateEmployee(
       UUID employeeId, EmployeeUpdateDto employeeUpdateDto, boolean recontratar) {

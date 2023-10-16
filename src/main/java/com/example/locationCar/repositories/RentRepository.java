@@ -1,6 +1,10 @@
 package com.example.locationCar.repositories;
 
 import com.example.locationCar.models.RentModel;
+import com.example.locationCar.models.VehicleModel;
+import java.time.ZonedDateTime;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.domain.Page;
@@ -10,12 +14,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RentRepository extends JpaRepository<RentModel, UUID> {
+  Optional<RentModel> findByVehicleAndContractingDateLessThanEqualAndReturnDateGreaterThanEqual(
+      VehicleModel vehicle, ZonedDateTime checkReturnDate, ZonedDateTime checkContractingDate);
 
-    Page<RentModel> findByIdClientAndEmployeeId(UUID idClient, UUID employeeId, Pageable pageable);
+  List<RentModel> findByClient_IdClient(UUID clientId);
 
-    Page<RentModel> findByIdClient(UUID idClient, Pageable pageable);
-
-    Page<RentModel> findByEmployeeId(UUID employeeId, Pageable pageable);
-
-
+  List<RentModel> findByEmployee_EmployeeId(UUID employeeId);
 }

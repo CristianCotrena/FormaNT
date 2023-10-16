@@ -12,20 +12,16 @@ import com.example.locationCar.models.enums.Role;
 import com.example.locationCar.repositories.EmployeeRepository;
 import com.example.locationCar.validate.employee.ListEmployeeValidate;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class ListEmployeeService {
   private final EmployeeRepository employeeRepository;
-
-  @Autowired
-  public ListEmployeeService(EmployeeRepository employeeRepository) {
-    this.employeeRepository = employeeRepository;
-  }
 
   public BaseDto listEmployees(String role, String position, String page) {
     List<BaseErrorDto> errors =

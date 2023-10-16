@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "60dea205-9f7f-47d1-bcc9-dad165824caa",
+		"_postman_id": "98bd217e-b8e6-4a0b-9aaf-caffe916f555",
 		"name": "LocationCar",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28525027"
 	},
 	"item": [
 		{
@@ -30,6 +31,78 @@
 							"path": [
 								"v1",
 								"address"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url-local}}/v1/address?idEmployee=2671a580-b991-4f72-8c85-f8cdcfd14148",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"address"
+							],
+							"query": [
+								{
+									"key": "idAddress",
+									"value": "2f40efbf-4cee-45f4-8808-94abd5510984",
+									"disabled": true
+								},
+								{
+									"key": "idClient",
+									"value": "31bfb198-af9c-4996-b6f7-d1aac700e94a",
+									"disabled": true
+								},
+								{
+									"key": "idEmployee",
+									"value": "2671a580-b991-4f72-8c85-f8cdcfd14148"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url-local}}/v1/address?idAddress=62363cc6-9046-4fce-984f-d4012bdd5565",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"address"
+							],
+							"query": [
+								{
+									"key": "idEmployee",
+									"value": "3022118b-b991-440f-91d0-e4b22f3db2ef",
+									"disabled": true
+								},
+								{
+									"key": "idClient",
+									"value": "95a6e8d8-9adc-414b-ba28-6ad1ee105842",
+									"disabled": true
+								},
+								{
+									"key": "idAddress",
+									"value": "62363cc6-9046-4fce-984f-d4012bdd5565"
+								}
 							]
 						}
 					},
@@ -173,6 +246,38 @@
 									"value": "546.667.550-35",
 									"disabled": true
 								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Rent",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idClient\": \"f330b8fb-4e38-44f5-a096-11fbc43d07d3\",\r\n    \"idEmployee\": \"0ca1f321-06ad-4845-845d-4c09a7a1b48e\",\r\n    \"idVehicle\": \"cf28f96b-0fb0-4af9-9102-de2aa9e6cda7\",\r\n    \"haveInsurance\": 1,\r\n    \"contractingDate\": \"2045-03-11T00:00:00+00:00\",\r\n    \"returnDate\": \"2045-05-09T00:00:00+00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url-local}}/v1/rent",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"rent"
 							]
 						}
 					},
@@ -451,6 +556,95 @@
 								"v1",
 								"vehicle",
 								"236187b3-f446-410a-b9df-cd0e279a434c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url-local}}/v1/vehicle?idVehicle=0f1dc4b4-bf7c-4d84-baf4-af8839628fe3&license=KAE6601",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"vehicle"
+							],
+							"query": [
+								{
+									"key": "idVehicle",
+									"value": "0f1dc4b4-bf7c-4d84-baf4-af8839628fe3"
+								},
+								{
+									"key": "license",
+									"value": "KAE6601"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"license\":\"AAA1E19\",\r\n    \"brand\":\"Toyota\",\r\n    \"model\":\"X5\",\r\n    \"doorNumber\": 4,\r\n    \"color\":\"pink\",\r\n    \"fuel\":\"GNV\",\r\n    \"dailyValue\":500,\r\n    \"mileage\": 40.5,\r\n    \"rating\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url-local}}/v1/vehicle/236187b3-f446-410a-b9df-cd0e279a434c",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"vehicle",
+								"236187b3-f446-410a-b9df-cd0e279a434c"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Rent",
+			"item": [
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"contractingDate\": \"2023-12-25T03:00:00Z\",\r\n    \"returnDate\": \"2024-01-29T03:00:00Z\",\r\n    \"haveInsurance\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url-local}}/v1/rent/899b4e8a-03b6-4473-a544-8371f8f3d5c7",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"rent",
+								"899b4e8a-03b6-4473-a544-8371f8f3d5c7"
 							]
 						}
 					},

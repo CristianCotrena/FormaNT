@@ -4,16 +4,14 @@ import com.example.locationCar.models.EmployeeModel;
 import com.example.locationCar.repositories.EmployeeRepository;
 import java.util.Optional;
 import java.util.UUID;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class DeleteEmployeeService {
 
   EmployeeRepository employeeRepository;
-
-  public DeleteEmployeeService(EmployeeRepository employeeRepository) {
-    this.employeeRepository = employeeRepository;
-  }
 
   public EmployeeModel deleteEmployee(UUID employeeId) {
     Optional<EmployeeModel> employee = employeeRepository.findById(employeeId);

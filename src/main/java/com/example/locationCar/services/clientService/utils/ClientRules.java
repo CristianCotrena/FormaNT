@@ -1,5 +1,8 @@
 package com.example.locationCar.services.clientService.utils;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class ClientRules {
 
   public static boolean isEmailValid(String email) {
