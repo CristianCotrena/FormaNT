@@ -4,7 +4,6 @@ import com.example.locationCar.base.dto.BaseDto;
 import com.example.locationCar.dtos.RentUpdateDto;
 import com.example.locationCar.dtos.RentUpdateReturnDto;
 import com.example.locationCar.dtos.input.RentInputDto;
-import com.example.locationCar.models.VehicleModel;
 import com.example.locationCar.services.rentService.CreateRentService;
 import com.example.locationCar.services.rentService.ListRentByStatusService;
 import com.example.locationCar.services.rentService.UpdateRentService;
@@ -21,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/v1/rent")
 @Tag(name = "Rent", description = "Operations about rent")
@@ -32,7 +29,10 @@ public class RentController {
   private UpdateRentService updateRentService;
   private ListRentByStatusService listRentByStatusService;
 
-  public RentController(CreateRentService createRentService, UpdateRentService updateRentService, ListRentByStatusService listRentByStatusService) {
+  public RentController(
+      CreateRentService createRentService,
+      UpdateRentService updateRentService,
+      ListRentByStatusService listRentByStatusService) {
     this.createRentService = createRentService;
     this.updateRentService = updateRentService;
     this.listRentByStatusService = listRentByStatusService;
@@ -97,13 +97,14 @@ public class RentController {
     return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
   }
 
-    @GetMapping("/list/{status}")
-    public ResponseEntity<BaseDto<List<VehicleModel>>> listRentByStatus(@PathVariable Integer status, @RequestParam int page) {
-        BaseDto<List<VehicleModel>> result = listRentByStatusService.listRentByStatus(status, page);
-        if (result.getErrors() != null && !result.getErrors().isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
-        } else {
-            return ResponseEntity.status(result.getResult().getStatusCode()).body(result);
-        }
+  @GetMapping("/list/{status}")
+  public ResponseEntity<BaseDto> listRentByStatus(
+      @PathVariable Integer status, @RequestParam int page) {
+    BaseDto result = listRentByStatusService.listRentByStatus(status, page);
+    if (result.getErrors() != null && !result.getErrors().isEmpty()) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+    } else {
+      return ResponseEntity.status(result.getResult().getStatusCode()).body(result);
     }
+  }
 }
