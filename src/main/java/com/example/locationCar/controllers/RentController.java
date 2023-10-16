@@ -5,6 +5,7 @@ import com.example.locationCar.dtos.RentUpdateDto;
 import com.example.locationCar.dtos.RentUpdateReturnDto;
 import com.example.locationCar.dtos.input.RentInputDto;
 import com.example.locationCar.services.rentService.CreateRentService;
+import com.example.locationCar.services.rentService.DeleteRentService;
 import com.example.locationCar.services.rentService.UpdateRentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/v1/rent")
 @Tag(name = "Rent", description = "Operations about rent")
@@ -25,10 +28,12 @@ public class RentController {
 
   private CreateRentService createRentService;
   private UpdateRentService updateRentService;
+  private DeleteRentService deleteRentService;
 
-  public RentController(CreateRentService createRentService, UpdateRentService updateRentService) {
+  public RentController(CreateRentService createRentService, UpdateRentService updateRentService,DeleteRentService deleteRentService) {
     this.createRentService = createRentService;
     this.updateRentService = updateRentService;
+    this.deleteRentService = deleteRentService;
   }
 
   @Operation(summary = "Create Rent", description = "Add a rent to the database")
@@ -89,4 +94,10 @@ public class RentController {
 
     return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
   }
+  @DeleteMapping("/{idRent}")
+  public ResponseEntity<BaseDto> createRent(@PathVariable UUID idRent) {
+      BaseDto baseDto = deleteRentService.remove(idRent);
+      return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
+    }
+
 }
