@@ -13,6 +13,7 @@ import com.example.locationCar.repositories.VehicleRepository;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -39,28 +40,25 @@ public class ListRentByStatusService {
       return new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, errors).get();
     }
 
-    Page<VehicleModel> vehicles;
-
-    PageRequest pageable = PageRequest.of(page, 10);
+    ZonedDateTime currentDate = ZonedDateTime.now();
+    Optional<List<RentModel>> rents = rentRepository.findByReturnDateGreaterThan(currentDate);
     List<UUID> vehicleIds = new ArrayList<>();
 
-    // Procura todos os alugueis
-    List<RentModel> allRents = rentRepository.findAll();
-
-    // Pesquisa data atual
-    ZonedDateTime currentDate = ZonedDateTime.now();
-
-    // Salva todos os IDs de veiculo que a data de retorno do aluguel é maior que hoje
-    for (int r = 0; r < allRents.size(); r++) {
-      if (allRents.get(r).getReturnDate().isAfter(currentDate)) {
-        vehicleIds.add(allRents.get(r).getIdRent());
-      }
+    for (RentModel rent : rents.get()) {
+      vehicleIds.add(rent.getVehicle().getIdVehicle());
     }
 
+    Page<VehicleModel> vehicles = Page.empty();
+    PageRequest pageRequest = PageRequest.of(page, 10);
+
     if (status == 0) {
-      vehicles = vehicleRepository.findByIdVehicleNotIn(vehicleIds, pageable);
+      if (vehicles.isEmpty()) {
+        vehicles = vehicleRepository.findAll(pageRequest);
+      } else {
+        vehicles = vehicleRepository.findByIdVehicleNotIn(vehicleIds, pageRequest);
+      }
     } else {
-      vehicles = vehicleRepository.findByIdVehicleIn(vehicleIds, pageable);
+      vehicles = vehicleRepository.findByIdVehicleIn(vehicleIds, pageRequest);
     }
 
     return new ResponseSuccessBuilder(HttpStatus.OK, vehicles, SuccessMessage.LIST_RENT_BY_STATUS)
