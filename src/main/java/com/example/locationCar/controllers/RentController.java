@@ -12,7 +12,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -99,12 +98,9 @@ public class RentController {
 
   @GetMapping("/list/{status}")
   public ResponseEntity<BaseDto> listRentByStatus(
-      @PathVariable Integer status, @RequestParam int page) {
-    BaseDto result = listRentByStatusService.listRentByStatus(status, page);
-    if (result.getErrors() != null && !result.getErrors().isEmpty()) {
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
-    } else {
-      return ResponseEntity.status(result.getResult().getStatusCode()).body(result);
-    }
+          @PathVariable Integer status, @RequestParam int page) {
+    BaseDto baseDto = listRentByStatusService.listRentByStatus(status, page);
+
+    return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
   }
 }

@@ -3,7 +3,7 @@ package com.example.locationCar.constants;
 public @interface ErrorMessage {
   String EMPTY_FIELD = "Campo obrigatório";
   String INVALID_FIELD = "Campo inválido";
-  String INVALID_STATUS = "Status inválido";
+  String INVALID_STATUS = "Valor inválido, status deve ser 0 ou 1";
   String UNIQUE_FIELD = "Campo já cadastrado na base de dados";
   String UNDERAGE = "Idade deve ser maior que 18";
   String NEGATIVE_DAILY_VALUE = "O valor da diária deve ser maior que 0";
@@ -31,5 +31,6 @@ public @interface ErrorMessage {
   String MUSTNT_BE_IN_THE_PAST = "A data não pode ser no passado";
   String MUST_BE_ZERO_OR_ONE = "Precisa ser 0 ou 1";
   String RETURN_DATE_SHORTER_THAN_CURRENT = "Data de devolução precisa ser maior que o valor atual";
-  String NO_VEHICLES_FOUND = "Nenhum Veículo encontrado";
+  String INVALID_PAGE_NUMBER = "Número de página inválido";
+  String EMPTY_PAGE = "Página vazia";
 }
