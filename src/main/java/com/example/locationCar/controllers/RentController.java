@@ -3,20 +3,24 @@ package com.example.locationCar.controllers;
 import com.example.locationCar.base.dto.BaseDto;
 import com.example.locationCar.dtos.RentUpdateDto;
 import com.example.locationCar.dtos.RentUpdateReturnDto;
+import com.example.locationCar.dtos.SearchRentResponseDto;
 import com.example.locationCar.dtos.input.RentInputDto;
 import com.example.locationCar.services.rentService.CreateRentService;
+import com.example.locationCar.services.rentService.SearchRentService;
 import com.example.locationCar.services.rentService.UpdateRentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 
 @RestController
 @RequestMapping("/v1/rent")
@@ -25,10 +29,12 @@ public class RentController {
 
   private CreateRentService createRentService;
   private UpdateRentService updateRentService;
+  private SearchRentService searchRentService;
 
-  public RentController(CreateRentService createRentService, UpdateRentService updateRentService) {
+  public RentController(CreateRentService createRentService, UpdateRentService updateRentService, SearchRentService searchRentService) {
     this.createRentService = createRentService;
     this.updateRentService = updateRentService;
+    this.searchRentService = searchRentService;
   }
 
   @Operation(summary = "Create Rent", description = "Add a rent to the database")
@@ -89,4 +95,11 @@ public class RentController {
 
     return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
   }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<BaseDto> searchRent(@PathVariable String id) {
+        BaseDto baseDto = searchRentService.searchRent(id);
+        return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
+    }
+
 }
