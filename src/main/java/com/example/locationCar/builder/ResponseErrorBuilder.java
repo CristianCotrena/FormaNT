@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 
-public class ResponseErrorBuilder<T> {
-  private BaseDto<T> result;
+public class ResponseErrorBuilder {
+  private BaseDto<Void> result;
 
   public ResponseErrorBuilder(HttpStatus status, String message) {
     BaseResultDto result =
@@ -32,7 +32,7 @@ public class ResponseErrorBuilder<T> {
     result.getErrors().add(baseErrorDto);
   }
 
-  public BaseDto<T> get() {
+  public BaseDto<Void> get() {
     return result;
   }
 }
