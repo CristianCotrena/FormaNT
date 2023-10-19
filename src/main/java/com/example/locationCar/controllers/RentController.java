@@ -94,8 +94,25 @@ public class RentController {
 
     return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
   }
+    @Operation(summary = "Delete Rent", description = "Delete a rent from the database")
+    @ApiResponse(
+            responseCode = "200",
+            description = "OK",
+            content = {
+                    @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(type = "string", example = "Aluguel excluído com sucesso."))
+            })
+    @ApiResponse(
+            responseCode = "404",
+            description = "Rent not found",
+            content = {
+                    @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(type = "string", example = "Bad Request")),
+            })
   @DeleteMapping("/{idRent}")
-  public ResponseEntity<BaseDto> createRent(@PathVariable UUID idRent) {
+  public ResponseEntity<BaseDto> deleteRent(@PathVariable UUID idRent) {
       BaseDto baseDto = deleteRentService.remove(idRent);
       return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
     }
