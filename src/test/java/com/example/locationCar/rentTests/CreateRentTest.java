@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 
 import com.example.locationCar.base.dto.BaseDto;
 import com.example.locationCar.dtos.input.RentInputDto;
+import com.example.locationCar.mock.rent.RentInputDtoMockBuilder;
 import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.models.EmployeeModel;
 import com.example.locationCar.models.RentModel;
@@ -55,40 +56,12 @@ public class CreateRentTest {
         new CreateRentService(
             clientRepository, employeeRepository, vehicleRepository, rentRepository);
 
-    dto = new RentInputDto();
-    dto.setIdClient("f330b8fb-4e38-44f5-a096-11fbc43d07d3");
-    dto.setIdEmployee("0ca1f321-06ad-4845-845d-4c09a7a1b48e");
-    dto.setIdVehicle("cf28f96b-0fb0-4af9-9102-de2aa9e6cda7");
-    dto.setContractingDate(ZonedDateTime.now());
-    dto.setReturnDate(ZonedDateTime.now().plusDays(30));
-    dto.setHaveInsurance(0);
+    dto = RentInputDtoMockBuilder.build();
 
     client = new ClientModel();
     employee = new EmployeeModel();
     vehicle = new VehicleModel();
   }
-
-  //    @Test
-  //    public void testCreateRent_Success() {
-  //        UUID validUUID = UUID.randomUUID();
-  //
-  //
-  // when(rentRepository.findByVehicleAndContractingDateLessThanEqualAndReturnDateGreaterThanEqual(any(VehicleModel.class),any(ZonedDateTime.class),any(ZonedDateTime.class))).thenReturn(Optional.empty());
-  //        when(employeeRepository.findById(any(UUID.class))).thenReturn(Optional.of(employee));
-  //        when(clientRepository.findById(any(UUID.class))).thenReturn(Optional.of(client));
-  //        //when(vehicleRepository.findByIdVehicleAndStatus(any(UUID.class),
-  // any(Integer.class))).thenReturn(Optional.of(vehicle));
-  //
-  //        RentModel rent = new RentModel();
-  //        rent.setIdRent(validUUID);
-  //
-  //        when(rentRepository.save(any(RentModel.class))).thenReturn(rent);
-  //
-  //        BaseDto responseEntity = createRentService.inserir(dto);
-  //
-  //        //assertEquals(HttpStatus.CREATED.value(), responseEntity.getResult().getStatusCode());
-  //        assertEquals("Aluguel criado com sucesso", responseEntity.getResult().getDescription());
-  //    }
 
   @Test
   public void testCreateRent_with_ClientNotFound_ShouldReturnError() {

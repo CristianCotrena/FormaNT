@@ -6,11 +6,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.example.locationCar.base.dto.BaseDto;
-import com.example.locationCar.dtos.input.VehicleInputDto;
 import com.example.locationCar.models.VehicleModel;
 import com.example.locationCar.repositories.VehicleRepository;
 import com.example.locationCar.services.vehicleService.ListVehicleParamService;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,48 +27,10 @@ public class ListVehicleParamTest {
 
   @Autowired private ListVehicleParamService listVehicleParamService;
 
-  private VehicleInputDto dto;
-  private VehicleInputDto dto2;
-  private VehicleInputDto dto3;
-
   @BeforeEach
   public void setup() {
     vehicleRepository = mock(VehicleRepository.class);
     listVehicleParamService = new ListVehicleParamService(vehicleRepository);
-
-    dto =
-        new VehicleInputDto(
-            "BRA2E25",
-            "Tesla",
-            "s",
-            4,
-            "Black",
-            "eletric",
-            BigDecimal.valueOf(50.3),
-            BigDecimal.valueOf(300.5),
-            BigDecimal.valueOf(4.5));
-    dto2 =
-        new VehicleInputDto(
-            "BRA2E22",
-            "Tesla",
-            "X",
-            4,
-            "Blue",
-            "eletric",
-            BigDecimal.valueOf(30.3),
-            BigDecimal.valueOf(5550.5),
-            BigDecimal.valueOf(3.3));
-    dto2 =
-        new VehicleInputDto(
-            "BRA2E12",
-            "Ford",
-            "Fiesta",
-            2,
-            "Blue",
-            "gasoline",
-            BigDecimal.valueOf(90.3),
-            BigDecimal.valueOf(50.5),
-            BigDecimal.valueOf(4.8));
   }
 
   @Test
