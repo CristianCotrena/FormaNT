@@ -5,6 +5,7 @@ import com.example.locationCar.dtos.RentUpdateDto;
 import com.example.locationCar.dtos.RentUpdateReturnDto;
 import com.example.locationCar.dtos.input.RentInputDto;
 import com.example.locationCar.services.rentService.CreateRentService;
+import com.example.locationCar.services.rentService.ListRentByStatusService;
 import com.example.locationCar.services.rentService.UpdateRentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -25,10 +26,15 @@ public class RentController {
 
   private CreateRentService createRentService;
   private UpdateRentService updateRentService;
+  private ListRentByStatusService listRentByStatusService;
 
-  public RentController(CreateRentService createRentService, UpdateRentService updateRentService) {
+  public RentController(
+      CreateRentService createRentService,
+      UpdateRentService updateRentService,
+      ListRentByStatusService listRentByStatusService) {
     this.createRentService = createRentService;
     this.updateRentService = updateRentService;
+    this.listRentByStatusService = listRentByStatusService;
   }
 
   @Operation(summary = "Create Rent", description = "Add a rent to the database")
@@ -86,6 +92,14 @@ public class RentController {
   public ResponseEntity<BaseDto> updateRent(
       @PathVariable String id, @RequestBody RentUpdateDto rentUpdateDto) {
     BaseDto baseDto = updateRentService.updateRent(id, rentUpdateDto);
+
+    return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
+  }
+
+  @GetMapping("/list/{status}")
+  public ResponseEntity<BaseDto> listRentByStatus(
+          @PathVariable Integer status, @RequestParam int page) {
+    BaseDto baseDto = listRentByStatusService.listRentByStatus(status, page);
 
     return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
   }
