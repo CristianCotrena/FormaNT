@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 
 import com.example.locationCar.base.dto.BaseDto;
 import com.example.locationCar.dtos.input.AddressInputDto;
+import com.example.locationCar.mock.client.AddressInputDtoMockBuilder;
 import com.example.locationCar.models.AddressModel;
 import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.models.EmployeeModel;
@@ -46,10 +47,7 @@ public class CreateAddressTest {
     createAddressService =
         new CreateAddressService(addressRepository, employeeRepository, clientRepository);
 
-    dto = new AddressInputDto();
-    dto.setCep("74840300");
-    dto.setComplement("Casa de Esquina");
-    dto.setNumber(12);
+    dto = AddressInputDtoMockBuilder.build();
 
     client = new ClientModel();
     employee = new EmployeeModel();
