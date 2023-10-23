@@ -1,7 +1,6 @@
 package com.example.locationCar.constants;
 
 public @interface ErrorMessage {
-<<<<<<< HEAD
   String EMPTY_FIELD = "Campo obrigatório";
   String INVALID_FIELD = "Campo inválido";
   String UNIQUE_FIELD = "Campo já cadastrado na base de dados";
