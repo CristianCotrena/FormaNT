@@ -1,9 +1,16 @@
 {
 	"info": {
+<<<<<<< HEAD
 		"_postman_id": "98bd217e-b8e6-4a0b-9aaf-caffe916f555",
 		"name": "LocationCar",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "28525027"
+=======
+		"_postman_id": "8ca13349-51c5-4971-ad1b-6cb4c5589cb9",
+		"name": "LocationCar",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28894337"
+>>>>>>> feature/editar-endereco
 	},
 	"item": [
 		{
@@ -107,6 +114,37 @@
 						}
 					},
 					"response": []
+<<<<<<< HEAD
+=======
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"publicPlace\":\"Não\",\r\n    \"number\":\"452\",\r\n    \"complement\":\"Casa\",\r\n    \"city\": \"São João do Sul\",\r\n    \"state\":\"SC\",\r\n    \"country\":\"Argentina\",\r\n    \"cep\":\" 94945-010\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url-local}}/v1/address/2f40efbf-4cee-45f4-8808-94abd5510984",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"address",
+								"2f40efbf-4cee-45f4-8808-94abd5510984"
+							]
+						}
+					},
+					"response": []
+>>>>>>> feature/editar-endereco
 				}
 			]
 		},
@@ -616,6 +654,7 @@
 						}
 					},
 					"response": []
+<<<<<<< HEAD
 				}
 			]
 		},
@@ -649,6 +688,8 @@
 						}
 					},
 					"response": []
+=======
+>>>>>>> feature/editar-endereco
 				}
 			]
 		}
