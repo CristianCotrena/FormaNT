@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 import com.example.locationCar.base.dto.BaseDto;
+import com.example.locationCar.mock.address.AddressMockBuilder;
 import com.example.locationCar.models.AddressModel;
-import com.example.locationCar.models.EmployeeModel;
 import com.example.locationCar.repositories.AddressRepository;
 import com.example.locationCar.services.addressService.DeleteAddressService;
 import java.util.Optional;
@@ -22,27 +22,23 @@ public class DeleteAddressTest {
 
   @InjectMocks private DeleteAddressService deleteAddressService;
 
+  private AddressModel addressModel;
+
   @BeforeEach
   public void setup() {
     MockitoAnnotations.initMocks(this);
     deleteAddressService = new DeleteAddressService(addressRepository);
+    addressModel = AddressMockBuilder.build();
   }
 
   @Test
   public void testDeleteAddress_Success() {
-    UUID addressId = UUID.randomUUID();
-    UUID employeeId = UUID.randomUUID();
-    EmployeeModel employee = new EmployeeModel();
-    AddressModel address = new AddressModel();
-    employee.setEmployeeId(employeeId);
-    employee.setStatus(1);
-    address.setIdAddress(addressId);
-    address.setStatus(1);
+    when(addressRepository.findById(addressModel.getIdAddress()))
+        .thenReturn(Optional.of(addressModel));
+    when(addressRepository.save(addressModel)).thenReturn(addressModel);
 
-    when(addressRepository.findById(addressId)).thenReturn(Optional.of(address));
-    when(addressRepository.save(address)).thenReturn(address);
-
-    BaseDto result = deleteAddressService.deleteAddress(addressId.toString(), "", "");
+    BaseDto result =
+        deleteAddressService.deleteAddress(addressModel.getIdAddress().toString(), "", "");
 
     assertEquals(HttpStatus.OK.value(), result.getResult().getStatusCode());
     assertEquals("Deletado com sucesso.", result.getResult().getDescription());
@@ -61,11 +57,11 @@ public class DeleteAddressTest {
 
   @Test
   public void testDeleteAddress_MoreThanOneFieldSent() {
-    UUID addressId = UUID.randomUUID();
-    UUID clientId = UUID.randomUUID();
-
     BaseDto result =
-        deleteAddressService.deleteAddress(addressId.toString(), "", clientId.toString());
+        deleteAddressService.deleteAddress(
+            addressModel.getIdAddress().toString(),
+            addressModel.getEmployee().getEmployeeId().toString(),
+            "");
 
     assertEquals(HttpStatus.BAD_REQUEST.value(), result.getResult().getStatusCode());
     assertEquals("Apenas um campo precisa ser enviado", result.getResult().getDescription());
