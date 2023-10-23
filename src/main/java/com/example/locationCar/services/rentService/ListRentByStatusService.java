@@ -35,7 +35,7 @@ public class ListRentByStatusService {
     ZonedDateTime currentDate = ZonedDateTime.now();
     Optional<List<RentModel>> rentsOptional = rentRepository.findByReturnDateGreaterThan(currentDate);
 
-    List<RentModel> rents = rentsOptional.get();
+    List<RentModel> rents = rentsOptional.orElse(Collections.emptyList());
     List<UUID> vehicleIds = new ArrayList<>();
 
       for (RentModel rent : rents) {
@@ -57,7 +57,7 @@ public class ListRentByStatusService {
       vehicles = vehicleRepository.findByIdVehicleIn(vehicleIds, pageRequest);
     }
 
-    if (vehicles.isEmpty()) {
+    if (vehicles == null || vehicles.isEmpty()) {
       return new ResponseErrorBuilder(HttpStatus.NOT_FOUND,
               List.of(new BaseErrorDto("vehicles", ErrorMessage.EMPTY_PAGE))).get();
     }
