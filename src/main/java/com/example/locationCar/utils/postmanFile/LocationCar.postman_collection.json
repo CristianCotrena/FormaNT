@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "98bd217e-b8e6-4a0b-9aaf-caffe916f555",
+		"_postman_id": "4b9db1d8-e260-4d15-9370-b051efa2146e",
 		"name": "LocationCar",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "28525027"
+		"_exporter_id": "28699719"
 	},
 	"item": [
 		{
@@ -280,6 +280,42 @@
 								"rent"
 							]
 						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"contractingDate\": \"2023-12-25T03:00:00Z\",\r\n    \"returnDate\": \"2024-01-29T03:00:00Z\",\r\n    \"haveInsurance\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url-local}}/v1/rent/899b4e8a-03b6-4473-a544-8371f8f3d5c7",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"rent",
+								"899b4e8a-03b6-4473-a544-8371f8f3d5c7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Id",
+					"request": {
+						"method": "GET",
+						"header": []
 					},
 					"response": []
 				}
@@ -612,39 +648,6 @@
 								"v1",
 								"vehicle",
 								"236187b3-f446-410a-b9df-cd0e279a434c"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Rent",
-			"item": [
-				{
-					"name": "Update",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"contractingDate\": \"2023-12-25T03:00:00Z\",\r\n    \"returnDate\": \"2024-01-29T03:00:00Z\",\r\n    \"haveInsurance\": 1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url-local}}/v1/rent/899b4e8a-03b6-4473-a544-8371f8f3d5c7",
-							"host": [
-								"{{url-local}}"
-							],
-							"path": [
-								"v1",
-								"rent",
-								"899b4e8a-03b6-4473-a544-8371f8f3d5c7"
 							]
 						}
 					},

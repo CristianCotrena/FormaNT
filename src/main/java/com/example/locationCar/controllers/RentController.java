@@ -104,6 +104,22 @@ public class RentController {
         return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
     }
 
+    @ApiResponse(
+            responseCode = "201",
+            description = "OK",
+            content = {
+                    @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(type = "string", example = "Lista de git statualuguel criado com sucesso."))
+            })
+    @ApiResponse(
+            responseCode = "404",
+            description = "Rent not found",
+            content = {
+                    @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(type = "string", example = "Bad Request")),
+            })
     @GetMapping("/list")
     @Operation(summary = "List Rent by Client or Employee")
     public ResponseEntity<?> listRentId(
