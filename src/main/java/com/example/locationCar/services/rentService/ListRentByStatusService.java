@@ -10,9 +10,9 @@ import com.example.locationCar.models.RentModel;
 import com.example.locationCar.models.VehicleModel;
 import com.example.locationCar.repositories.RentRepository;
 import com.example.locationCar.repositories.VehicleRepository;
+import com.example.locationCar.validate.rent.ListRentByStatusValidate;
 import java.time.ZonedDateTime;
 import java.util.*;
-import com.example.locationCar.validate.rent.ListRentByStatusValidate;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,26 +26,32 @@ public class ListRentByStatusService {
   private final RentRepository rentRepository;
   private final VehicleRepository vehicleRepository;
 
-  public BaseDto listRentByStatus(Integer status, int page) {
+  public BaseDto listRentByStatus(Integer status, String page) {
     List<BaseErrorDto> errors = new ListRentByStatusValidate().validate(status, page);
-    if (!errors.isEmpty()) {
+
+    if (errors.size() > 0) {
       return new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, errors).get();
     }
 
     ZonedDateTime currentDate = ZonedDateTime.now();
-    Optional<List<RentModel>> rentsOptional = rentRepository.findByReturnDateGreaterThan(currentDate);
+    Optional<List<RentModel>> rentsOptional =
+        rentRepository.findByReturnDateGreaterThan(currentDate);
 
     List<RentModel> rents = rentsOptional.orElse(Collections.emptyList());
     List<UUID> vehicleIds = new ArrayList<>();
 
-      for (RentModel rent : rents) {
-        if (rent.getVehicle() != null && rent.getVehicle().getIdVehicle() != null) {
-          vehicleIds.add(rent.getVehicle().getIdVehicle());
-        }
+    for (RentModel rent : rents) {
+      if (rent.getVehicle() != null && rent.getVehicle().getIdVehicle() != null) {
+        vehicleIds.add(rent.getVehicle().getIdVehicle());
       }
+    }
 
     Page<VehicleModel> vehicles = Page.empty();
-    PageRequest pageRequest = PageRequest.of(page, 10);
+
+    int pageToSearch = 0;
+    if (page != null) pageToSearch = Integer.parseInt(page);
+
+    PageRequest pageRequest = PageRequest.of(pageToSearch, 10);
 
     if (status == 0) {
       if (vehicles.isEmpty()) {
@@ -58,9 +64,12 @@ public class ListRentByStatusService {
     }
 
     if (vehicles == null || vehicles.isEmpty()) {
-      return new ResponseErrorBuilder(HttpStatus.NOT_FOUND,
-              List.of(new BaseErrorDto("vehicles", ErrorMessage.EMPTY_PAGE))).get();
+      return new ResponseErrorBuilder(
+              HttpStatus.NOT_FOUND, List.of(new BaseErrorDto("vehicles", ErrorMessage.EMPTY_PAGE)))
+          .get();
     }
-    return new ResponseSuccessBuilder(HttpStatus.OK, vehicles, SuccessMessage.LIST_RENT_BY_STATUS).get();
+
+    return new ResponseSuccessBuilder(HttpStatus.OK, vehicles, SuccessMessage.LIST_RENT_BY_STATUS)
+        .get();
   }
 }

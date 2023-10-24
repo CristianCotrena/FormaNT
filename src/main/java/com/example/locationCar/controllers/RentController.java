@@ -98,7 +98,7 @@ public class RentController {
 
   @GetMapping("/list/{status}")
   public ResponseEntity<BaseDto> listRentByStatus(
-          @PathVariable Integer status, @RequestParam int page) {
+      @PathVariable Integer status, @RequestParam(required = false) String page) {
     BaseDto baseDto = listRentByStatusService.listRentByStatus(status, page);
 
     return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
