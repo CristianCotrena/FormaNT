@@ -5,6 +5,8 @@ import static org.mockito.Mockito.when;
 
 import com.example.locationCar.base.dto.BaseDto;
 import com.example.locationCar.dtos.RentUpdateDto;
+import com.example.locationCar.mock.rent.RentMockBuilder;
+import com.example.locationCar.mock.rent.RentUpdateDtoMockBuilder;
 import com.example.locationCar.models.RentModel;
 import com.example.locationCar.repositories.RentRepository;
 import com.example.locationCar.services.rentService.UpdateRentService;
@@ -25,92 +27,50 @@ public class UpdateRentTest {
 
   @InjectMocks private UpdateRentService updateRentService;
 
+  private RentModel rentModel;
+  private RentUpdateDto rentUpdateDto;
+
   @BeforeEach
   public void setup() {
     MockitoAnnotations.initMocks(this);
     updateRentService = new UpdateRentService(rentRepository);
+
+    rentModel = RentMockBuilder.build();
+    rentUpdateDto = RentUpdateDtoMockBuilder.build();
   }
 
   @Test
   public void testUpdateRent_Success() {
-    UUID rentId = UUID.randomUUID();
-    RentModel rent = new RentModel();
-    RentUpdateDto rentUpdateDto = new RentUpdateDto();
-    rent.setIdRent(rentId);
+    when(rentRepository.findById(rentModel.getIdRent())).thenReturn(Optional.of(rentModel));
+    when(rentRepository.save(rentModel)).thenReturn(rentModel);
 
-    try {
-      ZonedDateTime contractingDate = ZonedDateTime.parse("2023-12-25T03:00:00Z");
-      ZonedDateTime returnDate = ZonedDateTime.parse("2024-01-11T03:00:00Z");
-      ZonedDateTime returnDateDto = ZonedDateTime.parse("2024-01-15T03:00:00Z");
+    BaseDto result = updateRentService.updateRent(rentModel.getIdRent().toString(), rentUpdateDto);
 
-      rent.setContractingDate(contractingDate);
-      rent.setReturnDate(returnDate);
-      rent.setHaveInsurance(1);
-
-      rentUpdateDto.setContractingDate(contractingDate);
-      rentUpdateDto.setReturnDate(returnDateDto);
-      rentUpdateDto.setHaveInsurance(1);
-
-      when(rentRepository.findById(rentId)).thenReturn(Optional.of(rent));
-      when(rentRepository.save(rent)).thenReturn(rent);
-
-      BaseDto result = updateRentService.updateRent(rentId.toString(), rentUpdateDto);
-
-      assertEquals(HttpStatus.OK.value(), result.getResult().getStatusCode());
-      assertEquals("Aluguel atualizado com sucesso", result.getResult().getDescription());
-    } catch (Exception e) {
-    }
+    assertEquals(HttpStatus.OK.value(), result.getResult().getStatusCode());
+    assertEquals("Aluguel atualizado com sucesso", result.getResult().getDescription());
   }
 
   @Test
   public void testUpdateRent_InvalidReturnDate() {
-    UUID rentId = UUID.randomUUID();
-    RentModel rent = new RentModel();
-    RentUpdateDto rentUpdateDto = new RentUpdateDto();
-    rent.setIdRent(rentId);
+    rentUpdateDto.setReturnDate(ZonedDateTime.parse("2024-01-11T03:00:00Z"));
 
-    try {
-      ZonedDateTime contractingDate = ZonedDateTime.parse("2023-12-25T03:00:00Z");
-      ZonedDateTime returnDate = ZonedDateTime.parse("2024-01-11T03:00:00Z");
+    when(rentRepository.findById(rentModel.getIdRent())).thenReturn(Optional.of(rentModel));
+    when(rentRepository.save(rentModel)).thenReturn(rentModel);
 
-      rent.setContractingDate(contractingDate);
-      rent.setReturnDate(returnDate);
-      rent.setHaveInsurance(1);
+    BaseDto result = updateRentService.updateRent(rentModel.getIdRent().toString(), rentUpdateDto);
 
-      rentUpdateDto.setContractingDate(contractingDate);
-      rentUpdateDto.setReturnDate(returnDate);
-      rentUpdateDto.setHaveInsurance(1);
-
-      when(rentRepository.findById(rentId)).thenReturn(Optional.of(rent));
-      when(rentRepository.save(rent)).thenReturn(rent);
-
-      BaseDto result = updateRentService.updateRent(rentId.toString(), rentUpdateDto);
-
-      assertEquals(HttpStatus.BAD_REQUEST.value(), result.getResult().getStatusCode());
-      assertEquals("Bad Request", result.getResult().getDescription());
-    } catch (Exception e) {
-    }
+    assertEquals(HttpStatus.BAD_REQUEST.value(), result.getResult().getStatusCode());
+    assertEquals("Bad Request", result.getResult().getDescription());
   }
 
   @Test
   public void testUpdateRent_NotFound() {
     UUID rentId = UUID.randomUUID();
     when(rentRepository.findById(rentId)).thenReturn(Optional.empty());
-    RentUpdateDto rentUpdateDto = new RentUpdateDto();
 
-    try {
-      ZonedDateTime contractingDateDto = ZonedDateTime.parse("2023-12-25T03:00:00Z");
-      ZonedDateTime returnDateDto = ZonedDateTime.parse("2024-01-11T03:00:00Z");
+    BaseDto result = updateRentService.updateRent(rentId.toString(), rentUpdateDto);
 
-      rentUpdateDto.setContractingDate(contractingDateDto);
-      rentUpdateDto.setReturnDate(returnDateDto);
-      rentUpdateDto.setHaveInsurance(1);
-
-      BaseDto result = updateRentService.updateRent(rentId.toString(), rentUpdateDto);
-
-      assertEquals(HttpStatus.NOT_FOUND.value(), result.getResult().getStatusCode());
-      assertEquals("Não encontrado", result.getResult().getDescription());
-    } catch (Exception e) {
-    }
+    assertEquals(HttpStatus.NOT_FOUND.value(), result.getResult().getStatusCode());
+    assertEquals("Não encontrado", result.getResult().getDescription());
   }
 }

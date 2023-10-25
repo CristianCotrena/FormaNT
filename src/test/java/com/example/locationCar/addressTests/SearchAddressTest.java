@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 import com.example.locationCar.base.dto.BaseDto;
+import com.example.locationCar.mock.address.AddressMockBuilder;
 import com.example.locationCar.models.AddressModel;
 import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.models.EmployeeModel;
@@ -26,29 +27,10 @@ public class SearchAddressTest {
   @Mock private AddressRepository addressRepository;
 
   private AddressModel addressModel;
-  private ClientModel clientModel;
-  private EmployeeModel employeeModel;
 
   @BeforeEach
   void setup() {
-    addressModel = new AddressModel();
-    addressModel.setIdAddress(UUID.randomUUID());
-    addressModel.setCep("94945-010");
-    addressModel.setCity("Cachoeirinha");
-    addressModel.setComplement("casa");
-    addressModel.setCountry("Brasil");
-    addressModel.setNumber(121);
-    addressModel.setPublicPlace("Sim");
-    addressModel.setState("RS");
-    addressModel.setStatus(1);
-
-    clientModel = new ClientModel();
-    clientModel.setIdClient(UUID.randomUUID());
-    addressModel.setClient(clientModel);
-
-    employeeModel = new EmployeeModel();
-    employeeModel.setEmployeeId(UUID.randomUUID());
-    addressModel.setEmployee(employeeModel);
+    addressModel = AddressMockBuilder.build();
   }
 
   @Test
