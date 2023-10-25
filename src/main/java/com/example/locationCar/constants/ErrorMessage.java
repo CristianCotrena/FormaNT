@@ -1,7 +1,7 @@
 package com.example.locationCar.constants;
 
 public @interface ErrorMessage {
-  String EMPTY_FIELD = "Campo obrigatório";
+ String EMPTY_FIELD = "Campo obrigatório";
   String INVALID_FIELD = "Campo inválido";
   String UNIQUE_FIELD = "Campo já cadastrado na base de dados";
   String UNDERAGE = "Idade deve ser maior que 18";
@@ -31,4 +31,5 @@ public @interface ErrorMessage {
   String MUST_BE_ZERO_OR_ONE = "Precisa ser 0 ou 1";
   String RETURN_DATE_SHORTER_THAN_CURRENT = "Data de devolução precisa ser maior que o valor atual";
   String RENT_LIST_NOT_FOUND = "Nenhum aluguel encontrato com esses dados";
+  String CEP_ERROR = "Campo inválido, este campo será atualizado via CEP";
 }

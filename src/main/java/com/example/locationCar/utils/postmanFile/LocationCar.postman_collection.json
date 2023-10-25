@@ -107,6 +107,34 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"publicPlace\":\"Não\",\r\n    \"number\":\"452\",\r\n    \"complement\":\"Casa\",\r\n    \"city\": \"São João do Sul\",\r\n    \"state\":\"SC\",\r\n    \"country\":\"Argentina\",\r\n    \"cep\":\" 94945-010\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url-local}}/v1/address/2f40efbf-4cee-45f4-8808-94abd5510984",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"address",
+								"2f40efbf-4cee-45f4-8808-94abd5510984"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
