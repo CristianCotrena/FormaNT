@@ -8,6 +8,11 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "TB_ADDRESS")
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class AddressModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
