@@ -36,14 +36,25 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/v1/address")
 @Tag(name = "Address", description = "Operations about address")
-@AllArgsConstructor
+//@AllArgsConstructor
 public class AddressController {
 
   private final SearchAddressService searchAddressService;
   private final CreateAddressService createAddressService;
   private final DeleteAddressService deleteAddressService;
+  private final UpdateAddressService updateAddressService;
 
-  @Operation(summary = "Search Address", description = "Search an address from database")
+    public AddressController(SearchAddressService searchAddressService,
+                             CreateAddressService createAddressService,
+                             DeleteAddressService deleteAddressService,
+                             UpdateAddressService updateAddressService) {
+        this.searchAddressService = searchAddressService;
+        this.createAddressService = createAddressService;
+        this.deleteAddressService = deleteAddressService;
+        this.updateAddressService = updateAddressService;
+    }
+
+    @Operation(summary = "Search Address", description = "Search an address from database")
   @ApiResponse(
       responseCode = "400",
       description = "Bad Request ",
