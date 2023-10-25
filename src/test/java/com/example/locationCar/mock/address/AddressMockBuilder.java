@@ -25,8 +25,8 @@ public class AddressMockBuilder {
             .publicPlace("Sim")
             .state("RS")
             .status(1)
-            .client(clientModel)
-            .employee(employeeModel)
+            .idClient(clientModel)
+            .idEmployee(employeeModel)
             .build();
 
     return addressModel;
