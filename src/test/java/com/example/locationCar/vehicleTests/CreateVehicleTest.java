@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 
 import com.example.locationCar.base.dto.BaseDto;
 import com.example.locationCar.dtos.input.VehicleInputDto;
+import com.example.locationCar.mock.vehicle.VehicleInputDtoMockBuilder;
 import com.example.locationCar.models.VehicleModel;
 import com.example.locationCar.repositories.VehicleRepository;
 import com.example.locationCar.services.vehicleService.CreateVehicleService;
@@ -32,16 +33,7 @@ public class CreateVehicleTest {
     vehicleRepository = mock(VehicleRepository.class);
     createVehicleService = new CreateVehicleService(vehicleRepository);
 
-    dto = new VehicleInputDto();
-    dto.setBrand("Tesla");
-    dto.setColor("Black");
-    dto.setFuel("Eletric");
-    dto.setModel("s");
-    dto.setLicense("BRA2E25");
-    dto.setDoorNumber(4);
-    dto.setMileage(BigDecimal.valueOf(300.5));
-    dto.setDailyValue(BigDecimal.valueOf(50.3));
-    dto.setRating(BigDecimal.valueOf(4.5));
+    dto = VehicleInputDtoMockBuilder.build();
   }
 
   @Test

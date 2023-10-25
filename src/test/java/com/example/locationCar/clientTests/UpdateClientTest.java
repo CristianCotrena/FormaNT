@@ -5,6 +5,7 @@ import static org.mockito.Mockito.when;
 
 import com.example.locationCar.controllers.ClientController;
 import com.example.locationCar.dtos.ClientUpdateDto;
+import com.example.locationCar.mock.client.ClientMockBuilder;
 import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.services.clientService.UpdateClientService;
 import java.util.UUID;
@@ -21,22 +22,12 @@ public class UpdateClientTest {
 
   @InjectMocks private ClientController clientController;
 
-  private ClientModel existingClient;
+  private ClientModel clientModel;
 
   @BeforeEach
   public void setup() {
     MockitoAnnotations.initMocks(this);
-    existingClient =
-        new ClientModel(
-            UUID.fromString("4c38c805-e0a4-4b19-ae13-582cbcaac807"),
-            "Funcionário 1",
-            "12345678999",
-            "1234567",
-            25,
-            "11952221414",
-            "1195222141",
-            "funcionario1@gmail.com",
-            1);
+    clientModel = ClientMockBuilder.build();
   }
 
   @Test

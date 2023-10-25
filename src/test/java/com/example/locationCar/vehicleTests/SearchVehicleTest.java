@@ -4,11 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 import com.example.locationCar.base.dto.BaseDto;
+import com.example.locationCar.mock.vehicle.VehicleMockBuilder;
 import com.example.locationCar.models.VehicleModel;
 import com.example.locationCar.repositories.VehicleRepository;
 import com.example.locationCar.services.vehicleService.SearchVehicleService;
 import java.util.Optional;
-import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -22,40 +22,36 @@ public class SearchVehicleTest {
 
   @InjectMocks private SearchVehicleService searchVehicleService;
 
+  private VehicleModel vehicleModel;
+
   @BeforeEach
   public void setup() {
     MockitoAnnotations.initMocks(this);
+
+    vehicleModel = VehicleMockBuilder.build();
   }
 
   @Test
   public void testExecute_ValidationError() {
-    UUID idVehicle = UUID.randomUUID();
     String license = "ABC123";
 
-    VehicleModel vehicleModel = new VehicleModel();
-    vehicleModel.setIdVehicle(idVehicle);
-    vehicleModel.setLicense(license);
-
-    when(vehicleRepository.findById(idVehicle)).thenReturn(Optional.of(vehicleModel));
+    when(vehicleRepository.findById(vehicleModel.getIdVehicle()))
+        .thenReturn(Optional.of(vehicleModel));
     when(vehicleRepository.findByLicense(license)).thenReturn(Optional.of(vehicleModel));
 
-    BaseDto result = searchVehicleService.searchVehicle(idVehicle, license);
+    BaseDto result = searchVehicleService.searchVehicle(vehicleModel.getIdVehicle(), license);
     assertEquals(result.getErrors().size(), 1);
   }
 
   @Test
   public void testSearchVehicleByIdAndLicenseSuccess() {
-    UUID idVehicle = UUID.randomUUID();
-    String license = "HUR0925";
+    when(vehicleRepository.findById(vehicleModel.getIdVehicle()))
+        .thenReturn(Optional.of(vehicleModel));
+    when(vehicleRepository.findByLicense(vehicleModel.getLicense()))
+        .thenReturn(Optional.of(vehicleModel));
 
-    VehicleModel vehicleModel = new VehicleModel();
-    vehicleModel.setIdVehicle(idVehicle);
-    vehicleModel.setLicense(license);
-
-    when(vehicleRepository.findById(idVehicle)).thenReturn(Optional.of(vehicleModel));
-    when(vehicleRepository.findByLicense(license)).thenReturn(Optional.of(vehicleModel));
-
-    BaseDto result = searchVehicleService.searchVehicle(idVehicle, license);
+    BaseDto result =
+        searchVehicleService.searchVehicle(vehicleModel.getIdVehicle(), vehicleModel.getLicense());
     Integer expectedStatusCode = HttpStatus.OK.value();
     Integer actualStatusCode = result.getResult().getStatusCode();
     assertEquals(expectedStatusCode, actualStatusCode);
@@ -63,14 +59,10 @@ public class SearchVehicleTest {
 
   @Test
   public void testSearchVehicleByIdSuccess() {
-    UUID idVehicle = UUID.randomUUID();
+    when(vehicleRepository.findById(vehicleModel.getIdVehicle()))
+        .thenReturn(Optional.of(vehicleModel));
 
-    VehicleModel vehicleModel = new VehicleModel();
-    vehicleModel.setIdVehicle(idVehicle);
-
-    when(vehicleRepository.findById(idVehicle)).thenReturn(Optional.of(vehicleModel));
-
-    BaseDto result = searchVehicleService.searchVehicle(idVehicle, null);
+    BaseDto result = searchVehicleService.searchVehicle(vehicleModel.getIdVehicle(), null);
     Integer expectedStatusCode = HttpStatus.OK.value();
     Integer actualStatusCode = result.getResult().getStatusCode();
     assertEquals(expectedStatusCode, actualStatusCode);
@@ -78,14 +70,10 @@ public class SearchVehicleTest {
 
   @Test
   public void testSearchVehicleByLicenseSuccess() {
-    String license = "HUR0925";
+    when(vehicleRepository.findByLicense(vehicleModel.getLicense()))
+        .thenReturn(Optional.of(vehicleModel));
 
-    VehicleModel vehicleModel = new VehicleModel();
-    vehicleModel.setLicense(license);
-
-    when(vehicleRepository.findByLicense(license)).thenReturn(Optional.of(vehicleModel));
-
-    BaseDto result = searchVehicleService.searchVehicle(null, license);
+    BaseDto result = searchVehicleService.searchVehicle(null, vehicleModel.getLicense());
     Integer expectedStatusCode = HttpStatus.OK.value();
     Integer actualStatusCode = result.getResult().getStatusCode();
     assertEquals(expectedStatusCode, actualStatusCode);
@@ -93,17 +81,10 @@ public class SearchVehicleTest {
 
   @Test
   public void testSearchNoParamsFailure() {
-    UUID idVehicle = null;
-    String license = null;
+    when(vehicleRepository.findById(null)).thenReturn(Optional.of(vehicleModel));
+    when(vehicleRepository.findByLicense(null)).thenReturn(Optional.of(vehicleModel));
 
-    VehicleModel vehicleModel = new VehicleModel();
-    vehicleModel.setIdVehicle(idVehicle);
-    vehicleModel.setLicense(license);
-
-    when(vehicleRepository.findById(idVehicle)).thenReturn(Optional.of(vehicleModel));
-    when(vehicleRepository.findByLicense(license)).thenReturn(Optional.of(vehicleModel));
-
-    BaseDto result = searchVehicleService.searchVehicle(idVehicle, license);
+    BaseDto result = searchVehicleService.searchVehicle(null, null);
     Integer expectedStatusCode = HttpStatus.BAD_REQUEST.value();
     Integer actualStatusCode = result.getResult().getStatusCode();
     assertEquals(expectedStatusCode, actualStatusCode);
@@ -111,17 +92,12 @@ public class SearchVehicleTest {
 
   @Test
   public void testSearchVehicleByWrongIdRightLicenceFailure() {
-    UUID idVehicle = UUID.randomUUID();
-    String license = "HUR0925";
+    when(vehicleRepository.existsById(vehicleModel.getIdVehicle())).thenReturn(false);
+    when(vehicleRepository.findByLicense(vehicleModel.getLicense()))
+        .thenReturn(Optional.of(vehicleModel));
 
-    VehicleModel vehicleModel = new VehicleModel();
-    vehicleModel.setIdVehicle(idVehicle);
-    vehicleModel.setLicense(license);
-
-    when(vehicleRepository.existsById(idVehicle)).thenReturn(false);
-    when(vehicleRepository.findByLicense(license)).thenReturn(Optional.of(vehicleModel));
-
-    BaseDto result = searchVehicleService.searchVehicle(idVehicle, license);
+    BaseDto result =
+        searchVehicleService.searchVehicle(vehicleModel.getIdVehicle(), vehicleModel.getLicense());
     Integer expectedStatusCode = HttpStatus.BAD_REQUEST.value();
     Integer actualStatusCode = result.getResult().getStatusCode();
     assertEquals(expectedStatusCode, actualStatusCode);
@@ -129,18 +105,13 @@ public class SearchVehicleTest {
 
   @Test
   public void testSearchVehicleByRightIdWrongLicenceFailure() {
-    UUID idVehicle = UUID.randomUUID();
-    String correctLicense = "ABC123";
     String wrongLicense = "HUR0925";
 
-    VehicleModel vehicleModel = new VehicleModel();
-    vehicleModel.setIdVehicle(idVehicle);
-    vehicleModel.setLicense(correctLicense);
-
-    when(vehicleRepository.findById(idVehicle)).thenReturn(Optional.of(vehicleModel));
+    when(vehicleRepository.findById(vehicleModel.getIdVehicle()))
+        .thenReturn(Optional.of(vehicleModel));
     when(vehicleRepository.findByLicense(wrongLicense)).thenReturn(Optional.empty());
 
-    BaseDto result = searchVehicleService.searchVehicle(idVehicle, wrongLicense);
+    BaseDto result = searchVehicleService.searchVehicle(vehicleModel.getIdVehicle(), wrongLicense);
     Integer expectedStatusCode = HttpStatus.BAD_REQUEST.value();
     Integer actualStatusCode = result.getResult().getStatusCode();
     assertEquals(expectedStatusCode, actualStatusCode);
@@ -148,17 +119,13 @@ public class SearchVehicleTest {
 
   @Test
   public void testSearchVehicleInvalidLicenseFailure() {
-    UUID idVehicle = UUID.randomUUID();
     String license = "ABC123";
 
-    VehicleModel vehicleModel = new VehicleModel();
-    vehicleModel.setIdVehicle(idVehicle);
-    vehicleModel.setLicense(license);
-
-    when(vehicleRepository.findById(idVehicle)).thenReturn(Optional.of(vehicleModel));
+    when(vehicleRepository.findById(vehicleModel.getIdVehicle()))
+        .thenReturn(Optional.of(vehicleModel));
     when(vehicleRepository.findByLicense(license)).thenReturn(Optional.of(vehicleModel));
 
-    BaseDto result = searchVehicleService.searchVehicle(idVehicle, license);
+    BaseDto result = searchVehicleService.searchVehicle(vehicleModel.getIdVehicle(), license);
     Integer expectedStatusCode = HttpStatus.BAD_REQUEST.value();
     Integer actualStatusCode = result.getResult().getStatusCode();
     assertEquals(expectedStatusCode, actualStatusCode);
@@ -166,14 +133,9 @@ public class SearchVehicleTest {
 
   @Test
   public void testSearchVehicleByIdFailure() {
-    UUID idVehicle = UUID.randomUUID();
+    when(vehicleRepository.existsById(vehicleModel.getIdVehicle())).thenReturn(false);
 
-    VehicleModel vehicleModel = new VehicleModel();
-    vehicleModel.setIdVehicle(idVehicle);
-
-    when(vehicleRepository.existsById(idVehicle)).thenReturn(false);
-
-    BaseDto result = searchVehicleService.searchVehicle(idVehicle, null);
+    BaseDto result = searchVehicleService.searchVehicle(vehicleModel.getIdVehicle(), null);
     Integer expectedStatusCode = HttpStatus.BAD_REQUEST.value();
     Integer actualStatusCode = result.getResult().getStatusCode();
     assertEquals(expectedStatusCode, actualStatusCode);
@@ -182,9 +144,6 @@ public class SearchVehicleTest {
   @Test
   public void testSearchVehicleByLicenseFailure() {
     String license = "HUR0925";
-
-    VehicleModel vehicleModel = new VehicleModel();
-    vehicleModel.setLicense(license);
 
     when(vehicleRepository.findByLicense(license)).thenReturn(Optional.empty());
 

@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 
 import com.example.locationCar.base.dto.BaseDto;
 import com.example.locationCar.dtos.EmployeeDto;
+import com.example.locationCar.mock.employee.EmployeeDtoMockBuilder;
 import com.example.locationCar.models.EmployeeModel;
 import com.example.locationCar.repositories.EmployeeRepository;
 import com.example.locationCar.services.employeeService.CreateEmployeeService;
@@ -31,15 +32,7 @@ public class CreateEmployeeTest {
     employeeRepository = mock(EmployeeRepository.class);
     employeeService = new CreateEmployeeService(employeeRepository);
 
-    employeeDto = new EmployeeDto();
-    employeeDto.setName("Adrielly");
-    employeeDto.setCpfCnpj("44190639800");
-    employeeDto.setEmail("teste@teste.com");
-    employeeDto.setPhone("11447523780");
-    employeeDto.setRegistry("001");
-    employeeDto.setPosition("ESTOQUISTA");
-    employeeDto.setContractType("CLT");
-    employeeDto.setRole("ADMINISTRADOR");
+    employeeDto = EmployeeDtoMockBuilder.build();
   }
 
   @Test
