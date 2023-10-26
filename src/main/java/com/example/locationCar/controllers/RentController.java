@@ -16,6 +16,8 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -108,21 +110,21 @@ public class RentController {
     @Operation(summary = "List Rent by Client or Employee")
     public ResponseEntity<?> listRentId(
             @RequestParam(required = false) UUID clientId,
-            @RequestParam(required = false) UUID employeeId) {
+            @RequestParam(required = false) UUID employeeId,
+            Pageable pageable) {
 
         if (clientId != null) {
-            BaseDto baseDto = listRentByIdService.getRentsByClientId(clientId);
-            return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
+            Page<BaseDto> pageResult = listRentByIdService.getRentsByClientId(clientId, pageable);
+            return ResponseEntity.status(HttpStatus.OK).body(pageResult);
 
         } else if (employeeId != null) {
-            BaseDto baseDto = listRentByIdService.getRentsByEmployeeId(employeeId);
-            return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
+            Page<BaseDto<RentModel>> pageResult = listRentByIdService.getRentsByEmployeeId(employeeId, pageable);
+            return ResponseEntity.status(HttpStatus.OK).body(pageResult);
         } else {
             List<BaseErrorDto> errors = new ArrayList<>();
             errors.add(new BaseErrorDto("employeeId ou clientId", ErrorMessage.AT_LEAST_ONE));
             ResponseErrorBuilder result = new ResponseErrorBuilder(HttpStatus.BAD_REQUEST, errors);
             return ResponseEntity.status(result.get().getResult().getStatusCode()).body(errors);
         }
-
     }
 }
