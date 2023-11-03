@@ -39,5 +39,3 @@ public class CustomExceptionHandler {
         return ResponseEntity.status(result.get().getResult().getStatusCode()).body(result.get());
     }
 }
-
-

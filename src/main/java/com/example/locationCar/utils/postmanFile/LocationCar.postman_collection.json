@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "72d53114-fcf0-4f9d-b22d-e0ac6fa26cfc",
+		"_postman_id": "98bd217e-b8e6-4a0b-9aaf-caffe916f555",
 		"name": "LocationCar",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "29220711"
+		"_exporter_id": "28525027"
 	},
 	"item": [
 		{
@@ -312,13 +312,13 @@
 					"response": []
 				},
 				{
-					"name": "Delete",
+					"name": "Update",
 					"request": {
-						"method": "DELETE",
+						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\r\n    \"contractingDate\": \"2023-12-25T03:00:00Z\",\r\n    \"returnDate\": \"2024-01-29T03:00:00Z\",\r\n    \"haveInsurance\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -340,13 +340,21 @@
 					"response": []
 				},
 				{
-					"name": "Update",
+					"name": "Search",
 					"request": {
-						"method": "PUT",
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"contractingDate\": \"2023-12-25T03:00:00Z\",\r\n    \"returnDate\": \"2024-01-29T03:00:00Z\",\r\n    \"haveInsurance\": 1\r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -623,6 +631,34 @@
 									"key": "size",
 									"value": "3"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"license\":\"AAA1E19\",\r\n    \"brand\":\"Toyota\",\r\n    \"model\":\"X5\",\r\n    \"doorNumber\": 4,\r\n    \"color\":\"pink\",\r\n    \"fuel\":\"GNV\",\r\n    \"dailyValue\":500,\r\n    \"mileage\": 40.5,\r\n    \"rating\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url-local}}/v1/vehicle/236187b3-f446-410a-b9df-cd0e279a434c",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"vehicle",
+								"236187b3-f446-410a-b9df-cd0e279a434c"
 							]
 						}
 					},

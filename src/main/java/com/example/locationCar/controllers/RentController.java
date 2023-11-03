@@ -6,10 +6,13 @@ import com.example.locationCar.builder.ResponseErrorBuilder;
 import com.example.locationCar.constants.ErrorMessage;
 import com.example.locationCar.dtos.RentUpdateDto;
 import com.example.locationCar.dtos.RentUpdateReturnDto;
+import com.example.locationCar.dtos.SearchRentResponseDto;
 import com.example.locationCar.dtos.input.RentInputDto;
 import com.example.locationCar.models.RentModel;
+import com.example.locationCar.models.VehicleModel;
 import com.example.locationCar.services.RentService.ListRentByIdService;
 import com.example.locationCar.services.rentService.CreateRentService;
+import com.example.locationCar.services.rentService.SearchRentService;
 import com.example.locationCar.services.rentService.DeleteRentService;
 import com.example.locationCar.services.rentService.UpdateRentService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -41,71 +44,73 @@ public class RentController {
   private UpdateRentService updateRentService;
   private DeleteRentService deleteRentService;
   private ListRentByIdService listRentByIdService;
+  private SearchRentService searchRentService;
 
-    public RentController(CreateRentService createRentService, UpdateRentService updateRentService, ListRentByIdService listRentByIdService, DeleteRentService deleteRentService) {
+    public RentController(CreateRentService createRentService, UpdateRentService updateRentService, ListRentByIdService listRentByIdService, DeleteRentService deleteRentService, SearchRentService searchRentService) {
     this.createRentService = createRentService;
     this.updateRentService = updateRentService;
     this.deleteRentService = deleteRentService;
     this.listRentByIdService = listRentByIdService;
+    this.searchRentService = searchRentService;
   }
 
-  @Operation(summary = "Create Rent", description = "Add a rent to the database")
-  @ApiResponse(
-      responseCode = "201",
-      description = "OK",
-      content = {
-        @Content(
-            mediaType = "application/json",
-            schema = @Schema(type = "string", example = "Aluguel criado com sucesso."))
-      })
-  @ApiResponse(
-      responseCode = "404",
-      description = "Rent not found",
-      content = {
-        @Content(
-            mediaType = "application/json",
-            schema = @Schema(type = "string", example = "Bad Request")),
-      })
-  @PostMapping
-  public ResponseEntity<BaseDto> createRent(@RequestBody RentInputDto rentInputDto) {
-    BaseDto baseDto = createRentService.inserir(rentInputDto);
-    return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
-  }
+    @Operation(summary = "Create Rent", description = "Add a rent to the database")
+    @ApiResponse(
+            responseCode = "201",
+            description = "OK",
+            content = {
+                    @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(type = "string", example = "Aluguel criado com sucesso."))
+            })
+    @ApiResponse(
+            responseCode = "404",
+            description = "Rent not found",
+            content = {
+                    @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(type = "string", example = "Bad Request")),
+            })
+    @PostMapping
+    public ResponseEntity<BaseDto> createRent(@RequestBody RentInputDto rentInputDto) {
+        BaseDto baseDto = createRentService.inserir(rentInputDto);
+        return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
+    }
 
-  @Operation(summary = "Update rent", description = "Update rent")
-  @ApiResponse(
-      responseCode = "200",
-      description = "OK",
-      content = {
-        @Content(
-            mediaType = "application/json",
-            schema = @Schema(implementation = RentUpdateReturnDto.class))
-      })
-  @ApiResponse(
-      responseCode = "404",
-      description = "Not Found",
-      content = {
-        @Content(
-            mediaType = "application/json",
-            schema = @Schema(type = "string", example = "Não encontrado")),
-      })
-  @ApiResponse(
-      responseCode = "400",
-      description = "Invalid data",
-      content = {
-        @Content(
-            mediaType = "application/json",
-            schema =
-                @Schema(
-                    type = "string",
-                    example = "Data de devolução precisa ser maior que o valor atual")),
-      })
-  @PutMapping("/{id}")
-  public ResponseEntity<BaseDto> updateRent(
-      @PathVariable String id, @RequestBody RentUpdateDto rentUpdateDto) {
-    BaseDto baseDto = updateRentService.updateRent(id, rentUpdateDto);
+    @Operation(summary = "Update rent", description = "Update rent")
+    @ApiResponse(
+            responseCode = "200",
+            description = "OK",
+            content = {
+                    @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = RentUpdateReturnDto.class))
+            })
+    @ApiResponse(
+            responseCode = "404",
+            description = "Not Found",
+            content = {
+                    @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(type = "string", example = "Não encontrado")),
+            })
+    @ApiResponse(
+            responseCode = "400",
+            description = "Invalid data",
+            content = {
+                    @Content(
+                            mediaType = "application/json",
+                            schema =
+                            @Schema(
+                                    type = "string",
+                                    example = "Data de devolução precisa ser maior que o valor atual")),
+            })
+    @PutMapping("/{id}")
+    public ResponseEntity<BaseDto> updateRent(
+            @PathVariable String id, @RequestBody RentUpdateDto rentUpdateDto) {
+        BaseDto baseDto = updateRentService.updateRent(id, rentUpdateDto);
 
-    return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
+        return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
   }
     @Operation(summary = "Delete Rent", description = "Delete a rent from the database")
     @ApiResponse(
@@ -168,4 +173,28 @@ public class RentController {
 }
 
     }
+
+    @Operation (summary = "Search Rent", description = "Search rent from database")
+    @ApiResponse(
+            responseCode = "200",
+            description = "OK",
+            content = {
+                    @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = SearchRentResponseDto.class))
+            })
+    @ApiResponse(
+            responseCode = "404",
+            description = "Rent not found",
+            content = {
+                    @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(type = "String", example = "Não encontrado"))
+            })
+    @GetMapping("/{id}")
+    public ResponseEntity<BaseDto> searchRent(@PathVariable String id) {
+        BaseDto baseDto = searchRentService.searchRent(id);
+        return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
+    }
+
 }
