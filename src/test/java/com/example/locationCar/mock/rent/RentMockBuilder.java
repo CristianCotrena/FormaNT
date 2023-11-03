@@ -10,22 +10,22 @@ import java.util.UUID;
 
 public class RentMockBuilder {
 
-    public static RentModel build() {
-        ClientModel clientModel = ClientMockBuilder.build();
+  public static RentModel build() {
+    ClientModel clientModel = ClientMockBuilder.build();
 
-        EmployeeModel employeeModel = EmployeeMockBuilder.build();
+    EmployeeModel employeeModel = EmployeeMockBuilder.build();
 
-        RentModel rentModel =
-                RentModel.builder()
-                        .idRent(UUID.randomUUID())
-                        .contractingDate(ZonedDateTime.parse("2023-12-25T03:00:00Z"))
-                        .returnDate(ZonedDateTime.parse("2024-01-11T03:00:00Z"))
-                        .haveInsurance(1)
-                        .status(1)
-                        .client(clientModel)
-                        .employee(employeeModel)
-                        .build();
+    RentModel rentModel =
+        RentModel.builder()
+            .idRent(UUID.randomUUID())
+            .contractingDate(ZonedDateTime.parse("2023-12-25T03:00:00Z"))
+            .returnDate(ZonedDateTime.parse("2024-01-11T03:00:00Z"))
+            .haveInsurance(1)
+            .status(1)
+            .client(clientModel)
+            .employee(employeeModel)
+            .build();
 
-        return rentModel;
-    }
+    return rentModel;
+  }
 }
