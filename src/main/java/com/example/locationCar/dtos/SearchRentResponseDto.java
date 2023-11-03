@@ -1,6 +1,7 @@
 package com.example.locationCar.dtos;
 
 import com.example.locationCar.models.RentModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 @Getter
@@ -9,8 +10,13 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SearchRentResponseDto {
+
+    @Schema(example = "2025-03-20T13:00Z")
     private String dataContratacao;
+
+    @Schema(example = "2025-04-09T13:00Z")
     private String dataDevolucao;
+
     private boolean possuiSeguro;
     private ClientInfoDto client;
     private EmployeeInfoDto employee;
@@ -49,10 +55,15 @@ public class SearchRentResponseDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class ClientInfoDto {
+        @Schema(example = "Tatiana")
         private String nome;
+        @Schema(example = "01630265055")
         private String cpfCnpj;
+        @Schema(example = "111111111111")
         private String cnh;
+        @Schema(example = "tati@gmail.com")
         private String email;
+        @Schema(example = "51981220948")
         private String telefone;
     }
 
@@ -62,8 +73,11 @@ public class SearchRentResponseDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class EmployeeInfoDto {
+        @Schema(example = "Alzira")
         private String nome;
+        @Schema(example = "alzira@gmail.com")
         private String email;
+        @Schema(example = "5599999788")
         private String telefone;
     }
 
@@ -73,9 +87,13 @@ public class SearchRentResponseDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class VehicleInfoDto {
+        @Schema(example = "BMW")
         private String marca;
+        @Schema(example = "X5")
         private String modelo;
+        @Schema(example = "NEJ9138")
         private String placa;
+        @Schema(example = "150.00")
         private String valorDiaria;
     }
 }
