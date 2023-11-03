@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "fa748b4f-0d57-4dcf-ad57-6f74e44124aa",
+		"_postman_id": "98bd217e-b8e6-4a0b-9aaf-caffe916f555",
 		"name": "LocationCar",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "28525027"
@@ -344,6 +344,45 @@
 					"request": {
 						"method": "GET",
 						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url-local}}/v1/rent/899b4e8a-03b6-4473-a544-8371f8f3d5c7",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"rent",
+								"899b4e8a-03b6-4473-a544-8371f8f3d5c7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				}
