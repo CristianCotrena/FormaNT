@@ -4,10 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
+import com.example.locationCar.mock.employee.EmployeeMockBuilder;
 import com.example.locationCar.models.EmployeeModel;
-import com.example.locationCar.models.enums.ContractType;
-import com.example.locationCar.models.enums.Position;
-import com.example.locationCar.models.enums.Role;
 import com.example.locationCar.repositories.EmployeeRepository;
 import com.example.locationCar.services.employeeService.SearchEmployeeService;
 import java.util.Optional;
@@ -30,17 +28,7 @@ public class SearchEmployeeTest {
 
   @BeforeEach
   void setup() {
-    employeeModel = new EmployeeModel();
-    employeeModel.setEmployeeId(UUID.randomUUID());
-    employeeModel.setName("Joana");
-    employeeModel.setPosition(Position.VENDEDOR);
-    employeeModel.setCpfCnpj("54506305302");
-    employeeModel.setRegistry("1234");
-    employeeModel.setPhone("5133340436");
-    employeeModel.setContractType(ContractType.CLT);
-    employeeModel.setRole(Role.VENDEDOR);
-    employeeModel.setEmail("joana@gmail.com");
-    employeeModel.setStatus(1);
+    employeeModel = EmployeeMockBuilder.build();
   }
 
   @Test
