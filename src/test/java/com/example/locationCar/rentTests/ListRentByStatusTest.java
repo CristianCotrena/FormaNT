@@ -7,7 +7,6 @@ import com.example.locationCar.base.dto.BaseDto;
 import com.example.locationCar.base.dto.BaseErrorDto;
 import com.example.locationCar.constants.ErrorMessage;
 import com.example.locationCar.constants.SuccessMessage;
-import com.example.locationCar.mock.vehicle.VehicleMockBuilder;
 import com.example.locationCar.models.RentModel;
 import com.example.locationCar.models.VehicleModel;
 import com.example.locationCar.repositories.RentRepository;
@@ -37,8 +36,6 @@ public class ListRentByStatusTest {
     listRentByStatusService = new ListRentByStatusService(rentRepository, vehicleRepository);
   }
 
-  VehicleModel vehicleModel = VehicleMockBuilder.build();
-
   @Test
   public void testListRentByStatus_Success() {
     List<RentModel> rents = new ArrayList<>();
@@ -61,7 +58,7 @@ public class ListRentByStatusTest {
         .thenReturn(Optional.of(rents));
     when(vehicleRepository.findAll(pageRequest)).thenReturn(vehicles);
 
-    BaseDto result = listRentByStatusService.listRentByStatus(0, 1);
+    BaseDto result = listRentByStatusService.listRentByStatus(0, "1");
     assertEquals(HttpStatus.OK.value(), result.getResult().getStatusCode());
     assertEquals(SuccessMessage.LIST_RENT_BY_STATUS, result.getResult().getDescription());
     assertEquals(1, ((Page<VehicleModel>) result.getData()).getContent().size());
@@ -69,7 +66,7 @@ public class ListRentByStatusTest {
 
   @Test
   public void testListRentByStatus_InvalidStatus() {
-    BaseDto result = listRentByStatusService.listRentByStatus(2, 1);
+    BaseDto result = listRentByStatusService.listRentByStatus(2, "1");
     assertEquals(HttpStatus.BAD_REQUEST.value(), result.getResult().getStatusCode());
     List<BaseErrorDto> errors = result.getErrors();
     assertEquals(1, errors.size());
@@ -80,7 +77,7 @@ public class ListRentByStatusTest {
   public void testListRentByStatus_EmptyResult() {
     when(rentRepository.findByReturnDateGreaterThan(ZonedDateTime.now()))
         .thenReturn(Optional.empty());
-    BaseDto result = listRentByStatusService.listRentByStatus(0, 1);
+    BaseDto result = listRentByStatusService.listRentByStatus(0, "1");
     assertEquals(HttpStatus.NOT_FOUND.value(), result.getResult().getStatusCode());
     List<BaseErrorDto> errors = result.getErrors();
     assertEquals(1, errors.size());
@@ -94,7 +91,7 @@ public class ListRentByStatusTest {
     when(rentRepository.findByReturnDateGreaterThan(ZonedDateTime.now()))
         .thenReturn(Optional.of(rents));
     when(vehicleRepository.findAll(pageRequest)).thenReturn(Page.empty());
-    BaseDto result = listRentByStatusService.listRentByStatus(0, 1);
+    BaseDto result = listRentByStatusService.listRentByStatus(0, "1");
     assertEquals(HttpStatus.NOT_FOUND.value(), result.getResult().getStatusCode());
     List<BaseErrorDto> errors = result.getErrors();
     assertEquals(1, errors.size());
