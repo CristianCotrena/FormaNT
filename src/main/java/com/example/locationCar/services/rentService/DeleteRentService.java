@@ -40,7 +40,9 @@ public class DeleteRentService {
             return result.get();
         }
 
-        rentModel.get().setStatus(0);
+        RentModel entity = rentModel.get();
+        entity.setStatus(0);
+        rentRepository.save(entity);
 
         return new ResponseSuccessBuilder<DeleteRentDto>(
                 HttpStatus.OK,
