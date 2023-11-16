@@ -1,6 +1,6 @@
 <h1 align="center">FormaNT RENTAL CARS</h1>
 FormaNT - Rental Cars é uma aplicação web baseada em Java que permite a um utilizador registar-se e alugar um carro. O utilizador pode escolher o carro que deseja alugar, a data de inicio e fim do aluguel.
-
+-
 <hr/>
 
 # 🚗 Aplicação
