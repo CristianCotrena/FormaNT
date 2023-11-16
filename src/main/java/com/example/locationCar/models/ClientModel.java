@@ -44,4 +44,9 @@ public class ClientModel implements Serializable {
 
   @Schema(hidden = true)
   private Integer status = 1;
+
+  @OneToOne
+  @JoinColumn(name = "idLogin")
+  private LoginModel login;
+
 }

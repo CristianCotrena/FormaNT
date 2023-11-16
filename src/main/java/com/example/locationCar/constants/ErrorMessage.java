@@ -32,4 +32,7 @@ public @interface ErrorMessage {
   String RETURN_DATE_SHORTER_THAN_CURRENT = "Data de devolução precisa ser maior que o valor atual";
   String RENT_LIST_NOT_FOUND = "Nenhum aluguel encontrato com esses dados";
   String CEP_ERROR = "Campo inválido, este campo será atualizado via CEP";
+  String PASSWORD_ERROR = "O campo deve conter no mínimo 8 carácteres, contendo, um número, uma letra maiúscula e letras minúsculas";
+  String CONFLIT_EMAIL = "Este email já possui login.";
+  String ONLY_ONE = "Apenas um desses campos deve ser informado.";
 }
