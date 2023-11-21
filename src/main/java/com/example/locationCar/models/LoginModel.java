@@ -21,5 +21,4 @@ public class LoginModel implements Serializable {
 
   private String email;
   private String password;
-  private String expiresIn;
 }
