@@ -4,6 +4,7 @@ import com.example.locationCar.base.dto.BaseDto;
 import com.example.locationCar.dtos.RentUpdateDto;
 import com.example.locationCar.dtos.RentUpdateReturnDto;
 import com.example.locationCar.dtos.input.RentInputDto;
+import com.example.locationCar.models.RentModel;
 import com.example.locationCar.services.rentService.CreateRentService;
 import com.example.locationCar.services.rentService.ListRentByStatusService;
 import com.example.locationCar.services.rentService.UpdateRentService;
@@ -96,6 +97,29 @@ public class RentController {
     return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
   }
 
+  @Operation(summary = "List rent by status", description = "List rent by status")
+  @ApiResponse(
+      responseCode = "200",
+      description = "OK",
+      content = {
+        @Content(mediaType = "application/json", schema = @Schema(implementation = RentModel.class))
+      })
+  @ApiResponse(
+      responseCode = "404",
+      description = "Not Found",
+      content = {
+        @Content(
+            mediaType = "application/json",
+            schema = @Schema(type = "string", example = "Alugueis não encontrados")),
+      })
+  @ApiResponse(
+      responseCode = "400",
+      description = "Invalid data",
+      content = {
+        @Content(
+            mediaType = "application/json",
+            schema = @Schema(type = "string", example = "Valor inválido, status deve ser 0 ou 1")),
+      })
   @GetMapping("/list/{status}")
   public ResponseEntity<BaseDto> listRentByStatus(
       @PathVariable Integer status, @RequestParam(required = false) String page) {

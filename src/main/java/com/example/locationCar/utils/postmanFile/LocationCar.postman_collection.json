@@ -282,6 +282,40 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "ListByStatus",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "status",
+								"value": "1",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{url-local}}/v1/rent/list/0",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"rent",
+								"list",
+								"0"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
