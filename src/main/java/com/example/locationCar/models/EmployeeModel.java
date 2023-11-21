@@ -54,6 +54,10 @@ public class EmployeeModel implements Serializable {
   @Schema(hidden = true)
   private int status = 1;
 
+  @OneToOne
+  @JoinColumn(name = "idLogin")
+  private LoginModel login;
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;

@@ -6,4 +6,5 @@ public @interface RegexValues {
   String PHONE = "^\\d{10,11}$";
   String LICENSE = "[A-Z]{3}[0-9][0-9A-Z][0-9]{2}";
   String CEP = "\\d{8}";
+  String PASSWORD = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-zA-Z0-9]).{8,}$";
 }
