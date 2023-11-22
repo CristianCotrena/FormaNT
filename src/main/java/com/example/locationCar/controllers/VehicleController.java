@@ -120,4 +120,13 @@ public class VehicleController {
     BaseDto baseDto = searchVehicleService.searchVehicle(idVehicle, license);
     return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
   }
+
+  @Operation(summary = "Create Vehicle", description = "Add an address to the database")
+  @ApiResponse(responseCode = "201", description = "Created")
+  @ApiResponse(responseCode = "400", description = "Invalid data")
+  @PostMapping
+  public ResponseEntity<BaseDto> createVehicle(@RequestBody VehicleInputDto vehicleInputDto) {
+    BaseDto baseDto = createVehicleService.inserir(vehicleInputDto);
+    return ResponseEntity.status(baseDto.getResult().getStatusCode()).body(baseDto);
+  }
 }

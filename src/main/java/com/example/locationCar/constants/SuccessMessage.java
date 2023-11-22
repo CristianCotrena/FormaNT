@@ -17,4 +17,5 @@ public @interface SuccessMessage {
   String CREATE_RENT = "Aluguel criado com sucesso";
   String UPDATE_RENT = "Aluguel atualizado com sucesso";
   String UPDATE_ADDRESS = "Endereço atualizado com sucesso";
+  String SEARCH_RENT = "Aluguel encontrado com sucesso";
 }

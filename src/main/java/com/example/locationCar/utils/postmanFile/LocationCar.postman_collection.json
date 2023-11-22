@@ -2,8 +2,8 @@
 	"info": {
 		"_postman_id": "98bd217e-b8e6-4a0b-9aaf-caffe916f555",
 		"name": "LocationCar",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "28525027"
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "28699719"
 	},
 	"item": [
 		{
@@ -23,16 +23,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{url-local}}/v1/address",
-							"host": [
-								"{{url-local}}"
-							],
-							"path": [
-								"v1",
-								"address"
-							]
-						}
+						"url": "{{url-local}}/v1/address"
 					},
 					"response": []
 				},
@@ -107,34 +98,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "Update",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"publicPlace\":\"Não\",\r\n    \"number\":\"452\",\r\n    \"complement\":\"Casa\",\r\n    \"city\": \"São João do Sul\",\r\n    \"state\":\"SC\",\r\n    \"country\":\"Argentina\",\r\n    \"cep\":\" 94945-010\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url-local}}/v1/address/2f40efbf-4cee-45f4-8808-94abd5510984",
-							"host": [
-								"{{url-local}}"
-							],
-							"path": [
-								"v1",
-								"address",
-								"2f40efbf-4cee-45f4-8808-94abd5510984"
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
@@ -155,16 +118,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{url-local}}/v1/client",
-							"host": [
-								"{{url-local}}"
-							],
-							"path": [
-								"v1",
-								"client"
-							]
-						}
+						"url": "{{url-local}}/v1/client"
 					},
 					"response": []
 				},
@@ -173,17 +127,7 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"url": {
-							"raw": "{{url-local}}/v1/client/8dfa0850-5e31-401f-aa80-3d41a48b6169",
-							"host": [
-								"{{url-local}}"
-							],
-							"path": [
-								"v1",
-								"client",
-								"8dfa0850-5e31-401f-aa80-3d41a48b6169"
-							]
-						}
+						"url": "{{url-local}}/v1/client/8dfa0850-5e31-401f-aa80-3d41a48b6169"
 					},
 					"response": []
 				},
@@ -231,17 +175,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{url-local}}/v1/client/0f15fc3e-51b7-439d-a788-eb7c368c1d2e",
-							"host": [
-								"{{url-local}}"
-							],
-							"path": [
-								"v1",
-								"client",
-								"0f15fc3e-51b7-439d-a788-eb7c368c1d2e"
-							]
-						}
+						"url": "{{url-local}}/v1/client/0f15fc3e-51b7-439d-a788-eb7c368c1d2e"
 					},
 					"response": []
 				},
@@ -298,14 +232,126 @@
 								}
 							}
 						},
+						"url": "{{url-local}}/v1/rent"
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"contractingDate\": \"2023-12-25T03:00:00Z\",\r\n    \"returnDate\": \"2024-01-29T03:00:00Z\",\r\n    \"haveInsurance\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url-local}}/v1/rent/899b4e8a-03b6-4473-a544-8371f8f3d5c7"
+					},
+					"response": []
+				},
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [],
 						"url": {
-							"raw": "{{url-local}}/v1/rent",
+							"raw": "{{url-local}}/v1/rent/list?employeeId=cb12711a-5b56-473b-952c-4261e64a314d",
 							"host": [
 								"{{url-local}}"
 							],
 							"path": [
 								"v1",
-								"rent"
+								"rent",
+								"list"
+							],
+							"query": [
+								{
+									"key": "employeeId",
+									"value": "cb12711a-5b56-473b-952c-4261e64a314d"
+								},
+								{
+									"key": "clientId",
+									"value": "cb12711a-5b56-473b-952c-4261e64a314d",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url-local}}/v1/rent/899b4e8a-03b6-4473-a544-8371f8f3d5c7",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"rent",
+								"899b4e8a-03b6-4473-a544-8371f8f3d5c7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListByStatus",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "status",
+								"value": "1",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{url-local}}/v1/rent/list/0",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"rent",
+								"list",
+								"0"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0",
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -321,17 +367,7 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"url": {
-							"raw": "{{url-local}}/v1/employee/ea70202e-b48b-4bb8-85ec-cb3594daf3af",
-							"host": [
-								"{{url-local}}"
-							],
-							"path": [
-								"v1",
-								"employee",
-								"ea70202e-b48b-4bb8-85ec-cb3594daf3af"
-							]
-						}
+						"url": "{{url-local}}/v1/employee/ea70202e-b48b-4bb8-85ec-cb3594daf3af"
 					},
 					"response": []
 				},
@@ -349,17 +385,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{url-local}}/v1/employee/ea70202e-b48b-4bb8-85ec-cb3594daf3af",
-							"host": [
-								"{{url-local}}"
-							],
-							"path": [
-								"v1",
-								"employee",
-								"ea70202e-b48b-4bb8-85ec-cb3594daf3af"
-							]
-						}
+						"url": "{{url-local}}/v1/employee/ea70202e-b48b-4bb8-85ec-cb3594daf3af"
 					},
 					"response": []
 				},
@@ -377,16 +403,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{url-local}}/v1/employee",
-							"host": [
-								"{{url-local}}"
-							],
-							"path": [
-								"v1",
-								"employee"
-							]
-						}
+						"url": "{{url-local}}/v1/employee"
 					},
 					"response": []
 				},
@@ -503,16 +520,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{url-local}}/v1/vehicle",
-							"host": [
-								"{{url-local}}"
-							],
-							"path": [
-								"v1",
-								"vehicle"
-							]
-						}
+						"url": "{{url-local}}/v1/vehicle"
 					},
 					"response": []
 				},
@@ -575,17 +583,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{url-local}}/v1/vehicle/236187b3-f446-410a-b9df-cd0e279a434c",
-							"host": [
-								"{{url-local}}"
-							],
-							"path": [
-								"v1",
-								"vehicle",
-								"236187b3-f446-410a-b9df-cd0e279a434c"
-							]
-						}
+						"url": "{{url-local}}/v1/vehicle/236187b3-f446-410a-b9df-cd0e279a434c"
 					},
 					"response": []
 				},
@@ -631,84 +629,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{url-local}}/v1/vehicle/236187b3-f446-410a-b9df-cd0e279a434c",
-							"host": [
-								"{{url-local}}"
-							],
-							"path": [
-								"v1",
-								"vehicle",
-								"236187b3-f446-410a-b9df-cd0e279a434c"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Rent",
-			"item": [
-				{
-					"name": "Update",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"contractingDate\": \"2023-12-25T03:00:00Z\",\r\n    \"returnDate\": \"2024-01-29T03:00:00Z\",\r\n    \"haveInsurance\": 1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url-local}}/v1/rent/899b4e8a-03b6-4473-a544-8371f8f3d5c7",
-							"host": [
-								"{{url-local}}"
-							],
-							"path": [
-								"v1",
-								"rent",
-								"899b4e8a-03b6-4473-a544-8371f8f3d5c7"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "ListByStatus",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "status",
-								"value": "1",
-								"type": "text",
-								"disabled": true
-							}
-						],
-						"url": {
-							"raw": "{{url-local}}/v1/rent/list/0",
-							"host": [
-								"{{url-local}}"
-							],
-							"path": [
-								"v1",
-								"rent",
-								"list",
-								"0"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "0",
-									"disabled": true
-								}
-							]
-						}
+						"url": "{{url-local}}/v1/vehicle/236187b3-f446-410a-b9df-cd0e279a434c"
 					},
 					"response": []
 				}
