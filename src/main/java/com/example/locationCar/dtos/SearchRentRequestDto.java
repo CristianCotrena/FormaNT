@@ -7,67 +7,66 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 public class SearchRentRequestDto {
 
-    private String dataContratacao;
-    private String dataDevolucao;
-    private boolean possuiSeguro;
+  private String dataContratacao;
+  private String dataDevolucao;
+  private boolean possuiSeguro;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private ClientModel clientModel;
+  @JsonInclude(JsonInclude.Include.NON_NULL)
+  private ClientModel clientModel;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private EmployeeModel employeeModel;
+  @JsonInclude(JsonInclude.Include.NON_NULL)
+  private EmployeeModel employeeModel;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private VehicleModel vehicleModel;
+  @JsonInclude(JsonInclude.Include.NON_NULL)
+  private VehicleModel vehicleModel;
 
-    public SearchRentRequestDto() {
-    }
+  public SearchRentRequestDto() {}
 
-    public String getDataContratacao() {
-        return dataContratacao;
-    }
+  public String getDataContratacao() {
+    return dataContratacao;
+  }
 
-    public void setDataContratacao(String dataContratacao) {
-        this.dataContratacao = dataContratacao;
-    }
+  public void setDataContratacao(String dataContratacao) {
+    this.dataContratacao = dataContratacao;
+  }
 
-    public String getDataDevolucao() {
-        return dataDevolucao;
-    }
+  public String getDataDevolucao() {
+    return dataDevolucao;
+  }
 
-    public void setDataDevolucao(String dataDevolucao) {
-        this.dataDevolucao = dataDevolucao;
-    }
+  public void setDataDevolucao(String dataDevolucao) {
+    this.dataDevolucao = dataDevolucao;
+  }
 
-    public boolean isPossuiSeguro() {
-        return possuiSeguro;
-    }
+  public boolean isPossuiSeguro() {
+    return possuiSeguro;
+  }
 
-    public void setPossuiSeguro(boolean possuiSeguro) {
-        this.possuiSeguro = possuiSeguro;
-    }
+  public void setPossuiSeguro(boolean possuiSeguro) {
+    this.possuiSeguro = possuiSeguro;
+  }
 
-    public ClientModel getCliente() {
-        return clientModel;
-    }
+  public ClientModel getCliente() {
+    return clientModel;
+  }
 
-    public void setCliente(ClientModel cliente) {
-        this.clientModel = cliente;
-    }
+  public void setCliente(ClientModel cliente) {
+    this.clientModel = cliente;
+  }
 
-    public EmployeeModel getFuncionarios() {
-        return employeeModel;
-    }
+  public EmployeeModel getFuncionarios() {
+    return employeeModel;
+  }
 
-    public void setFuncionarios(EmployeeModel funcionarios) {
-        this.employeeModel = funcionarios;
-    }
+  public void setFuncionarios(EmployeeModel funcionarios) {
+    this.employeeModel = funcionarios;
+  }
 
-    public VehicleModel getVeiculo() {
-        return vehicleModel;
-    }
+  public VehicleModel getVeiculo() {
+    return vehicleModel;
+  }
 
-    public void setVeiculo(VehicleModel veiculo) {
-        this.vehicleModel = veiculo;
-    }
+  public void setVeiculo(VehicleModel veiculo) {
+    this.vehicleModel = veiculo;
+  }
 }
