@@ -3,7 +3,7 @@ package com.example.locationCar.EmployeeTests;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-import com.example.locationCar.controllers.EmployeeController;
+import com.example.locationCar.mock.employee.EmployeeMockBuilder;
 import com.example.locationCar.models.EmployeeModel;
 import com.example.locationCar.repositories.EmployeeRepository;
 import com.example.locationCar.services.employeeService.DeleteEmployeeService;
@@ -19,33 +19,28 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class DeleteEmployeeTest {
 
-  @Mock private DeleteEmployeeService employeeServiceDelete;
-
-  @InjectMocks private EmployeeController employeeController;
-
   @Mock private EmployeeRepository employeeRepository;
 
   @InjectMocks private DeleteEmployeeService deleteEmployeeService;
 
+  private EmployeeModel employeeModel;
+
   @BeforeEach
   public void setUp() {
-    MockitoAnnotations.initMocks(this); // Inicializa os mocks
+    MockitoAnnotations.initMocks(this);
 
-    // Instancia o serviço a ser testado, passando os mocks configurados
     deleteEmployeeService = new DeleteEmployeeService(employeeRepository);
+
+    employeeModel = EmployeeMockBuilder.build();
   }
 
   @Test
   public void deleteEmployee_Success() {
-    UUID employeeId = UUID.randomUUID();
-    EmployeeModel employee = new EmployeeModel();
-    employee.setEmployeeId(employeeId);
-    employee.setStatus(1);
+    when(employeeRepository.findById(employeeModel.getEmployeeId()))
+        .thenReturn(Optional.of(employeeModel));
+    when(employeeRepository.save(employeeModel)).thenReturn(employeeModel);
 
-    when(employeeRepository.findById(employeeId)).thenReturn(Optional.of(employee));
-    when(employeeRepository.save(employee)).thenReturn(employee);
-
-    EmployeeModel result = deleteEmployeeService.deleteEmployee(employeeId);
+    EmployeeModel result = deleteEmployeeService.deleteEmployee(employeeModel.getEmployeeId());
 
     assertNotNull(result);
     assertEquals(0, result.getStatus());

@@ -60,7 +60,7 @@ public class ListRentByStatusTest {
 
     BaseDto result = listRentByStatusService.listRentByStatus(0, "1");
     assertEquals(HttpStatus.OK.value(), result.getResult().getStatusCode());
-    assertEquals(SuccessMessage.LIST_RENT_BY_STATUS, result.getResult().getDescription());
+    assertEquals(SuccessMessage.LIST_RENT, result.getResult().getDescription());
     assertEquals(1, ((Page<VehicleModel>) result.getData()).getContent().size());
   }
 
@@ -70,7 +70,7 @@ public class ListRentByStatusTest {
     assertEquals(HttpStatus.BAD_REQUEST.value(), result.getResult().getStatusCode());
     List<BaseErrorDto> errors = result.getErrors();
     assertEquals(1, errors.size());
-    assertEquals(ErrorMessage.INVALID_STATUS, errors.get(0).getMessage());
+    assertEquals(ErrorMessage.INVALID_FIELD, errors.get(0).getMessage());
   }
 
   @Test
@@ -81,7 +81,7 @@ public class ListRentByStatusTest {
     assertEquals(HttpStatus.NOT_FOUND.value(), result.getResult().getStatusCode());
     List<BaseErrorDto> errors = result.getErrors();
     assertEquals(1, errors.size());
-    assertEquals(ErrorMessage.EMPTY_PAGE, errors.get(0).getMessage());
+    assertEquals(ErrorMessage.NOT_FOUND, errors.get(0).getMessage());
   }
 
   @Test
@@ -95,6 +95,6 @@ public class ListRentByStatusTest {
     assertEquals(HttpStatus.NOT_FOUND.value(), result.getResult().getStatusCode());
     List<BaseErrorDto> errors = result.getErrors();
     assertEquals(1, errors.size());
-    assertEquals(ErrorMessage.EMPTY_PAGE, errors.get(0).getMessage());
+    assertEquals(ErrorMessage.NOT_FOUND, errors.get(0).getMessage());
   }
 }

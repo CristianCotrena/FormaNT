@@ -17,7 +17,7 @@ public class ListRentByStatusValidate {
     }
 
     if (status != 0 && status != 1) {
-      errors.add(new BaseErrorDto("status", ErrorMessage.INVALID_STATUS));
+      errors.add(new BaseErrorDto("status", ErrorMessage.INVALID_FIELD));
     }
 
     if (page != null) {

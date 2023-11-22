@@ -107,6 +107,34 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"publicPlace\":\"Não\",\r\n    \"number\":\"452\",\r\n    \"complement\":\"Casa\",\r\n    \"city\": \"São João do Sul\",\r\n    \"state\":\"SC\",\r\n    \"country\":\"Argentina\",\r\n    \"cep\":\" 94945-010\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url-local}}/v1/address/2f40efbf-4cee-45f4-8808-94abd5510984",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"address",
+								"2f40efbf-4cee-45f4-8808-94abd5510984"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -278,40 +306,6 @@
 							"path": [
 								"v1",
 								"rent"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "ListByStatus",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "status",
-								"value": "1",
-								"type": "text",
-								"disabled": true
-							}
-						],
-						"url": {
-							"raw": "{{url-local}}/v1/rent/list/0",
-							"host": [
-								"{{url-local}}"
-							],
-							"path": [
-								"v1",
-								"rent",
-								"list",
-								"0"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "0",
-									"disabled": true
-								}
 							]
 						}
 					},
@@ -679,6 +673,40 @@
 								"v1",
 								"rent",
 								"899b4e8a-03b6-4473-a544-8371f8f3d5c7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListByStatus",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "status",
+								"value": "1",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{url-local}}/v1/rent/list/0",
+							"host": [
+								"{{url-local}}"
+							],
+							"path": [
+								"v1",
+								"rent",
+								"list",
+								"0"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0",
+									"disabled": true
+								}
 							]
 						}
 					},

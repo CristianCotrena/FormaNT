@@ -6,11 +6,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.example.locationCar.base.dto.BaseDto;
+import com.example.locationCar.mock.client.ClientMockBuilder;
 import com.example.locationCar.models.ClientModel;
 import com.example.locationCar.repositories.ClientRepository;
 import com.example.locationCar.services.clientService.CreateClientService;
 import java.util.Optional;
-import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -30,16 +30,7 @@ public class CreateClientTest {
     clientRepository = mock(ClientRepository.class);
     createClientService = new CreateClientService(clientRepository);
 
-    clientModel = new ClientModel();
-    clientModel.setIdClient(UUID.randomUUID());
-    clientModel.setName("Anna");
-    clientModel.setCpfCnpj("38709471014");
-    clientModel.setCnh("874658935467");
-    clientModel.setAge(37);
-    clientModel.setTelephone("51981220944");
-    clientModel.setEmergencyContact("5133360636");
-    clientModel.setEmail("anna.hermes@gmail.com");
-    clientModel.setStatus(1);
+    clientModel = ClientMockBuilder.build();
   }
 
   @Test

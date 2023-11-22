@@ -65,11 +65,10 @@ public class ListRentByStatusService {
 
     if (vehicles == null || vehicles.isEmpty()) {
       return new ResponseErrorBuilder(
-              HttpStatus.NOT_FOUND, List.of(new BaseErrorDto("vehicles", ErrorMessage.EMPTY_PAGE)))
+              HttpStatus.NOT_FOUND, List.of(new BaseErrorDto("vehicles", ErrorMessage.NOT_FOUND)))
           .get();
     }
 
-    return new ResponseSuccessBuilder(HttpStatus.OK, vehicles, SuccessMessage.LIST_RENT_BY_STATUS)
-        .get();
+    return new ResponseSuccessBuilder(HttpStatus.OK, vehicles, SuccessMessage.LIST_RENT).get();
   }
 }

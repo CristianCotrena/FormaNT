@@ -20,6 +20,7 @@ public class AddressModel implements Serializable {
   private UUID idAddress;
 
   private String publicPlace;
+  private String road;
   private Integer number;
   private String complement;
   private String city;
